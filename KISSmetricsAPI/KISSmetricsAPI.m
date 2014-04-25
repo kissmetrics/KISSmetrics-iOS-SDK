@@ -1,0 +1,637 @@
+//
+// KISSmetricsSDK
+//
+// KISSmetricsAPI.m
+//
+// Copyright 2014 KISSmetrics
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+
+
+#import "KMAMacros.c"
+#import "KISSmetricsAPI.h"
+
+// Define KISSmetricsAPI_options.m default values in case the customer has not opted to use a defaults file.
+// In this case, the customer dev will need to initialize the KISSmetricsAPI with sharedAPIWithKey:(NSString*)
+// in the Application Delegate's didFinishLaunchingWithOptions method.
+NSString *kKMAAPIKey;
+BOOL kKMARecordInstallations;
+BOOL kKMARecordApplicationLifecycle;
+BOOL kKMASetHardwareProperties;
+BOOL kKMASetAppProperties;
+BOOL kKMARecordViewControllerLifecycles;
+
+
+// Import KISSmetricsAPI_options.h only AFTER default options definitions to allow for overwriting of values.
+#import "KISSmetricsAPI_options.h"
+#import "UIDevice+KMAHardware.h"
+#import "KMAArchiver.h"
+#import "KMAVerificationDelegateProtocol.h"
+#import "KMAConnectionDelegateProtocol.h"
+#import "KMAVerification.h"
+#import "KMAConnection.h"
+#import "KMASendingOperations.h"
+#import "KMASendingOperations_NonSendingState.h"
+#import "KMASendingOperations_SendingState.h"
+#import "KMATrackingOperations.h"
+#import "KMATrackingOperations_NonTrackingState.h"
+#import "KMATrackingOperations_TrackingState.h"
+
+
+static NSInteger const kKMAFailsafeMaxVerificationDur = 1209600;
+static KISSmetricsAPI  *sharedAPI = nil;
+static KMAConnection   *_connection;
+static KMAVerification *_verification;
+
+
+@interface KISSmetricsAPI () <KMAVerificationDelegate, KMAConnectionDelegate>
+@end
+
+
+@implementation KISSmetricsAPI
+{
+  @private
+    NSOperationQueue *_dataOpQueue;
+    NSOperationQueue *_connectionOpQueue;
+    id <KMASendingOperations> _sendingOperations;
+    id <KMATrackingOperations> _trackingOperations;
+}
+
+
+
+#pragma mark self initialization methods
+
+//-----
+// load
+//
+// Discussion:
+//
+// Using the load method we can initialize the KISSmetricsAPI singleton prior to application launch.
+// This allows us to attach listeners for application lifecycle events and pickup "applicationDidFinishLaunching"
+// automatically.
+//
+// "In a custom implementation of load you can therefore safely message other
+// unrelated classes from the same image, but any load methods implemented by
+// those classes may not have run yet."
+// http://developer.apple.com/library/Mac/#documentation/Cocoa/Reference/Foundation/Classes/NSObject_Class/Reference/Reference.html
+//
+// So we can message unrelated class, but we should not expect those unrelated
+// classes to have run their load method. Simply don't do any work in the load
+// method of any other KMA SDK classes.
+//---
++ (void)load
+{
+    // Only if an API key has been supplied from the KISSmetricsAPI_options.h file
+    if (kKMAAPIKey != NULL) {
+        // The KISSmetricsAPI will self initialize using this API key
+        [KISSmetricsAPI sharedAPIWithKey:kKMAAPIKey];
+    }
+}
+
+
+
+#pragma mark Singleton Methods
+
++ (KISSmetricsAPI *) sharedAPIWithKey:(NSString *)apiKey
+{
+    @synchronized(self)
+    {
+        if (sharedAPI == nil) {
+            sharedAPI = [[super allocWithZone:NULL] init];
+            [sharedAPI initializeAPIWithKey:apiKey];
+        }
+    }
+    return sharedAPI;
+}
+
+
++ (KISSmetricsAPI *) sharedAPI
+{
+    @synchronized(self)
+    {
+        if (sharedAPI == nil) {
+            KMALog(@"KISSMetricsAPI: WARNING - Returning nil object in sharedAPI as sharedAPIWithKey: has not been called.");
+        }
+    }
+    return sharedAPI;
+}
+
+
++ (id)allocWithZone:(NSZone *)zone
+{
+    return [self sharedAPI];
+}
+
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    return self;
+}
+
+
+- (void) initializeAPIWithKey:(NSString *)apiKey
+{
+    KMALog(@"KISSmetricsAPI: init");
+    KMALog(@"API_KEY = %@", apiKey);
+    
+    [KMAArchiver sharedArchiverWithKey:apiKey];
+        
+    // Initialize the queues
+        
+    // _dataOpQueue:
+    // Handles all forwarded opertions received by the public methods to identify, alias, record, set...
+    // This is so that we don't block the customer application's main thread and halt receipt of gestures,
+    // animations or other main thread operations. Active threads may lock during Archive and Unarchive of the
+    // queue via KMAArchiver .
+    _dataOpQueue = [[NSOperationQueue alloc] init];
+    [_dataOpQueue setMaxConcurrentOperationCount:2];
+    [_dataOpQueue setName:@"KMADataOpQueue"];
+        
+        
+    // _connectionOpQueue
+    // Handles URLRequest attempts. There should only ever be one recursive send occuring at a time, so we limit
+    // this opertion queue to serial execution of operations. Subsequent calls to send will stack up. Once we see
+    // that we've emptied the sendQueue or if the KM server is not responding, we cancelAllOperations on this queue
+    // to prevent numerous unnecessary attempts to empty the sendQueue.
+    _connectionOpQueue = [[NSOperationQueue alloc] init];
+    [_connectionOpQueue setMaxConcurrentOperationCount:1];
+    [_connectionOpQueue setName:@"KMAConnectionOpQueue"];
+        
+    _connection = [[KMAConnection alloc] init];
+        
+        
+    // Set intial SendingOperations state
+    if ([[KMAArchiver sharedArchiver] getDoSend]) {
+        _sendingOperations = [[KMASendingOperations_SendingState alloc] init];
+    }
+    else {
+        _sendingOperations = [[KMASendingOperations_NonSendingState alloc] init];
+    }
+
+    // Set initial TrackingOperations state
+    if ([[KMAArchiver sharedArchiver] getDoTrack]) {
+        _trackingOperations = [[KMATrackingOperations_TrackingState alloc] init];
+    }
+    else {
+        _trackingOperations = [[KMATrackingOperations_NonTrackingState alloc] init];
+    }
+        
+    // Ensure an Install UUID exists
+    if (![[KMAArchiver sharedArchiver] getInstallUuid]) {
+        [[KMAArchiver sharedArchiver] archiveInstallUuid:[self kma_generateID]];
+    }
+        
+    // Ensure an identity exists
+    if (![[KMAArchiver sharedArchiver] getIdentity]) {
+        KMALog(@"KISSmetricsAPI - identity not set");
+        [[KMAArchiver sharedArchiver] archiveFirstIdentity:[self kma_generateID]];
+    }
+        
+    [self kma_verifiyForTracking];
+    
+    // KISSmetricsAPI_options.m defined options constants for automatic tracking
+    if (kKMARecordApplicationLifecycle) {
+        [sharedAPI kma_beginObservingAppLifecycle];
+    }
+    
+    if (kKMASetHardwareProperties) {
+        [sharedAPI autoSetHardwareProperties];
+    }
+    
+    if (kKMASetAppProperties) {
+        [sharedAPI autoSetAppProperties];
+    }
+    
+    if (kKMARecordInstallations) {
+        [sharedAPI autoRecordInstalls];
+    }
+}
+
+
+
+#pragma mark - sharedAPI public methods
+
+- (void)identify:(NSString *)identity
+{
+    [_dataOpQueue addOperation:[_trackingOperations identifyOperationWithIdentity:identity
+                                                                         archiver:[KMAArchiver sharedArchiver]
+                                                                            kmapi:self]];
+}
+
+
+- (NSString *)identity
+{
+    return [[KMAArchiver sharedArchiver] getIdentity];
+}
+
+
+- (void)clearIdentity
+{
+    [_dataOpQueue addOperation:[_trackingOperations clearIdentityOperationWithNewIdentity:[self kma_generateID]
+                                                                                 archiver:[KMAArchiver sharedArchiver]]];
+}
+
+
+- (void)alias:(NSString *)alias withIdentity:(NSString *)identity
+{
+    [_dataOpQueue addOperation:[_trackingOperations aliasOperationWithAlias:alias
+                                                                   identity:identity
+                                                                   archiver:[KMAArchiver sharedArchiver]
+                                                                      kmapi:self]];
+}
+
+
+- (void)record:(NSString *)name
+{
+    [self record:name withProperties:nil];
+}
+
+
+- (void)record:(NSString *)name withProperties:(NSDictionary *)properties
+{
+    [_dataOpQueue addOperation:[_trackingOperations recordOperationWithName:name
+                                                                 properties:properties
+                                                                   archiver:[KMAArchiver sharedArchiver]
+                                                                      kmapi:self]];
+}
+
+
+// Deprecated method for record
+- (void)recordEvent:(NSString *)name withProperties:(NSDictionary *)properties
+{
+    [self record:name withProperties:properties];
+}
+
+
+- (void)recordOnce:(NSString*)name
+{
+    [_dataOpQueue addOperation:[_trackingOperations recordOnceOperationWithName:name
+                                                                       archiver:[KMAArchiver sharedArchiver]
+                                                                          kmapi:self]];
+}
+
+
+- (void)set:(NSDictionary *)properties
+{
+    [_dataOpQueue addOperation:[_trackingOperations setOperationWithProperties:properties
+                                                                      archiver:[KMAArchiver sharedArchiver]
+                                                                         kmapi:self]];
+}
+
+
+// Deprecated method for setProperties
+- (void)setProperties:(NSDictionary *)properties
+{
+    [self set:properties];
+}
+
+
+- (void)setDistinct:(NSObject*)propertyValue forKey:(NSString*)propertyKey
+{
+    [_dataOpQueue addOperation:[_trackingOperations setDistinctOperationWithPropertyValue:propertyValue
+                                                                                   forKey:propertyKey
+                                                                                 archiver:[KMAArchiver sharedArchiver]
+                                                                                    kmapi:self]];
+}
+
+
+- (void)autoRecordInstalls
+{
+    // If no value previously set, this is a new app install on the device.
+    // We expect the keychain value to persist between app install, upgrade and uninstall. 
+    if (![[KMAArchiver sharedArchiver] keychainAppVersion]) {
+        [sharedAPI record:@"Installed App"];
+        [[KMAArchiver sharedArchiver] setKeychainAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    }
+    else {
+        // If the existing value doesn't match the current, this is an update.
+        if (![[[KMAArchiver sharedArchiver] keychainAppVersion] isEqualToString:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]]) {
+            [sharedAPI record:@"Updated App"];
+        }
+    }
+}
+
+
+- (void)autoRecordAppLifecycle
+{
+    // Record application launch now, as it's too late to pick it up via NSNotificationCenter
+    [sharedAPI record:@"Launched App"];
+    [sharedAPI kma_beginObservingAppLifecycle];
+}
+
+
+- (void)autoSetHardwareProperties
+{
+    // Recording 'Device Manufaturer' to keep properties consistent between iOS and other mobile devices/systems
+    [[KISSmetricsAPI sharedAPI] setDistinct:@"Apple" forKey:@"Device Manufacturer"];
+
+    // Device platform (iPhone, iPad)
+    [[KISSmetricsAPI sharedAPI] setDistinct:[[UIDevice currentDevice] model] forKey:@"Device Platform"];
+    
+    // Device model (iPhone 5S, iPhone 5C)
+    [[KISSmetricsAPI sharedAPI] setDistinct:[[UIDevice currentDevice] kmac_platformString] forKey:@"Device Model"];
+    
+    // System Name (iOS)
+    [[KISSmetricsAPI sharedAPI] setDistinct:[[UIDevice currentDevice] systemName] forKey:@"System Name"];
+    
+    // System Version (7.1)
+    [[KISSmetricsAPI sharedAPI] setDistinct:[[UIDevice currentDevice] systemVersion] forKey:@"System Version"];
+}
+
+
+- (void)autoSetAppProperties
+{
+    NSString *build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+    [[KISSmetricsAPI sharedAPI] setDistinct:build forKey:@"App Build"];
+    
+    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    [[KISSmetricsAPI sharedAPI] setDistinct:version forKey:@"App Version"];
+}
+
+
+
+# pragma mark Private methods
+
+- (void)kma_beginObservingAppLifecycle
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(kma_handleLaunch:)
+                                                 name:UIApplicationDidFinishLaunchingNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(kma_handleBackground:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(kma_handleActivity:)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(kma_handleTermination:)
+                                                 name:UIApplicationWillTerminateNotification
+                                               object:nil];
+}
+
+
+- (NSString*)kma_generateID
+{
+    CFUUIDRef theUUID = CFUUIDCreate(NULL);
+    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+    CFRelease(theUUID);
+    return  (NSString *)CFBridgingRelease(string);
+}
+
+
+// Allows for injection of a mock connection.
++ (void)kma_setConnection:(KMAConnection *)connection
+{
+    _connection = connection;
+}
+
+
+// Allows for injection of mock verification.
++ (void)kma_setVerification:(KMAVerification *)verification
+{
+    _verification = verification;
+}
+
+
+// Initializes the default connection if not set.
+// Allows for injection of mock NSURLConnection within KMAConnection via method override.
++ (KMAConnection *)kma_connection
+{
+    if (!_connection) {
+        _connection = [KMAConnection new];
+    }
+    
+    return _connection;
+}
+
+
+// Initializes the default connection if not set.
+// Allows for injection of mock NSURLConnection within KMAConnection via method override.
++ (KMAVerification *)kma_verification
+{
+    if (!_verification) {
+        _verification = [KMAVerification new];
+    }
+    
+    return _verification;
+}
+
+
+// - kma_recursiveSend
+// Private method to attempt to empty the sendQueue running within the _connectionOpQueue.
+// Makes URLRequests for archived records one at a time until the archive queue is empty.
+// Currently this is only called when a new record is added to the archive.
+- (void)kma_recursiveSend
+{
+    // If there's nothing to send... return
+    if ([[KMAArchiver sharedArchiver] getQueueCount] == 0) {
+        // Since we have nothing left to send, we can empty the _connectionOpQueue and prevent any stacked up calls to
+        // recursiveSend from running.
+        @synchronized(_connectionOpQueue)
+        {
+            [_connectionOpQueue cancelAllOperations];
+        }
+        return;
+    }
+    
+    @synchronized(_connectionOpQueue)
+    {
+        [_connectionOpQueue addOperation:[_sendingOperations recursiveSendOperationWithArchiver:[KMAArchiver sharedArchiver]
+                                                                                     connection:_connection
+                                                                             connectionDelegate:self]];
+    }
+}
+
+
+- (void)kma_verifiyForTracking
+{
+    // If not expired
+    if ((NSInteger)[[NSDate date] timeIntervalSince1970] < [[[KMAArchiver sharedArchiver] getVerificationExpDate] intValue]) {
+        return;
+    }
+    
+    // Run verification in background thread
+    [[[NSOperationQueue alloc] init] addOperationWithBlock:^{
+        
+        NSString *installUuid = [[KMAArchiver sharedArchiver] getInstallUuid];
+        [[KISSmetricsAPI kma_verification] verifyTrackingForProductKey:[KMAArchiver sharedArchiver].key
+                                                           installUuid:installUuid
+                                                              delegate:self];
+    }];
+}
+
+
+
+#pragma mark - iOS NSNotification Observer Methods
+
+- (void)kma_handleLaunch:(NSNotification*)note
+{
+    KMALog(@"handleLaunch");
+    [[KISSmetricsAPI sharedAPI] record:@"Launched App"];
+}
+
+- (void)kma_handleBackground:(NSNotification*)note
+{
+    KMALog(@"handleBackground");
+    [[KISSmetricsAPI sharedAPI] record:@"App moved to background"];
+}
+
+- (void)kma_handleActivity:(NSNotification*)note
+{
+    KMALog(@"handleActivity");
+    [[KISSmetricsAPI sharedAPI] record:@"App became active"];
+}
+
+- (void)kma_handleTermination:(NSNotification *)note
+{
+    KMALog(@"handleTermination");
+    [[KISSmetricsAPI sharedAPI] record:@"App terminated"];
+}
+
+
+
+# pragma mark - KMAVerificationDelegate methods
+
+- (void)verificationSuccessful:(BOOL)success
+                       doTrack:(BOOL)doTrack
+                       baseUrl:(NSString*)baseUrl
+                expirationDate:(NSNumber*)expirationDate
+{
+    if (!success) {
+
+        _trackingOperations = [[KMATrackingOperations_TrackingState alloc] init];
+        [[KMAArchiver sharedArchiver] archiveDoTrack:YES];
+        
+        _sendingOperations = [[KMASendingOperations_NonSendingState alloc] init];
+        [[KMAArchiver sharedArchiver] archiveDoSend:NO];
+
+        return;
+    }
+    
+    NSNumber *maxExpiration = @([[NSDate date] timeIntervalSince1970] + kKMAFailsafeMaxVerificationDur);
+    NSNumber *expDate = MIN(expirationDate, maxExpiration);
+    [[KMAArchiver sharedArchiver] archiveVerificationExpDate:expDate];
+    
+    if (!doTrack) {
+        _trackingOperations = [[KMATrackingOperations_NonTrackingState alloc] init];
+        
+        // Clear the send queue. Any archived records will be discarded and not sent.
+        [[KMAArchiver sharedArchiver] clearSendQueue];
+    }
+    else {
+        _trackingOperations = [[KMATrackingOperations_TrackingState alloc] init];
+        
+        // If we should be tracking, then we should should be sending...
+        _sendingOperations = [[KMASendingOperations_SendingState alloc] init];
+        [[KMAArchiver sharedArchiver] archiveDoSend:YES];
+    }
+    
+    [[KMAArchiver sharedArchiver] archiveDoTrack:doTrack];
+    [[KMAArchiver sharedArchiver] archiveBaseUrl:baseUrl];
+}
+
+
+
+# pragma mark - KMAConnectionDelegate methods
+
+- (void)connectionSuccessful:(BOOL)success
+                forUrlString:(NSString*)urlString
+          isMalformedRequest:(BOOL)malformed
+{
+    KMALog(@"KMAConnectionDelegate method was called");
+
+    // If the request was successful or malformed(unusable) we remove it from the queue.
+    if (success || malformed) {
+        [[KMAArchiver sharedArchiver] removeQueryStringAtIndex:0];
+    }
+    
+    if (success) {
+        [self kma_recursiveSend];
+    }
+    else {
+        @synchronized(_connectionOpQueue)
+        {
+            [_connectionOpQueue cancelAllOperations];
+        }
+    }
+}
+
+
+
+#pragma mark Private Unit Testing Helpers
+
+// + sharedAPIInitialized
+//
+// private static method for unit testing the on load self initialization of the SDK.
+// This private method is exposed publicly within a category for testing.
++ (BOOL)uth_sharedAPIInitialized
+{
+    return sharedAPI != nil;
+}
+
+// These empty methods my be swizzled in tests to pick up nsi_recursiveSend activity with tests.
+- (void)uth_testRequestSuccessful{}
+- (void)uth_testRequestReceivedError{}
+- (void)uth_testRequestReceivedUnexpectedStatusCode{}
+
+@end
+
+
+
+#pragma mark KISSMetricsAPI - deprecated
+
+// KISSMetricsAPI is deprecated
+// All methods will forward to KISSmetricsAPI
+@implementation KISSMetricsAPI
+
++ (KISSmetricsAPI *)sharedAPIWithKey:(NSString *)apiKey {
+    return [KISSmetricsAPI sharedAPIWithKey:apiKey];
+}
+
++ (KISSmetricsAPI *)sharedAPI {
+    return [KISSmetricsAPI sharedAPI];
+}
+
+- (void)recordEvent:(NSString *)name withProperties:(NSDictionary *)properties {
+    [[KISSmetricsAPI sharedAPI] record:name withProperties:properties];
+}
+
+- (void)setProperties:(NSDictionary *)properties {
+    [[KISSmetricsAPI sharedAPI] set:properties];
+}
+
+- (void)identify:(NSString *)identity {
+    [[KISSmetricsAPI sharedAPI] identify:identity];
+}
+
+- (NSString *)identity {
+    return [[KISSmetricsAPI sharedAPI] identity];
+}
+
+- (void)clearIdentity {
+    [[KISSmetricsAPI sharedAPI] clearIdentity];
+}
+
+- (void)alias:(NSString *)firstIdentity withIdentity:(NSString *)secondIdentity {
+    [[KISSmetricsAPI sharedAPI] alias:firstIdentity withIdentity:secondIdentity];
+}
+
+
+@end

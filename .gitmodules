@@ -1,0 +1,3 @@
+[submodule "TestFrameworks/MockNSURLConnection"]
+	path = TestFrameworks/MockNSURLConnection
+	url = git@github.com:willrust/MockNSURLConnection.git

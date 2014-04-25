@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>4347BB70-5E8D-4005-9D2B-E0EBBA306829</string>
+	<key>IDESourceControlProjectName</key>
+	<string>KISSmetrics-iOS-SDK</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0BE6AFAF-DCB1-4A72-9B22-E3AFAC6A8AFA</key>
+		<string>ssh://github.com/willrust/MockNSURLConnection.git</string>
+		<key>AA7FB4BF-5400-41A1-A158-7137AF0D9FCE</key>
+		<string>ssh://github.com/kissmetrics/KISSmetrics-iOS-SDK.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>KISSmetrics-iOS-SDK.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0BE6AFAF-DCB1-4A72-9B22-E3AFAC6A8AFA</key>
+		<string>../TestFrameworks/MockNSURLConnection</string>
+		<key>AA7FB4BF-5400-41A1-A158-7137AF0D9FCE</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/kissmetrics/KISSmetrics-iOS-SDK.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>AA7FB4BF-5400-41A1-A158-7137AF0D9FCE</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>AA7FB4BF-5400-41A1-A158-7137AF0D9FCE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>KISSmetrics-iOS-SDK</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0BE6AFAF-DCB1-4A72-9B22-E3AFAC6A8AFA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MockNSURLConnection</string>
+		</dict>
+	</array>
+</dict>
+</plist>
