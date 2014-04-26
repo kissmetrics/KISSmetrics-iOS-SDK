@@ -53,13 +53,7 @@ Building:
 * Select `UniversaliOS Scheme > iOS Device` and `Run`
 
 
-You should find the compiled framework at:
-
-```
-~/Library/Developer/Xcode/DerivedData/KISSmetrics-iOS-SDK-xxxxxxxxxx/Build/Products/KISSmetricsAPI.framework
-```
-
-(Your location will vary slightly)
+You should find the compiled framework `KISSmetricsAPI.framework` in this repo's root dir.
 
 
 32bit and 64bit architectures:
