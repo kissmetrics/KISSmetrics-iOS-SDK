@@ -27,7 +27,7 @@
 // Obj-C doesn't have protected methods.
 // This extension is used to expose the private kma_recursiveSend method.
 @interface KISSmetricsAPI (KMAExposedRecursiveSend)
-- (void)kma_recursiveSend;
+- (void)kma_sendRecords;
 @end
 
 
@@ -43,7 +43,7 @@
         // We need an autoreleasepool for operations run in a background thread.
         @autoreleasepool {
             [archiver archiveIdentity:identity];
-            [kmapi kma_recursiveSend];
+            [kmapi kma_sendRecords];
         }
     }];
     
@@ -76,7 +76,7 @@
         
         @autoreleasepool {
             [archiver archiveAlias:alias withIdentity:identity];
-            [kmapi kma_recursiveSend];
+            [kmapi kma_sendRecords];
         }
     }];
     
@@ -93,7 +93,7 @@
 
         @autoreleasepool {
             [archiver archiveEvent:name withProperties:properties];
-            [kmapi kma_recursiveSend];
+            [kmapi kma_sendRecords];
         }
     }];
     
@@ -109,7 +109,7 @@
         
         @autoreleasepool {
             [archiver archiveEventOnce:name];
-            [kmapi kma_recursiveSend];
+            [kmapi kma_sendRecords];
         }
     }];
     
@@ -125,7 +125,7 @@
         
         @autoreleasepool {
             [archiver archiveProperties:properties];
-            [kmapi kma_recursiveSend];
+            [kmapi kma_sendRecords];
         }
     }];
     
@@ -142,7 +142,7 @@
         
         @autoreleasepool {
             [archiver archiveDistinctProperty:propertyKey value:propertyValue];
-            [kmapi kma_recursiveSend];
+            [kmapi kma_sendRecords];
         }
     }];
     
