@@ -45,8 +45,6 @@
 		AF92FD4E17F9F47800C47A73 /* KMAVCLifecycleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF92FD4D17F9F47800C47A73 /* KMAVCLifecycleTests.m */; };
 		AF9EB3CD17FA39A0002FF023 /* OCMockitoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9EB3CC17FA39A0002FF023 /* OCMockitoIOS.framework */; };
 		AF9EB3CF17FB3DCA002FF023 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9EB3CE17FB3DCA002FF023 /* OCHamcrestIOS.framework */; };
-		AFA648781860C7C3006F48E7 /* KMASendingOperations_NonSendingState.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA648741860C7C3006F48E7 /* KMASendingOperations_NonSendingState.m */; };
-		AFA648791860C7C3006F48E7 /* KMASendingOperations_SendingState.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA648761860C7C3006F48E7 /* KMASendingOperations_SendingState.m */; };
 		AFB99FF9188DA410004CD0AD /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFB99FF7188DA410004CD0AD /* Main_iPad.storyboard */; };
 		AFB99FFA188DA410004CD0AD /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFB99FF8188DA410004CD0AD /* Main_iPhone.storyboard */; };
 		AFCC8DDA17FC917A003691FA /* KMAConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = AFCC8DD817FC9179003691FA /* KMAConnection.m */; };
@@ -130,11 +128,6 @@
 		AF92FD4D17F9F47800C47A73 /* KMAVCLifecycleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMAVCLifecycleTests.m; sourceTree = "<group>"; };
 		AF9EB3CC17FA39A0002FF023 /* OCMockitoIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMockitoIOS.framework; path = ../TestFrameworks/OCMockitoIOS.framework; sourceTree = "<group>"; };
 		AF9EB3CE17FB3DCA002FF023 /* OCHamcrestIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCHamcrestIOS.framework; path = ../TestFrameworks/OCHamcrestIOS.framework; sourceTree = "<group>"; };
-		AFA648731860C7C3006F48E7 /* KMASendingOperations_NonSendingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMASendingOperations_NonSendingState.h; sourceTree = "<group>"; };
-		AFA648741860C7C3006F48E7 /* KMASendingOperations_NonSendingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMASendingOperations_NonSendingState.m; sourceTree = "<group>"; };
-		AFA648751860C7C3006F48E7 /* KMASendingOperations_SendingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMASendingOperations_SendingState.h; sourceTree = "<group>"; };
-		AFA648761860C7C3006F48E7 /* KMASendingOperations_SendingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMASendingOperations_SendingState.m; sourceTree = "<group>"; };
-		AFA648771860C7C3006F48E7 /* KMASendingOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMASendingOperations.h; sourceTree = "<group>"; };
 		AFA6487E1860D2EC006F48E7 /* KMAVerificationDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMAVerificationDelegateProtocol.h; sourceTree = "<group>"; };
 		AFA648811860D356006F48E7 /* KMAConnectionDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMAConnectionDelegateProtocol.h; sourceTree = "<group>"; };
 		AFB99FF7188DA410004CD0AD /* Main_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main_iPad.storyboard; sourceTree = "<group>"; };
@@ -293,11 +286,6 @@
 				AF52BF271860DAB100989978 /* KMATrackingOperations_NonTrackingState.m */,
 				AF3103AB18610AA10030713B /* KMATrackingOperations_TrackingState.h */,
 				AF3103AC18610AA10030713B /* KMATrackingOperations_TrackingState.m */,
-				AFA648771860C7C3006F48E7 /* KMASendingOperations.h */,
-				AFA648731860C7C3006F48E7 /* KMASendingOperations_NonSendingState.h */,
-				AFA648741860C7C3006F48E7 /* KMASendingOperations_NonSendingState.m */,
-				AFA648751860C7C3006F48E7 /* KMASendingOperations_SendingState.h */,
-				AFA648761860C7C3006F48E7 /* KMASendingOperations_SendingState.m */,
 				AF65F4701857B6570075949D /* KMAQueryEncoder.h */,
 				AF65F4711857B6570075949D /* KMAQueryEncoder.m */,
 				AF89B9AA17F9E40500B7E21E /* KMAArchiver.h */,
@@ -466,9 +454,7 @@
 				AF8C79A4180DF213005EF4DD /* UIDevice+KMAHardware.m in Sources */,
 				AF90D6DD1868ABEA00DE1074 /* KISSmetricsAPI_options.m in Sources */,
 				AF89BB0A17F9EA5A00B7E21E /* KISSmetricsAPI.m in Sources */,
-				AFA648791860C7C3006F48E7 /* KMASendingOperations_SendingState.m in Sources */,
 				AFE6D07A1946A06A00A6E074 /* KMASenderDisabledState.m in Sources */,
-				AFA648781860C7C3006F48E7 /* KMASendingOperations_NonSendingState.m in Sources */,
 				AF3103B018610D110030713B /* KMATrackingOperations_TrackingState.m in Sources */,
 				AF8ACA03190B287D00C02B43 /* MockNSURLConnection.m in Sources */,
 				AF52BF2B1860DAB100989978 /* KMATrackingOperations_NonTrackingState.m in Sources */,

@@ -48,13 +48,6 @@
 		AF90D73B1869F9AF00DE1074 /* KMAQueryEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = AF90D7101869F9AF00DE1074 /* KMAQueryEncoder.h */; };
 		AF90D73C1869F9AF00DE1074 /* KMAQueryEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = AF90D7111869F9AF00DE1074 /* KMAQueryEncoder.m */; };
 		AF90D73D1869F9AF00DE1074 /* KMAQueryEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = AF90D7111869F9AF00DE1074 /* KMAQueryEncoder.m */; };
-		AF90D73E1869F9AF00DE1074 /* KMASendingOperations.h in Headers */ = {isa = PBXBuildFile; fileRef = AF90D7121869F9AF00DE1074 /* KMASendingOperations.h */; };
-		AF90D73F1869F9AF00DE1074 /* KMASendingOperations_NonSendingState.h in Headers */ = {isa = PBXBuildFile; fileRef = AF90D7131869F9AF00DE1074 /* KMASendingOperations_NonSendingState.h */; };
-		AF90D7401869F9AF00DE1074 /* KMASendingOperations_NonSendingState.m in Sources */ = {isa = PBXBuildFile; fileRef = AF90D7141869F9AF00DE1074 /* KMASendingOperations_NonSendingState.m */; };
-		AF90D7411869F9AF00DE1074 /* KMASendingOperations_NonSendingState.m in Sources */ = {isa = PBXBuildFile; fileRef = AF90D7141869F9AF00DE1074 /* KMASendingOperations_NonSendingState.m */; };
-		AF90D7421869F9AF00DE1074 /* KMASendingOperations_SendingState.h in Headers */ = {isa = PBXBuildFile; fileRef = AF90D7151869F9AF00DE1074 /* KMASendingOperations_SendingState.h */; };
-		AF90D7431869F9AF00DE1074 /* KMASendingOperations_SendingState.m in Sources */ = {isa = PBXBuildFile; fileRef = AF90D7161869F9AF00DE1074 /* KMASendingOperations_SendingState.m */; };
-		AF90D7441869F9AF00DE1074 /* KMASendingOperations_SendingState.m in Sources */ = {isa = PBXBuildFile; fileRef = AF90D7161869F9AF00DE1074 /* KMASendingOperations_SendingState.m */; };
 		AF90D7451869F9AF00DE1074 /* KMASwizzler.h in Headers */ = {isa = PBXBuildFile; fileRef = AF90D7171869F9AF00DE1074 /* KMASwizzler.h */; };
 		AF90D7461869F9AF00DE1074 /* KMASwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = AF90D7181869F9AF00DE1074 /* KMASwizzler.m */; };
 		AF90D7471869F9AF00DE1074 /* KMASwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = AF90D7181869F9AF00DE1074 /* KMASwizzler.m */; };
@@ -133,11 +126,6 @@
 		AF90D70F1869F9AF00DE1074 /* KMAMacros.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = KMAMacros.c; sourceTree = "<group>"; };
 		AF90D7101869F9AF00DE1074 /* KMAQueryEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMAQueryEncoder.h; sourceTree = "<group>"; };
 		AF90D7111869F9AF00DE1074 /* KMAQueryEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMAQueryEncoder.m; sourceTree = "<group>"; };
-		AF90D7121869F9AF00DE1074 /* KMASendingOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMASendingOperations.h; sourceTree = "<group>"; };
-		AF90D7131869F9AF00DE1074 /* KMASendingOperations_NonSendingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMASendingOperations_NonSendingState.h; sourceTree = "<group>"; };
-		AF90D7141869F9AF00DE1074 /* KMASendingOperations_NonSendingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMASendingOperations_NonSendingState.m; sourceTree = "<group>"; };
-		AF90D7151869F9AF00DE1074 /* KMASendingOperations_SendingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMASendingOperations_SendingState.h; sourceTree = "<group>"; };
-		AF90D7161869F9AF00DE1074 /* KMASendingOperations_SendingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMASendingOperations_SendingState.m; sourceTree = "<group>"; };
 		AF90D7171869F9AF00DE1074 /* KMASwizzler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMASwizzler.h; sourceTree = "<group>"; };
 		AF90D7181869F9AF00DE1074 /* KMASwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMASwizzler.m; sourceTree = "<group>"; };
 		AF90D7191869F9AF00DE1074 /* KMATrackingOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMATrackingOperations.h; sourceTree = "<group>"; };
@@ -247,11 +235,6 @@
 				AFE6D0641946503000A6E074 /* KMASenderSendingState.m */,
 				AFE6D0681946506300A6E074 /* KMASenderDisabledState.h */,
 				AFE6D0691946506300A6E074 /* KMASenderDisabledState.m */,
-				AF90D7121869F9AF00DE1074 /* KMASendingOperations.h */,
-				AF90D7131869F9AF00DE1074 /* KMASendingOperations_NonSendingState.h */,
-				AF90D7141869F9AF00DE1074 /* KMASendingOperations_NonSendingState.m */,
-				AF90D7151869F9AF00DE1074 /* KMASendingOperations_SendingState.h */,
-				AF90D7161869F9AF00DE1074 /* KMASendingOperations_SendingState.m */,
 				AF90D7171869F9AF00DE1074 /* KMASwizzler.h */,
 				AF90D7181869F9AF00DE1074 /* KMASwizzler.m */,
 				AF90D7191869F9AF00DE1074 /* KMATrackingOperations.h */,
@@ -305,13 +288,10 @@
 				AF90D7531869F9AF00DE1074 /* UIDevice+KMAHardware.h in Headers */,
 				AF90D72C1869F9AF00DE1074 /* KMAConnection.h in Headers */,
 				AF90D7491869F9AF00DE1074 /* KMATrackingOperations_NonTrackingState.h in Headers */,
-				AF90D73E1869F9AF00DE1074 /* KMASendingOperations.h in Headers */,
 				AF90D74F1869F9AF00DE1074 /* KMAVerification.h in Headers */,
-				AF90D7421869F9AF00DE1074 /* KMASendingOperations_SendingState.h in Headers */,
 				AF90D74C1869F9AF00DE1074 /* KMATrackingOperations_TrackingState.h in Headers */,
 				AF90D7291869F9AF00DE1074 /* KMAArchiver.h in Headers */,
 				AF90D7561869F9AF00DE1074 /* UIViewController+KMAVCLifecycle.h in Headers */,
-				AF90D73F1869F9AF00DE1074 /* KMASendingOperations_NonSendingState.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,14 +420,12 @@
 				AF90D74E1869F9AF00DE1074 /* KMATrackingOperations_TrackingState.m in Sources */,
 				AF90D7581869F9AF00DE1074 /* UIViewController+KMAVCLifecycle.m in Sources */,
 				AF90D6FC1869F6C000DE1074 /* KMAQueryEncoderTests.m in Sources */,
-				AF90D7441869F9AF00DE1074 /* KMASendingOperations_SendingState.m in Sources */,
 				AF90D6FB1869F6C000DE1074 /* KMADeviceHardwareTests.m in Sources */,
 				AF90D6FE1869F6C000DE1074 /* KMASwizzlerTests.m in Sources */,
 				AFE6D0621946501A00A6E074 /* KMASenderReadyState.m in Sources */,
 				AFE6D05B19464F7F00A6E074 /* KMASender.m in Sources */,
 				AF90D7351869F9AF00DE1074 /* KMAKeychainItemWrapper.m in Sources */,
 				AF90D72E1869F9AF00DE1074 /* KMAConnection.m in Sources */,
-				AF90D7411869F9AF00DE1074 /* KMASendingOperations_NonSendingState.m in Sources */,
 				AFE6D0671946503000A6E074 /* KMASenderSendingState.m in Sources */,
 				AF90D73A1869F9AF00DE1074 /* KMAMacros.c in Sources */,
 				AF90D7271869F9AF00DE1074 /* KISSmetricsAPI.m in Sources */,
@@ -466,10 +444,8 @@
 				AF90D7391869F9AF00DE1074 /* KMAMacros.c in Sources */,
 				AF90D7501869F9AF00DE1074 /* KMAVerification.m in Sources */,
 				AF90D7571869F9AF00DE1074 /* UIViewController+KMAVCLifecycle.m in Sources */,
-				AF90D7431869F9AF00DE1074 /* KMASendingOperations_SendingState.m in Sources */,
 				AF90D7261869F9AF00DE1074 /* KISSmetricsAPI.m in Sources */,
 				AF90D72D1869F9AF00DE1074 /* KMAConnection.m in Sources */,
-				AF90D7401869F9AF00DE1074 /* KMASendingOperations_NonSendingState.m in Sources */,
 				AFE6D06B1946506300A6E074 /* KMASenderDisabledState.m in Sources */,
 				AF90D72A1869F9AF00DE1074 /* KMAArchiver.m in Sources */,
 				AF90D7341869F9AF00DE1074 /* KMAKeychainItemWrapper.m in Sources */,
