@@ -51,17 +51,23 @@
 #pragma mark - Forwarded methods
 - (void)startSending
 {
-    [self.state startSending];
+    @synchronized(self) {
+        [self.state startSending];
+    }
 }
 
 - (void)disableSending
 {
-    [self.state disableSending];
+    @synchronized(self) {
+        [self.state disableSending];
+    }
 }
 
 - (void)enableSending
 {
-    [self.state enableSending];
+    @synchronized(self) {
+        [self.state enableSending];
+    }
 }
 
 
@@ -70,9 +76,11 @@
                 forUrlString:(NSString *)urlString
           isMalformedRequest:(BOOL)malformed
 {
-    [self.state connectionSuccessful:success
-                        forUrlString:urlString
-                  isMalformedRequest:malformed];
+    @synchronized(self) {
+        [self.state connectionSuccessful:success
+                            forUrlString:urlString
+                      isMalformedRequest:malformed];
+    }
 }
 
 @end
