@@ -370,6 +370,7 @@
 				AF89B98817F9E08500B7E21E /* Sources */,
 				AF89B98917F9E08500B7E21E /* Frameworks */,
 				AF89B98A17F9E08500B7E21E /* Resources */,
+				AFABD23D1948C9ED00178C77 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -438,6 +439,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AFABD23D1948C9ED00178C77 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "codesign --verify --force --sign \"$CODE_SIGN_IDENTITY\" \"$CODESIGNING_FOLDER_PATH\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AF89B96417F9E08500B7E21E /* Sources */ = {

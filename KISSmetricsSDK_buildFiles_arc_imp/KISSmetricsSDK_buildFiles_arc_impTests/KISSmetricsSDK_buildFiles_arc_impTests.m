@@ -303,7 +303,7 @@
     
     // The nsi_recursiveSend does not return or callback on completion.
     // We expect this opertion to complete within 5 seconds.
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:5]];
     
     [MockNSURLConnection stopStubbing];
 
