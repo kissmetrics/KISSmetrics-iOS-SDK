@@ -38,12 +38,8 @@ BOOL kKMARecordViewControllerLifecycles;
 #import "UIDevice+KMAHardware.h"
 #import "KMAArchiver.h"
 #import "KMAVerificationDelegateProtocol.h"
-#import "KMAConnectionDelegateProtocol.h"
 #import "KMAVerification.h"
-#import "KMAConnection.h"
-#import "KMASendingOperations.h"
-#import "KMASendingOperations_NonSendingState.h"
-#import "KMASendingOperations_SendingState.h"
+#import "KMASender.h"
 #import "KMATrackingOperations.h"
 #import "KMATrackingOperations_NonTrackingState.h"
 #import "KMATrackingOperations_TrackingState.h"
@@ -51,11 +47,10 @@ BOOL kKMARecordViewControllerLifecycles;
 
 static NSInteger const kKMAFailsafeMaxVerificationDur = 1209600;
 static KISSmetricsAPI  *sharedAPI = nil;
-static KMAConnection   *_connection;
 static KMAVerification *_verification;
 
 
-@interface KISSmetricsAPI () <KMAVerificationDelegate, KMAConnectionDelegate>
+@interface KISSmetricsAPI () <KMAVerificationDelegate>
 @end
 
 
@@ -63,8 +58,7 @@ static KMAVerification *_verification;
 {
   @private
     NSOperationQueue *_dataOpQueue;
-    NSOperationQueue *_connectionOpQueue;
-    id <KMASendingOperations> _sendingOperations;
+    KMASender *_sender;
     id <KMATrackingOperations> _trackingOperations;
 }
 
@@ -157,27 +151,8 @@ static KMAVerification *_verification;
     _dataOpQueue = [[NSOperationQueue alloc] init];
     [_dataOpQueue setMaxConcurrentOperationCount:2];
     [_dataOpQueue setName:@"KMADataOpQueue"];
-        
-        
-    // _connectionOpQueue
-    // Handles URLRequest attempts. There should only ever be one recursive send occuring at a time, so we limit
-    // this opertion queue to serial execution of operations. Subsequent calls to send will stack up. Once we see
-    // that we've emptied the sendQueue or if the KM server is not responding, we cancelAllOperations on this queue
-    // to prevent numerous unnecessary attempts to empty the sendQueue.
-    _connectionOpQueue = [[NSOperationQueue alloc] init];
-    [_connectionOpQueue setMaxConcurrentOperationCount:1];
-    [_connectionOpQueue setName:@"KMAConnectionOpQueue"];
-        
-    _connection = [[KMAConnection alloc] init];
-        
-        
-    // Set intial SendingOperations state
-    if ([[KMAArchiver sharedArchiver] getDoSend]) {
-        _sendingOperations = [[KMASendingOperations_SendingState alloc] init];
-    }
-    else {
-        _sendingOperations = [[KMASendingOperations_NonSendingState alloc] init];
-    }
+    
+    _sender = [[KMASender alloc] initDisabled:![[KMAArchiver sharedArchiver] getDoSend]];
 
     // Set initial TrackingOperations state
     if ([[KMAArchiver sharedArchiver] getDoTrack]) {
@@ -396,29 +371,10 @@ static KMAVerification *_verification;
 }
 
 
-// Allows for injection of a mock connection.
-+ (void)kma_setConnection:(KMAConnection *)connection
-{
-    _connection = connection;
-}
-
-
 // Allows for injection of mock verification.
 + (void)kma_setVerification:(KMAVerification *)verification
 {
     _verification = verification;
-}
-
-
-// Initializes the default connection if not set.
-// Allows for injection of mock NSURLConnection within KMAConnection via method override.
-+ (KMAConnection *)kma_connection
-{
-    if (!_connection) {
-        _connection = [KMAConnection new];
-    }
-    
-    return _connection;
 }
 
 
@@ -434,29 +390,9 @@ static KMAVerification *_verification;
 }
 
 
-// - kma_recursiveSend
-// Private method to attempt to empty the sendQueue running within the _connectionOpQueue.
-// Makes URLRequests for archived records one at a time until the archive queue is empty.
-// Currently this is only called when a new record is added to the archive.
-- (void)kma_recursiveSend
+- (void)kma_sendRecords
 {
-    // If there's nothing to send... return
-    if ([[KMAArchiver sharedArchiver] getQueueCount] == 0) {
-        // Since we have nothing left to send, we can empty the _connectionOpQueue and prevent any stacked up calls to
-        // recursiveSend from running.
-        @synchronized(_connectionOpQueue)
-        {
-            [_connectionOpQueue cancelAllOperations];
-        }
-        return;
-    }
-    
-    @synchronized(_connectionOpQueue)
-    {
-        [_connectionOpQueue addOperation:[_sendingOperations recursiveSendOperationWithArchiver:[KMAArchiver sharedArchiver]
-                                                                                     connection:_connection
-                                                                             connectionDelegate:self]];
-    }
+    [_sender startSending];
 }
 
 
@@ -519,7 +455,7 @@ static KMAVerification *_verification;
         _trackingOperations = [[KMATrackingOperations_TrackingState alloc] init];
         [[KMAArchiver sharedArchiver] archiveDoTrack:YES];
         
-        _sendingOperations = [[KMASendingOperations_NonSendingState alloc] init];
+        [_sender disableSending];
         [[KMAArchiver sharedArchiver] archiveDoSend:NO];
 
         return;
@@ -539,38 +475,12 @@ static KMAVerification *_verification;
         _trackingOperations = [[KMATrackingOperations_TrackingState alloc] init];
         
         // If we should be tracking, then we should should be sending...
-        _sendingOperations = [[KMASendingOperations_SendingState alloc] init];
+        [_sender enableSending];
         [[KMAArchiver sharedArchiver] archiveDoSend:YES];
     }
     
     [[KMAArchiver sharedArchiver] archiveDoTrack:doTrack];
     [[KMAArchiver sharedArchiver] archiveBaseUrl:baseUrl];
-}
-
-
-
-# pragma mark - KMAConnectionDelegate methods
-
-- (void)connectionSuccessful:(BOOL)success
-                forUrlString:(NSString*)urlString
-          isMalformedRequest:(BOOL)malformed
-{
-    KMALog(@"KMAConnectionDelegate method was called");
-
-    // If the request was successful or malformed(unusable) we remove it from the queue.
-    if (success || malformed) {
-        [[KMAArchiver sharedArchiver] removeQueryStringAtIndex:0];
-    }
-    
-    if (success) {
-        [self kma_recursiveSend];
-    }
-    else {
-        @synchronized(_connectionOpQueue)
-        {
-            [_connectionOpQueue cancelAllOperations];
-        }
-    }
 }
 
 

@@ -278,6 +278,74 @@
 }
 
 
+- (void)testStressfulRecordsToKM
+{
+    // Ensure that we begin with an empty queue
+    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)0, @"Begins with an emtpy archive");
+    
+    [MockNSURLConnection beginStubbing];
+    
+    [MockNSURLConnection stubEveryResponseStatus:200 body:@""];
+
+    dispatch_async(dispatch_queue_create("com.kissmetrics.stress1", 0), ^{
+        for (int i=0; i<100; i++) {
+            NSString *record = [NSString stringWithFormat:@"passingURLResponseTestThread1_%i", i];
+            [[KISSmetricsAPI sharedAPI] record:record];
+        }
+    });
+    
+    dispatch_async(dispatch_queue_create("com.kissmetrics.stress2", 0), ^{
+        for (int i=0; i<100; i++) {
+            NSString *record = [NSString stringWithFormat:@"passingURLResponseTestThread2_%i", i];\
+            [[KISSmetricsAPI sharedAPI] record:record];
+        }
+    });
+    
+    // The nsi_recursiveSend does not return or callback on completion.
+    // We expect this opertion to complete within 5 seconds.
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:5]];
+    
+    [MockNSURLConnection stopStubbing];
+
+    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)0, @"Removes successfully uploaded records fom the archives sendQueue");
+}
+
+
+- (void)testEmptyQueuePlacesSenderInReadyState
+{
+    // Ensure that we begin with an empty queue
+    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)0, @"Begins with an emtpy archive");
+    
+    [MockNSURLConnection beginStubbing];
+    
+    [MockNSURLConnection stubEveryResponseStatus:200 body:@""];
+    
+    // Send 10 records
+    for (int i=0; i<10; i++) {
+        NSString *record = [NSString stringWithFormat:@"passingURLResponseTestSender1_%i", i];
+        [[KISSmetricsAPI sharedAPI] record:record];
+    }
+    
+    // Allow the queue to empty
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
+    
+    // Send another 10 records.
+    // If Sender is not in the ready state, these will not be sent
+    for (int i=0; i<10; i++) {
+        NSString *record = [NSString stringWithFormat:@"passingURLResponseTestSender2_%i", i];
+        [[KISSmetricsAPI sharedAPI] record:record];
+    }
+    
+    // The nsi_recursiveSend does not return or callback on completion.
+    // We expect this opertion to complete within 5 seconds.
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];
+    
+    [MockNSURLConnection stopStubbing];
+    
+    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)0, @"Removes successfully uploaded records fom the archives sendQueue");
+}
+
+
 - (void)testRemovesRecordsWithBadURLs
 {
     int testRecordCount = 1;
