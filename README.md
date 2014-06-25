@@ -27,8 +27,11 @@ Import the API class in your AppDelegate and in any classes where you'll be trac
 Initialization:
 ---------------
 Manual: (Required if ``KISSmetricsAPI_options.m`` is not used)
-At the top of the application delegate's didFinishLaunchingWithOptions method, add
+At the top of the application delegate's ``didFinishLaunchingWithOptions`` method, add:
+
+```objective-c
 [KISSmetricsAPI sharedAPIWithKey:@"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"];
+```
 
 Automatic: (Requires ``KISSmetricsAPI_options.m``)
 The customer's settings, including their API key, will live in ``KISSmetricsAPI_options.m``
