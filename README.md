@@ -13,10 +13,16 @@ Framework project setup:
 Setting up a framework project requires several steps and may change from one version of Xcode to the next. Rather than listing all the steps here, please refer to this tutorial: http://blog.db-in.com/universal-framework-for-ios/
 
 
+Inclusion:
+----------
+Import the API class in your AppDelegate and in any classes where you'll be tracking from. 
+``#import <KISSmetricsSDK/KISSmetricsAPI.h>``
+
+
 Initialization:
 ---------------
 Manual: (Required if ``KISSmetricsAPI_options.m`` is not used)
-At the top of the application delegate's didFinishLaunching method, add
+At the top of the application delegate's didFinishLaunchingWithOptions method, add
 [KISSmetricsAPI sharedAPIWithKey:@"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"];
 
 Automatic: (Requires ``KISSmetricsAPI_options.m``)
