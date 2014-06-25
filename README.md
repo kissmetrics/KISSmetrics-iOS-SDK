@@ -20,8 +20,11 @@ Add ``pod 'KISSmetrics-iOS-SDK'`` to your Podfile.
 
 Inclusion:
 ----------
-Import the API class in your AppDelegate and in any classes where you'll be tracking from. 
-``#import <KISSmetricsSDK/KISSmetricsAPI.h>``
+Import the API class in your AppDelegate and in any classes where you'll be tracking from: 
+
+```objective-c
+#import <KISSmetricsSDK/KISSmetricsAPI.h>
+```
 
 
 Initialization:
