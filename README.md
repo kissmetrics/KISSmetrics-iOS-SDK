@@ -13,6 +13,11 @@ Framework project setup:
 Setting up a framework project requires several steps and may change from one version of Xcode to the next. Rather than listing all the steps here, please refer to this tutorial: http://blog.db-in.com/universal-framework-for-ios/
 
 
+CocoaPods:
+----------
+Add ``pod 'KISSmetrics-iOS-SDK'`` to your Podfile.
+
+
 Inclusion:
 ----------
 Import the API class in your AppDelegate and in any classes where you'll be tracking from. 
