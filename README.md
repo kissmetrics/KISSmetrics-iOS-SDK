@@ -5,7 +5,7 @@ KISSmetrics-iOS-SDK
 This workspace contains the source files that build the SDK as a framework (``KISSmetricsSDK.framework``) and the required public interface (``KISSmetricsAPI.h``). The source files included here are not intended to be used directly in your app.
 
 
-For implementation details please see: http://support.kissmetrics.com/apis/ios-v2/
+For implementation details please see: http://support.kissmetrics.com/apis/ios-v2
 
 
 Framework project setup:
