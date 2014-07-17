@@ -24,7 +24,7 @@
 @interface KISSmetricsAPI : NSObject
 
 
-//------------
+//-------------------
 // + sharedAPIWithKey
 //
 // Return Value:
@@ -34,6 +34,7 @@
 // You are required to call this method if your project DOES NOT include the KISSmetricsAPI_options.m file.
 // If your project does include KISSmetricsAPI_options.m, the API key defined in your options will be used and calls to
 // this method will be ignored.
+//---
 + (KISSmetricsAPI *) sharedAPIWithKey:(NSString *)apiKey;
 
 
@@ -46,7 +47,7 @@
 //
 // Discussion:
 // Returns the singleton instance of KISSmetricsAPI
-//
+//---
 + (KISSmetricsAPI *)sharedAPI;
 
 
@@ -67,16 +68,17 @@
 
 
 
-//-------------
+//-----------
 // - identity
 //
 // Discussion:
 // Returns the last set identity
+//---
 - (NSString*)identity;
 
 
 
-// ---------------
+//----------------
 // - clearIdentity
 //
 // Clears the last set identity.
@@ -151,11 +153,12 @@
 
 
 
-// ----------
+//------------
 // recordOnce:
 //
 // Records an event only once per identity, per installation of an application
 // If an identity is cleared via clearIdentity, these events may again be recorded once for the next identity.
+//---
 - (void)recordOnce:(NSString*)name;
 
 
@@ -190,18 +193,18 @@
 
 
 
-// ---------------------
+//---------------------
 // setDistinct: forKey:
 //
 // Sets one property on a user per identity only if the provided value is different
 // than the previously set value or if a value has not yet been set for the property. If an identity is
 // cleared via clearIdentity, these properties may again be set for the next identity.
-// ---
+//---
 - (void)setDistinct:(NSObject*)propertyValue forKey:(NSString*)propertyKey;
 
 
 
-// ----------------------
+//-----------------------
 // autoRecordAppLifecycle
 //
 // Automatically records the following events
@@ -209,21 +212,23 @@
 // "Application moved to background"
 // "Application became active"
 // "Application Terminated"
+//---
 - (void)autoRecordAppLifecycle;
 
 
 
-// ------------------
+//-------------------
 // autoRecordInstalls
 //
 // Automatically records the following events
 // "Installed App"
 // "Updated App"
+//---
 - (void)autoRecordInstalls;
 
 
 
-// -------------------------
+//--------------------------
 // autoSetHardwareProperties
 //
 // Automatically collects and sets the following hardware properties as distinct properties:
@@ -231,16 +236,18 @@
 // "Device Model" : (iPhone 5S, iPhone 5C)
 // "System Name" : (iOS)
 // "System Version" : (7.1)
+//---
 - (void)autoSetHardwareProperties;
 
 
 
-// --------------------
+//---------------------
 // autoSetAppProperties
 //
 // Automatically collects and sets the following applcation properties as distinct properties:
 // "App Version" : (1.0)
 // "App Build" : (1.0)
+//---
 - (void)autoSetAppProperties;
 
 
