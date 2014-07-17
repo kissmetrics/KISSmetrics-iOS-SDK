@@ -154,7 +154,7 @@
 
 
 //------------
-// recordOnce:
+// - recordOnce:
 //
 // Records an event only once per identity, per installation of an application
 // If an identity is cleared via clearIdentity, these events may again be recorded once for the next identity.
@@ -164,7 +164,7 @@
 
 
 //-----
-// set:
+// - set:
 //
 // Sets one or more properties on a user.
 //
@@ -194,7 +194,7 @@
 
 
 //---------------------
-// setDistinct: forKey:
+// - setDistinct: forKey:
 //
 // Sets one property on a user per identity only if the provided value is different
 // than the previously set value or if a value has not yet been set for the property. If an identity is
@@ -205,7 +205,7 @@
 
 
 //-----------------------
-// autoRecordAppLifecycle
+// - autoRecordAppLifecycle
 //
 // Automatically records the following events
 // "Launched Application"
@@ -218,7 +218,7 @@
 
 
 //-------------------
-// autoRecordInstalls
+// - autoRecordInstalls
 //
 // Automatically records the following events
 // "Installed App"
@@ -229,7 +229,7 @@
 
 
 //--------------------------
-// autoSetHardwareProperties
+// - autoSetHardwareProperties
 //
 // Automatically collects and sets the following hardware properties as distinct properties:
 // "Device Platform" : (iPhone, iPad)
@@ -242,7 +242,7 @@
 
 
 //---------------------
-// autoSetAppProperties
+// - autoSetAppProperties
 //
 // Automatically collects and sets the following applcation properties as distinct properties:
 // "App Version" : (1.0)
