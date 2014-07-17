@@ -166,7 +166,7 @@ typedef NS_ENUM(NSInteger, KMSRecordCondition) {
 // Using KMSOncePerId - The event will only be recorded once until the identity changes or is cleared via clearIdentity.
 // Using KMSOncePerInstall - The event will only be recorded once during the lifetime of the application's installation.
 //---
-- (void)record:(NSString *)eventName onCondition:(KMSRecordCondition);
+- (void)record:(NSString *)eventName onCondition:(KMSRecordCondition)condition;
 
 
 
