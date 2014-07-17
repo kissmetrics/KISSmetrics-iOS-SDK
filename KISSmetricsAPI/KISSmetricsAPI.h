@@ -22,8 +22,9 @@
 #import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, KMSRecordCondition) {
-    KMSOncePerInstall,
-    KMSOncePerIdentity
+    KMSRecordAlways,
+    KMSRecordOncePerInstall,
+    KMSRecordOncePerIdentity
 };
 
 
@@ -163,8 +164,10 @@ typedef NS_ENUM(NSInteger, KMSRecordCondition) {
 // - record: onCondition:
 //
 // Records an event per identity or install depending on the KMSRecordCondition that's passed.
-// Using KMSOncePerId - The event will only be recorded once until the identity changes or is cleared via clearIdentity.
-// Using KMSOncePerInstall - The event will only be recorded once during the lifetime of the application's installation.
+// Using KMSRecordOncePerInstall - The event will only be recorded once during the lifetime of the application's
+// installation.
+// Using KMSRecordOncePerIdentity - The event will only be recorded once until the identity changes or is cleared via
+// clearIdentity.
 //---
 - (void)record:(NSString *)eventName onCondition:(KMSRecordCondition)condition;
 
