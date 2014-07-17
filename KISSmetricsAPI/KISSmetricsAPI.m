@@ -227,15 +227,15 @@ static KMAVerification *_verification;
 }
 
 
-- (void)record:(NSString *)name
+- (void)record:(NSString *)eventName
 {
-    [self record:name withProperties:nil];
+    [self record:eventName withProperties:nil];
 }
 
 
-- (void)record:(NSString *)name withProperties:(NSDictionary *)properties
+- (void)record:(NSString *)eventName withProperties:(NSDictionary *)properties
 {
-    [_dataOpQueue addOperation:[_trackingOperations recordOperationWithName:name
+    [_dataOpQueue addOperation:[_trackingOperations recordOperationWithName:eventName
                                                                  properties:properties
                                                                    archiver:[KMAArchiver sharedArchiver]
                                                                       kmapi:self]];
@@ -243,15 +243,15 @@ static KMAVerification *_verification;
 
 
 // Deprecated method for record
-- (void)recordEvent:(NSString *)name withProperties:(NSDictionary *)properties
+- (void)recordEvent:(NSString *)eventName withProperties:(NSDictionary *)properties
 {
-    [self record:name withProperties:properties];
+    [self record:eventName withProperties:properties];
 }
 
 
-- (void)recordOnce:(NSString*)name
+- (void)recordOnce:(NSString*)eventName
 {
-    [_dataOpQueue addOperation:[_trackingOperations recordOnceOperationWithName:name
+    [_dataOpQueue addOperation:[_trackingOperations recordOnceOperationWithName:eventName
                                                                        archiver:[KMAArchiver sharedArchiver]
                                                                           kmapi:self]];
 }
@@ -519,8 +519,8 @@ static KMAVerification *_verification;
     return [KISSmetricsAPI sharedAPI];
 }
 
-- (void)recordEvent:(NSString *)name withProperties:(NSDictionary *)properties {
-    [[KISSmetricsAPI sharedAPI] record:name withProperties:properties];
+- (void)recordEvent:(NSString *)eventName withProperties:(NSDictionary *)properties {
+    [[KISSmetricsAPI sharedAPI] record:eventName withProperties:properties];
 }
 
 - (void)setProperties:(NSDictionary *)properties {
