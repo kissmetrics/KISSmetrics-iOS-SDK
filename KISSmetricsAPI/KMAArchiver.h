@@ -45,7 +45,7 @@
 - (void)archiveAlias:(NSString *)firstIdentity withIdentity:(NSString *)secondIdentity;
 
 - (void)clearSendQueue;
-- (void)clearSavedEvents;
+- (void)clearSavedIdEvents;
 - (void)clearSavedProperties;
 - (NSString *)getQueryStringAtIndex:(NSInteger)index;
 - (void)removeQueryStringAtIndex:(NSInteger)index;

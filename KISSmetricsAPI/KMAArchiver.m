@@ -51,13 +51,13 @@ static KMAArchiver *sSharedArchiver = nil;
   @property (nonatomic, strong) NSURL *actionsUrl;
   @property (nonatomic, strong) NSURL *identityUrl;
   @property (nonatomic, strong) NSURL *settingsUrl;
-  @property (nonatomic, strong) NSURL *savedEventsUrl;
+  @property (nonatomic, strong) NSURL *savedIdEventsUrl;
   @property (nonatomic, strong) NSURL *savedPropertiesUrl;
   @property (nonatomic, strong) KMAQueryEncoder *queryEncoder;
   @property (nonatomic, strong) NSMutableArray *sendQueue;
   @property (nonatomic, strong) NSString *identity;
   @property (nonatomic, strong) NSMutableDictionary *settings;
-  @property (nonatomic, strong) NSMutableArray *savedEvents;
+  @property (nonatomic, strong) NSMutableArray *savedIdEvents;
   @property (nonatomic, strong) NSMutableDictionary *savedProperties;
 
 
@@ -75,8 +75,8 @@ static KMAArchiver *sSharedArchiver = nil;
 
   - (void)kma_unarchiveIdentity;
 
-  - (void)kma_unarchiveSavedEvents;
-  - (void)kma_archiveSavedEvents;
+  - (void)kma_unarchiveSavedIdEvents;
+  - (void)kma_archiveSavedIdEvents;
 
   - (void)kma_unarchiveSavedProperties;
   - (void)kma_archiveSavedProperties;
@@ -151,7 +151,7 @@ static KMAArchiver *sSharedArchiver = nil;
         
         [self kma_unarchiveIdentity];
         [self kma_unarchiveSendQueue];
-        [self kma_unarchiveSavedEvents];
+        [self kma_unarchiveSavedIdEvents];
         [self kma_unarchiveSavedProperties];
         
         [self keychainAppVersion];
@@ -222,7 +222,7 @@ static KMAArchiver *sSharedArchiver = nil;
     self.actionsUrl = [self kma_libraryUrlWithPathComponent:@"KISSmetrics/actions.kma"];
     self.identityUrl = [self kma_libraryUrlWithPathComponent:@"KISSmetrics/identity.kma"];
     self.settingsUrl = [self kma_libraryUrlWithPathComponent:@"KISSmetrics/settings.kma"];
-    self.savedEventsUrl = [self kma_libraryUrlWithPathComponent:@"KISSmetrics/savedEvents.kma"];
+    self.savedIdEventsUrl = [self kma_libraryUrlWithPathComponent:@"KISSmetrics/savedEvents.kma"];
     self.savedPropertiesUrl = [self kma_libraryUrlWithPathComponent:@"KISSmetrics/savedProperties.kma"];
 }
 
@@ -349,13 +349,13 @@ static KMAArchiver *sSharedArchiver = nil;
 }
 
 
-// Replaces _savedEvents with a new(empty) Array
-- (void)clearSavedEvents
+// Replaces _savedIdEvents with a new(empty) Array
+- (void)clearSavedIdEvents
 {
     @synchronized(self)
     {
-        self.savedEvents = [NSMutableArray array];
-        [self kma_archiveSavedEvents];
+        self.savedIdEvents = [NSMutableArray array];
+        [self kma_archiveSavedIdEvents];
     }
 }
 
@@ -435,22 +435,66 @@ static KMAArchiver *sSharedArchiver = nil;
 
 - (void)archiveEvent:(NSString *)name withProperties:(NSDictionary *)properties onCondition:(KMARecordCondition)condition
 {
-    KMALog(@"KMAArchiver archiveEvent");
+    KMALog(@"KMAArchiver archiveEvent withProperties onCondition");
     
     if (name == nil || [name length] == 0) {
         KMALog(@"KISSmetricsAPI - !WARNING! - Tried to record event with empty or nil name. Ignoring.");
         return;
     }
     
+    switch (condition) {
+        case KMARecordAlways:
+
+            // Nothing else to check, continue with archiving the event.
+            [self archiveEvent:name withProperties:properties];
+            
+            break;
+                
+        case KMARecordOncePerIdentity:
+            
+            @synchronized(self)
+            {
+                if ([self.savedIdEvents containsObject:name]) {
+                    return;
+                }
+                else {
+                    [self.savedIdEvents addObject:name];
+                    [self kma_archiveSavedIdEvents];
+                }
+            }
+            
+            // Intentionally called outside of @synchronized, method is already synchronized
+            [self archiveEvent:name withProperties:properties];
+            
+            break;
+                
+        case KMARecordOncePerInstall:
+
+                
+            break;
+        
+        default:
+            
+            [self archiveEvent:name withProperties:properties];
+            
+            break;
+    }
+}
+
+
+- (void)archiveEvent:(NSString *)name withProperties:(NSDictionary *)properties
+{
+    KMALog(@"KMAArchiver archiveEvent withProperties");
+    
     @synchronized(self)
     {
         // We'll store and use the actual time of the record event in case of disconnected operation.
         int actualTimeOfEvent = (int)[[NSDate date] timeIntervalSince1970];
-
+        
         NSString *theUrl = [self.queryEncoder createEventQueryWithName:name
-                                                             properties:properties
-                                                               identity:self.identity
-                                                              timestamp:actualTimeOfEvent];
+                                                            properties:properties
+                                                              identity:self.identity
+                                                             timestamp:actualTimeOfEvent];
         // Queue up call
         [self.sendQueue addObject:theUrl];
         
@@ -458,6 +502,7 @@ static KMAArchiver *sSharedArchiver = nil;
         [self kma_archiveSendQueue];
     }
 }
+
 
 
 - (void)archiveProperties:(NSDictionary *)properties
@@ -510,7 +555,7 @@ static KMAArchiver *sSharedArchiver = nil;
         else {
             // This is expected to be an entirely different user.
             // Clear saved Events and Properties just as we would when clearing an Identity
-            [self clearSavedEvents];
+            [self clearSavedIdEvents];
             [self clearSavedProperties];
         }
     }
@@ -684,21 +729,21 @@ static KMAArchiver *sSharedArchiver = nil;
 }
 
 
-- (void)kma_archiveSavedEvents
+- (void)kma_archiveSavedIdEvents
 {
     // Not @synch'ed as should always be called inside @sync bloc
-    if (![NSKeyedArchiver archiveRootObject:self.savedEvents toFile:self.savedEventsUrl.path]) {
-        KMALog(@"KISSmetricsAPI - !WARNING! - Unable to archive savedEvents!");
+    if (![NSKeyedArchiver archiveRootObject:self.savedIdEvents toFile:self.savedIdEventsUrl.path]) {
+        KMALog(@"KISSmetricsAPI - !WARNING! - Unable to archive savedIdEvents!");
     }
 }
 
 
-- (void)kma_unarchiveSavedEvents
+- (void)kma_unarchiveSavedIdEvents
 {
     // Not @synch'ed as should always be called inside @sync bloc
-    self.savedEvents = [NSKeyedUnarchiver unarchiveObjectWithFile:self.savedEventsUrl.path];
-    if (!self.savedEvents) {
-        self.savedEvents = [NSMutableArray array];
+    self.savedIdEvents = [NSKeyedUnarchiver unarchiveObjectWithFile:self.savedIdEventsUrl.path];
+    if (!self.savedIdEvents) {
+        self.savedIdEvents = [NSMutableArray array];
     }
 }
 
@@ -795,8 +840,8 @@ static KMAArchiver *sSharedArchiver = nil;
 }
 
 
-- (NSMutableArray *)uth_getSavedEvents {
-    return self.savedEvents;
+- (NSMutableArray *)uth_getSavedIdEvents {
+    return self.savedIdEvents;
 }
 
 

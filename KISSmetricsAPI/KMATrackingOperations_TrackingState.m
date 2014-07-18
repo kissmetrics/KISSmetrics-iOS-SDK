@@ -58,7 +58,7 @@
         
         @autoreleasepool {
             [archiver archiveFirstIdentity:newIdentity];
-            [archiver clearSavedEvents];
+            [archiver clearSavedIdEvents];
             [archiver clearSavedProperties];
         }
     }];
