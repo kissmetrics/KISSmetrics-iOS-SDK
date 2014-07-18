@@ -860,21 +860,21 @@ static KMAArchiver *sSharedArchiver = nil;
     }
 }
 
-
 - (NSMutableArray *)uth_getSendQueue {
     return self.sendQueue;
 }
-
 
 - (NSMutableDictionary *)uth_getSettings {
     return self.settings;
 }
 
-
 - (NSMutableArray *)uth_getSavedIdEvents {
     return self.savedIdEvents;
 }
 
+- (NSMutableArray *)uth_getSavedInstallEvents {
+    return self.savedInstallEvents;
+}
 
 - (NSMutableDictionary *)uth_getSavedProperties {
     return self.savedProperties;

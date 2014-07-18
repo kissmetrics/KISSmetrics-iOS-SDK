@@ -366,7 +366,7 @@
     NSString *expectedRecord = [_queryEncoder createEventQueryWithName:eventNameString properties:nil identity:userNameString timestamp:timestamp];
     
     // User archiveRecord to create a similar record. (timestamp may not match expected record)
-    [[KMAArchiver sharedArchiver] archiveEvent:eventNameString withProperties:nil];
+    [[KMAArchiver sharedArchiver] archiveEvent:eventNameString withProperties:nil onCondition:KMARecordAlways];
     
     // !!!: The timestamp of archiveRecord and the expectedRecord may not match.
     // If this is a frequent result we should remove the &t=xxxxxxxxx from
@@ -392,7 +392,7 @@
     
     
     // User archiveRecord to create a similar record. (timestamp may not match expected record)
-    [[KMAArchiver sharedArchiver] archiveEvent:eventNameString withProperties:propertiesDictionary];
+    [[KMAArchiver sharedArchiver] archiveEvent:eventNameString withProperties:propertiesDictionary onCondition:KMARecordAlways];
     
     // !!!: The timestamp of archiveRecord and the expectedRecord may not match.
     // If this is a frequent result we should remove the &t=xxxxxxxxx from
@@ -403,7 +403,7 @@
 
 - (void)testArchiveEventIgnoresNil
 {
-    [[KMAArchiver sharedArchiver] archiveEvent:nil withProperties:nil];
+    [[KMAArchiver sharedArchiver] archiveEvent:nil withProperties:nil onCondition:KMARecordAlways];
     
     XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Records should be nil");
 }
@@ -411,7 +411,7 @@
 
 - (void)testArchiveEventIgnoresEmptyString
 {
-    [[KMAArchiver sharedArchiver] archiveEvent:@"" withProperties:nil];
+    [[KMAArchiver sharedArchiver] archiveEvent:@"" withProperties:nil onCondition:KMARecordAlways];
     
     XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Records should be nil");
 }
@@ -591,11 +591,11 @@
 }
 
 
-- (void)testArchiveEventOnce
+- (void)testArchiveEventOncePerId
 {
     NSString *userNameString = @"testuser@example.com";
     
-    NSString *eventNameString = @"uniqueEvent";
+    NSString *eventNameString = @"uniqueIdEvent";
     
     // Only using this to set an expected identity
     [[KMAArchiver sharedArchiver] archiveFirstIdentity:userNameString];
@@ -604,24 +604,54 @@
     NSString *expectedRecord = [_queryEncoder createEventQueryWithName:eventNameString properties:nil identity:userNameString timestamp:timestamp];
     
     // User archiveRecord to create a similar record. (timestamp may not match expected record)
-    [[KMAArchiver sharedArchiver] archiveEventOnce:eventNameString];
+    [[KMAArchiver sharedArchiver] archiveEvent:eventNameString withProperties:nil onCondition:KMARecordOncePerIdentity];
     
-    // !!!: The timestamp of archiveRecordOnce and the expectedRecord may not match.
+    // !!!: The timestamp of the archived event and the expectedRecord may not match.
     // If this is a frequent result we should remove the &t=xxxxxxxxx from
-    // both the archiveRecordOnce and expectedRecord prior to comparison.
+    // both the archiveRecord and expectedRecord prior to comparison.
     XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], expectedRecord, @"Records do not match");
 }
 
 
-- (void)testArchiveEventOnceIgnoresSubsequentCalls
+- (void)testArchiveEventOncePerIdIgnoresSubsequentCalls
 {
-    NSString *eventNameString = @"uniqueEvent";
+    NSString *eventNameString = @"uniqueIdEvent";
     
-    [[KMAArchiver sharedArchiver] archiveEventOnce:eventNameString];
-    
-    [[KMAArchiver sharedArchiver] archiveEventOnce:eventNameString];
+    [[KMAArchiver sharedArchiver] archiveEvent:eventNameString withProperties:nil onCondition:KMARecordOncePerIdentity];
 
-    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)1, @"Records only the first call to recordOnce");
+    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)1, @"Records only the first call to record");
+}
+
+
+- (void)testArchiveEventOncePerInstall
+{
+    NSString *userNameString = @"testuser@example.com";
+    
+    NSString *eventNameString = @"uniqueInstallEvent";
+    
+    // Only using this to set an expected identity
+    [[KMAArchiver sharedArchiver] archiveFirstIdentity:userNameString];
+    
+    int timestamp = [[NSDate date] timeIntervalSince1970];
+    NSString *expectedRecord = [_queryEncoder createEventQueryWithName:eventNameString properties:nil identity:userNameString timestamp:timestamp];
+    
+    // User archiveRecord to create a similar record. (timestamp may not match expected record)
+    [[KMAArchiver sharedArchiver] archiveEvent:eventNameString withProperties:nil onCondition:KMARecordOncePerInstall];
+    
+    // !!!: The timestamp of the archived event and the expectedRecord may not match.
+    // If this is a frequent result we should remove the &t=xxxxxxxxx from
+    // both the archiveRecord and expectedRecord prior to comparison.
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], expectedRecord, @"Records do not match");
+}
+
+
+- (void)testArchiveEventOncePerInstallIgnoresSubsequentCalls
+{
+    NSString *eventNameString = @"uniqueInstallEvent";
+    
+    [[KMAArchiver sharedArchiver] archiveEvent:eventNameString withProperties:nil onCondition:KMARecordOncePerInstall];
+    
+    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)1, @"Records only the first call to record");
 }
 
 
@@ -700,7 +730,7 @@
 {
     NSMutableArray *testIdEvents = [[KMAArchiver sharedArchiver] uth_getSavedIdEvents];
   
-    [testEvents addObject:@"testIdEvent"];
+    [testIdEvents addObject:@"testIdEvent"];
     
     [[KMAArchiver sharedArchiver] kma_archiveSavedIdEvents];
 
@@ -717,7 +747,7 @@
     // Populate and directly archive the test events
     NSMutableArray *testIdEvents = (NSMutableArray*)@[@"testIdEvent"];
     NSString *savedIdEventsPath = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"KISSmetrics/savedEvents.kma"];
-    [NSKeyedArchiver archiveRootObject:testEvents toFile:savedIdEventsPath];
+    [NSKeyedArchiver archiveRootObject:testIdEvents toFile:savedIdEventsPath];
     
     [[KMAArchiver sharedArchiver] kma_unarchiveSavedIdEvents];
     NSMutableArray *archivedIdEvents = [[KMAArchiver sharedArchiver] uth_getSavedIdEvents];
@@ -745,7 +775,7 @@
 {
     NSMutableArray *testInstallEvents = [[KMAArchiver sharedArchiver] uth_getSavedInstallEvents];
     
-    [testEvents addObject:@"testInstallEvent"];
+    [testInstallEvents addObject:@"testInstallEvent"];
     
     [[KMAArchiver sharedArchiver] kma_archiveSavedInstallEvents];
     
@@ -753,7 +783,7 @@
     NSString *savedInstallEventsPath = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"KISSmetrics/savedInstallEvents.kma"];
     NSArray *archivedInstallEvents = [NSKeyedUnarchiver unarchiveObjectWithFile:savedInstallEventsPath];
     
-    XCTAssertEqualObjects(archivedEvents, testInstallEvents, @"Archived install event array returns unarchived array");
+    XCTAssertEqualObjects(archivedInstallEvents, testInstallEvents, @"Archived install event array returns unarchived array");
 }
 
 
