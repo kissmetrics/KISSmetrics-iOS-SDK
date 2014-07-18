@@ -250,6 +250,16 @@ static KMAVerification *_verification;
 }
 
 
+- (void)record:(NSString *)eventName withProperties:(NSDictionary *)properties onCondition:(KMARecordCondition)condition
+{
+    [_dataOpQueue addOperation:[_trackingOperations recordOperationWithName:eventName
+                                                                 properties:properties
+                                                                  condition:condition
+                                                                   archiver:[KMAArchiver sharedArchiver]
+                                                                      kmapi:self]];
+}
+
+
 - (void)record:(NSString *)eventName onCondition:(KMARecordCondition)condition
 {
     [_dataOpQueue addOperation:[_trackingOperations recordOperationWithName:eventName
@@ -296,7 +306,7 @@ static KMAVerification *_verification;
     // If no value previously set, this is a new app install on the device.
     // We expect the keychain value to persist between app install, upgrade and uninstall. 
     if (![[KMAArchiver sharedArchiver] keychainAppVersion]) {
-        [sharedAPI record:@"Installed App"];
+        [sharedAPI record:@"Installed App" withProperties:nil onCondition:KMARecordOncePerInstall];
         [[KMAArchiver sharedArchiver] setKeychainAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     }
     else {
