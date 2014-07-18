@@ -257,7 +257,7 @@
 
     [[KMAArchiver sharedArchiver] archiveFirstIdentity:testIdentity];
     
-    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getIdentity], testIdentity, @"Archive should hold our test identity");
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getIdentity], testIdentity, @"Archive holds our test identity");
 }
 
 
@@ -405,7 +405,7 @@
 {
     [[KMAArchiver sharedArchiver] archiveEvent:nil withProperties:nil onCondition:KMARecordAlways];
     
-    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Records should be nil");
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Records are nil");
 }
 
 
@@ -413,7 +413,7 @@
 {
     [[KMAArchiver sharedArchiver] archiveEvent:@"" withProperties:nil onCondition:KMARecordAlways];
     
-    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Records should be nil");
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Records are nil");
 }
 
 
@@ -444,7 +444,7 @@
 {
     [[KMAArchiver sharedArchiver] archiveProperties:nil];
     
-    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Record should be nil");
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Record are nil");
 }
 
 
@@ -452,7 +452,7 @@
 {
     [[KMAArchiver sharedArchiver] archiveProperties:@{}];
     
-    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Record should be nil");
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Record are nil");
 }
 
 
@@ -542,7 +542,7 @@
 
     [[KMAArchiver sharedArchiver] archiveIdentity:nil];
     
-    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Record should be nil");
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Record is nil");
 }
 
 
@@ -552,7 +552,7 @@
     
     [[KMAArchiver sharedArchiver] archiveIdentity:@""];
     
-    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Record should be nil");
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Record is nil");
 }
 
 
@@ -567,7 +567,7 @@
     
     [[KMAArchiver sharedArchiver] archiveAlias:aliasString withIdentity:identityString];
     
-    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], expectedRecord, @"Record should match expected alias record");
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], expectedRecord, @"Record matches expected alias record");
 }
 
 
@@ -577,7 +577,7 @@
     
     [[KMAArchiver sharedArchiver] archiveAlias:nil withIdentity:nil];
     
-    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Record should be nil");
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Record is nil");
 }
 
 
@@ -587,7 +587,7 @@
     
     [[KMAArchiver sharedArchiver] archiveAlias:@"" withIdentity:@""];
     
-    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Record should be nil");
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], nil, @"Record is nil");
 }
 
 
@@ -685,7 +685,7 @@
     
     [[KMAArchiver sharedArchiver] archiveDistinctProperty:@"distinctProperty" value:@"testNewDistinctValue"];
     
-    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)2, @"2 Records will exist");
+    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)2, @"2 Records exist");
 }
 
 
@@ -696,7 +696,7 @@
     
     [[KMAArchiver sharedArchiver] archiveDistinctProperty:@"distinctProperty" value:@"testDistinctValue"];
     
-    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)1, @"1 Record will exist");
+    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)1, @"1 Record exist");
 }
 
 
@@ -708,7 +708,7 @@
     
     [[KMAArchiver sharedArchiver] archiveDistinctProperty:@"distinctProperty" value:@"testDistinctValue"];
 
-    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)3, @"3 Records will exist");
+    XCTAssertEqual([[KMAArchiver sharedArchiver] getQueueCount], (NSUInteger)3, @"3 Records exist");
 }
 
 
