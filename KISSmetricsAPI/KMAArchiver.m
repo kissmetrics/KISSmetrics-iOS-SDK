@@ -52,12 +52,14 @@ static KMAArchiver *sSharedArchiver = nil;
   @property (nonatomic, strong) NSURL *identityUrl;
   @property (nonatomic, strong) NSURL *settingsUrl;
   @property (nonatomic, strong) NSURL *savedIdEventsUrl;
+  @property (nonatomic, strong) NSURL *savedInstallEventsUrl;
   @property (nonatomic, strong) NSURL *savedPropertiesUrl;
   @property (nonatomic, strong) KMAQueryEncoder *queryEncoder;
   @property (nonatomic, strong) NSMutableArray *sendQueue;
   @property (nonatomic, strong) NSString *identity;
   @property (nonatomic, strong) NSMutableDictionary *settings;
   @property (nonatomic, strong) NSMutableArray *savedIdEvents;
+  @property (nonatomic, strong) NSMutableArray *savedInstallEvents;
   @property (nonatomic, strong) NSMutableDictionary *savedProperties;
 
 
@@ -77,6 +79,9 @@ static KMAArchiver *sSharedArchiver = nil;
 
   - (void)kma_unarchiveSavedIdEvents;
   - (void)kma_archiveSavedIdEvents;
+
+  - (void)kma_unarchiveSavedInstallEvents;
+  - (void)kma_archiveSavedInstallEvents;
 
   - (void)kma_unarchiveSavedProperties;
   - (void)kma_archiveSavedProperties;
@@ -152,6 +157,7 @@ static KMAArchiver *sSharedArchiver = nil;
         [self kma_unarchiveIdentity];
         [self kma_unarchiveSendQueue];
         [self kma_unarchiveSavedIdEvents];
+        [self kma_unarchiveSavedInstallEvents];
         [self kma_unarchiveSavedProperties];
         
         [self keychainAppVersion];
@@ -223,6 +229,7 @@ static KMAArchiver *sSharedArchiver = nil;
     self.identityUrl = [self kma_libraryUrlWithPathComponent:@"KISSmetrics/identity.kma"];
     self.settingsUrl = [self kma_libraryUrlWithPathComponent:@"KISSmetrics/settings.kma"];
     self.savedIdEventsUrl = [self kma_libraryUrlWithPathComponent:@"KISSmetrics/savedEvents.kma"];
+    self.savedInstallEventsUrl = [self kma_libraryUrlWithPathComponent:@"KISSmetrics/savedInstallEvents.kma"];
     self.savedPropertiesUrl = [self kma_libraryUrlWithPathComponent:@"KISSmetrics/savedProperties.kma"];
 }
 
@@ -444,10 +451,7 @@ static KMAArchiver *sSharedArchiver = nil;
     
     switch (condition) {
         case KMARecordAlways:
-
             // Nothing else to check, continue with archiving the event.
-            [self archiveEvent:name withProperties:properties];
-            
             break;
                 
         case KMARecordOncePerIdentity:
@@ -463,22 +467,30 @@ static KMAArchiver *sSharedArchiver = nil;
                 }
             }
             
-            // Intentionally called outside of @synchronized, method is already synchronized
-            [self archiveEvent:name withProperties:properties];
-            
             break;
                 
         case KMARecordOncePerInstall:
 
-                
+            @synchronized(self)
+            {
+                if ([self.savedInstallEvents containsObject:name]) {
+                    return;
+                }
+                else {
+                    [self.savedInstallEvents addObject:name];
+                    [self kma_archiveSavedInstallEvents];
+                }
+            }
+
             break;
         
         default:
-            
-            [self archiveEvent:name withProperties:properties];
-            
+            // Continue with archiving the event.
             break;
     }
+    
+    // Intentionally called outside of @synchronized, method is already synchronized
+    [self archiveEvent:name withProperties:properties];
 }
 
 
@@ -744,6 +756,25 @@ static KMAArchiver *sSharedArchiver = nil;
     self.savedIdEvents = [NSKeyedUnarchiver unarchiveObjectWithFile:self.savedIdEventsUrl.path];
     if (!self.savedIdEvents) {
         self.savedIdEvents = [NSMutableArray array];
+    }
+}
+
+
+- (void)kma_archiveSavedInstallEvents
+{
+    // Not @synch'ed as should always be called inside @sync bloc
+    if (![NSKeyedArchiver archiveRootObject:self.savedInstallEvents toFile:self.savedInstallEventsUrl.path]) {
+        KMALog(@"KISSmetricsAPI - !WARNING! - Unable to archive savedInstallEvents!");
+    }
+}
+
+
+- (void)kma_unarchiveSavedInstallEvents
+{
+    // Not @synch'ed as should always be called inside @sync bloc
+    self.savedInstallEvents = [NSKeyedUnarchiver unarchiveObjectWithFile:self.savedInstallEventsUrl.path];
+    if (!self.savedInstallEvents) {
+        self.savedInstallEvents = [NSMutableArray array];
     }
 }
 

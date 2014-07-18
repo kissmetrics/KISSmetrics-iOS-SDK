@@ -42,6 +42,9 @@
 - (void)kma_unarchiveSavedIdEvents;
 - (void)kma_archiveSavedIdEvents;
 
+- (void)kma_unarchiveSavedInstallEvents;
+- (void)kma_archiveSavedInstallEvents;
+
 - (void)kma_unarchiveSavedProperties;
 - (void)kma_archiveSavedProperties;
 
@@ -59,6 +62,7 @@
 - (NSMutableArray *)uth_getSendQueue;
 - (NSMutableDictionary *)uth_getSettings;
 - (NSMutableArray *)uth_getSavedIdEvents;
+- (NSMutableArray *)uth_getSavedInstallEvents;
 - (NSMutableDictionary *)uth_getSavedProperties;
 
 @end
@@ -154,10 +158,15 @@
     [NSKeyedArchiver archiveRootObject:nil toFile:settingsArchivePath];
     [[KMAArchiver sharedArchiver] kma_unarchiveSettings]; // Exposed private method
     
-    // Empty the archive file at the savedIdEvents path (record once events live here)
+    // Empty the archive file at the savedIdEvents path (record once per ID events live here)
     NSString *savedIdEventsPath = [librarySearchPath stringByAppendingPathComponent:@"KISSmetrics/savedEvents.kma"];
     [NSKeyedArchiver archiveRootObject:nil toFile:savedIdEventsPath];
     [[KMAArchiver sharedArchiver] kma_unarchiveSavedIdEvents];
+    
+    // Empty the archive file at the savedInstallEvents path (record once per install events live here)
+    NSString *savedInstallEventsPath = [librarySearchPath stringByAppendingPathComponent:@"KISSmetrics/savedInstallEvents.kma"];
+    [NSKeyedArchiver archiveRootObject:nil toFile:savedInstallEventsPath];
+    [[KMAArchiver sharedArchiver] kma_unarchiveSavedInstallEvents];
     
     // Empty the archive file at the savedProperties path (setDistinct properties live here)
     NSString *savedPropertiesPath = [librarySearchPath stringByAppendingPathComponent:@"KISSmetrics/savedProperties.kma"];
@@ -689,9 +698,9 @@
 
 - (void)testArchiveSavedIdEvents
 {
-    NSMutableArray *testEvents = [[KMAArchiver sharedArchiver] uth_getSavedIdEvents];
+    NSMutableArray *testIdEvents = [[KMAArchiver sharedArchiver] uth_getSavedIdEvents];
   
-    [testEvents addObject:@"testEvent"];
+    [testEvents addObject:@"testIdEvent"];
     
     [[KMAArchiver sharedArchiver] kma_archiveSavedIdEvents];
 
@@ -699,37 +708,66 @@
     NSString *savedIdEventsPath = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"KISSmetrics/savedEvents.kma"];
     NSArray *archivedIdEvents = [NSKeyedUnarchiver unarchiveObjectWithFile:savedIdEventsPath];
 
-    XCTAssertEqualObjects(archivedEvents, testEvents, @"Archived ID event array returns unarchived array");
+    XCTAssertEqualObjects(archivedIdEvents, testIdEvents, @"Archived ID event array returns unarchived array");
 }
 
 
 - (void)testUnarchiveSavedIdEvents
 {
     // Populate and directly archive the test events
-    NSMutableArray *testEvents = (NSMutableArray*)@[@"testEvent"];
+    NSMutableArray *testIdEvents = (NSMutableArray*)@[@"testIdEvent"];
     NSString *savedIdEventsPath = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"KISSmetrics/savedEvents.kma"];
     [NSKeyedArchiver archiveRootObject:testEvents toFile:savedIdEventsPath];
     
-    // Unarchive _savedIdEvents
     [[KMAArchiver sharedArchiver] kma_unarchiveSavedIdEvents];
-    NSMutableArray *archivedEvents = [[KMAArchiver sharedArchiver] uth_getSavedIdEvents];
+    NSMutableArray *archivedIdEvents = [[KMAArchiver sharedArchiver] uth_getSavedIdEvents];
 
-    XCTAssertEqualObjects(archivedEvents, testEvents, @"Unarchived event array returns archived array");
+    XCTAssertEqualObjects(archivedIdEvents, testIdEvents, @"Unarchived ID event array returns archived array");
 }
 
 
 - (void)testClearSavedIdEvents
 {
     // Populate and directly archive the test events
-    NSMutableArray *testEvents = (NSMutableArray*)@[@"testEvent"];
+    NSMutableArray *testIdEvents = (NSMutableArray*)@[@"testIdEvent"];
     NSString *savedIdEventsPath = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"KISSmetrics/savedEvents.kma"];
-    [NSKeyedArchiver archiveRootObject:testEvents toFile:savedIdEventsPath];
+    [NSKeyedArchiver archiveRootObject:testIdEvents toFile:savedIdEventsPath];
     
     [[KMAArchiver sharedArchiver] kma_unarchiveSavedIdEvents];
     
     [[KMAArchiver sharedArchiver] clearSavedIdEvents];
     
     XCTAssertEqualObjects([[KMAArchiver sharedArchiver] uth_getSavedIdEvents], [NSMutableArray array], @"Returns an emtpy mutable array");
+}
+
+
+- (void)testArchiveSavedInstallEvents
+{
+    NSMutableArray *testInstallEvents = [[KMAArchiver sharedArchiver] uth_getSavedInstallEvents];
+    
+    [testEvents addObject:@"testInstallEvent"];
+    
+    [[KMAArchiver sharedArchiver] kma_archiveSavedInstallEvents];
+    
+    // Directly unarchive the events
+    NSString *savedInstallEventsPath = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"KISSmetrics/savedInstallEvents.kma"];
+    NSArray *archivedInstallEvents = [NSKeyedUnarchiver unarchiveObjectWithFile:savedInstallEventsPath];
+    
+    XCTAssertEqualObjects(archivedEvents, testInstallEvents, @"Archived install event array returns unarchived array");
+}
+
+
+- (void)testUnarchiveSavedInstallEvents
+{
+    // Populate and directly archive the test events
+    NSMutableArray *testInstallEvents = (NSMutableArray*)@[@"testInstallEvent"];
+    NSString *savedInstallEventsPath = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"KISSmetrics/savedInstallEvents.kma"];
+    [NSKeyedArchiver archiveRootObject:testInstallEvents toFile:savedInstallEventsPath];
+    
+    [[KMAArchiver sharedArchiver] kma_unarchiveSavedInstallEvents];
+    NSMutableArray *archivedInstallEvents = [[KMAArchiver sharedArchiver] uth_getSavedInstallEvents];
+    
+    XCTAssertEqualObjects(archivedInstallEvents, testInstallEvents, @"Unarchived install event array returns archived array");
 }
 
 
