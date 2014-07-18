@@ -237,6 +237,7 @@ static KMAVerification *_verification;
 {
     [_dataOpQueue addOperation:[_trackingOperations recordOperationWithName:eventName
                                                                  properties:properties
+                                                                  condition:KMARecordAlways
                                                                    archiver:[KMAArchiver sharedArchiver]
                                                                       kmapi:self]];
 }
@@ -249,11 +250,20 @@ static KMAVerification *_verification;
 }
 
 
+- (void)record:(NSString *)eventName onCondition:(KMARecordCondition)condition
+{
+    [_dataOpQueue addOperation:[_trackingOperations recordOperationWithName:eventName
+                                                                 properties:nil
+                                                                  condition:condition
+                                                                   archiver:[KMAArchiver sharedArchiver]
+                                                                      kmapi:self]];
+}
+
+
+// Deprecated method for recordOnce
 - (void)recordOnce:(NSString*)eventName
 {
-    [_dataOpQueue addOperation:[_trackingOperations recordOnceOperationWithName:eventName
-                                                                       archiver:[KMAArchiver sharedArchiver]
-                                                                          kmapi:self]];
+    [self record:eventName onCondition:KMARecordOncePerIdentity];
 }
 
 

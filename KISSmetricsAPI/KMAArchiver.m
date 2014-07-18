@@ -433,7 +433,7 @@ static KMAArchiver *sSharedArchiver = nil;
 }
 
 
-- (void)archiveEvent:(NSString *)name withProperties:(NSDictionary *)properties
+- (void)archiveEvent:(NSString *)name withProperties:(NSDictionary *)properties onCondition:(KMARecordCondition)condition
 {
     KMALog(@"KMAArchiver archiveEvent");
     
@@ -535,25 +535,6 @@ static KMAArchiver *sSharedArchiver = nil;
         [self kma_archiveSendQueue];
     }
 }
-
-
-- (void)archiveEventOnce:(NSString*)name
-{
-    @synchronized(self)
-    {
-        KMALog(@"KMAArchiver archiveRecordOnce");
-        if ([self.savedEvents containsObject:name]) {
-            return;
-        }
-        else {
-            [self.savedEvents addObject:name];
-            [self kma_archiveSavedEvents];
-        }
-    }
-    
-    [self archiveEvent:name withProperties:nil];
-}
-
 
 - (void)archiveDistinctProperty:(NSString*)name value:(NSObject*)value
 {

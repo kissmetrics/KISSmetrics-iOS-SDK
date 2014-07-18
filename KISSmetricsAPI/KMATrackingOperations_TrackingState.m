@@ -86,29 +86,14 @@
 
 - (NSOperation *)recordOperationWithName:(NSString *)name
                               properties:(NSDictionary *)properties
+                               condition:(KMARecordCondition)condition
                                 archiver:(KMAArchiver *)archiver
                                    kmapi:(KISSmetricsAPI *)kmapi {
     
     NSBlockOperation *opBlock = [NSBlockOperation blockOperationWithBlock:^{
 
         @autoreleasepool {
-            [archiver archiveEvent:name withProperties:properties];
-            [kmapi kma_sendRecords];
-        }
-    }];
-    
-    return opBlock;
-}
-
-
-- (NSOperation *)recordOnceOperationWithName:(NSString *)name
-                                    archiver:(KMAArchiver *)archiver
-                                       kmapi:(KISSmetricsAPI *)kmapi {
-    
-    NSBlockOperation *opBlock = [NSBlockOperation blockOperationWithBlock:^{
-        
-        @autoreleasepool {
-            [archiver archiveEventOnce:name];
+            [archiver archiveEvent:name withProperties:properties onCondition:condition];
             [kmapi kma_sendRecords];
         }
     }];
