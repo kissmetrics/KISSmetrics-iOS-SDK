@@ -164,10 +164,12 @@ typedef NS_ENUM(NSInteger, KMARecordCondition) {
 // - record: onCondition:
 //
 // Records an event per identity or install depending on the KMSRecordCondition that's passed.
+//
 // Using KMSRecordOncePerInstall - The event will only be recorded once during the lifetime of the application's
-// installation.
+// installation. If the event has already been recorded, any properties passed will also be ignored.
+//
 // Using KMSRecordOncePerIdentity - The event will only be recorded once until the identity changes or is cleared via
-// clearIdentity.
+// clearIdentity. If the event has already been recorded, any properties passed will also be ignored.
 //---
 - (void)record:(NSString *)eventName onCondition:(KMARecordCondition)condition;
 
