@@ -64,6 +64,8 @@ static KMAArchiver *sSharedArchiver = nil;
 
 
   // Private methods
+  - (void)kma_archiveEvent:(NSString *)name withProperties:(NSDictionary *)properties;
+
   - (NSURL *)kma_libraryUrlWithPathComponent:(NSString *)pathComponent;
   - (BOOL)kma_directoryExistsAtUrl:(NSURL *)dirUrl;
   - (void)kma_createLibraryDirectoryAtURL:(NSURL *)dirUrl;
@@ -490,29 +492,7 @@ static KMAArchiver *sSharedArchiver = nil;
     }
     
     // Intentionally called outside of @synchronized, method is already synchronized
-    [self archiveEvent:name withProperties:properties];
-}
-
-
-- (void)archiveEvent:(NSString *)name withProperties:(NSDictionary *)properties
-{
-    KMALog(@"KMAArchiver archiveEvent withProperties");
-    
-    @synchronized(self)
-    {
-        // We'll store and use the actual time of the record event in case of disconnected operation.
-        int actualTimeOfEvent = (int)[[NSDate date] timeIntervalSince1970];
-        
-        NSString *theUrl = [self.queryEncoder createEventQueryWithName:name
-                                                            properties:properties
-                                                              identity:self.identity
-                                                             timestamp:actualTimeOfEvent];
-        // Queue up call
-        [self.sendQueue addObject:theUrl];
-        
-        // Persist the new queue
-        [self kma_archiveSendQueue];
-    }
+    [self kma_archiveEvent:name withProperties:properties];
 }
 
 
@@ -690,6 +670,27 @@ static KMAArchiver *sSharedArchiver = nil;
 
 
 #pragma mark - sharedArchiver private methods
+
+- (void)kma_archiveEvent:(NSString *)name withProperties:(NSDictionary *)properties
+{
+    KMALog(@"KMAArchiver archiveEvent withProperties");
+    
+    @synchronized(self)
+    {
+        // We'll store and use the actual time of the record event in case of disconnected operation.
+        int actualTimeOfEvent = (int)[[NSDate date] timeIntervalSince1970];
+        
+        NSString *theUrl = [self.queryEncoder createEventQueryWithName:name
+                                                            properties:properties
+                                                              identity:self.identity
+                                                             timestamp:actualTimeOfEvent];
+        // Queue up call
+        [self.sendQueue addObject:theUrl];
+        
+        // Persist the new queue
+        [self kma_archiveSendQueue];
+    }
+}
 
 - (void)kma_archiveSchemaVersion:(NSNumber *)schemaVersion
 {
