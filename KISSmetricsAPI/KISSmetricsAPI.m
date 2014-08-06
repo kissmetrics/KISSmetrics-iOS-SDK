@@ -49,6 +49,27 @@ static NSInteger const kKMAFailsafeMaxVerificationDur = 1209600;
 static KISSmetricsAPI  *sharedAPI = nil;
 static KMAVerification *_verification;
 
+// autoRecordInstalls events naming
+static NSString *kKMAAppInstallEventName  = @"Installed App";
+static NSString *kKMAAppUpdatedEventName  = @"Updated App";
+
+// autoRecordAppLifecycle events naming
+static NSString *kKMALaunchEventName      = @"Launched App";
+static NSString *kKMABackgroundEventName  = @"App moved to background";
+static NSString *kKMAActiveEventName      = @"App became active";
+static NSString *kKMATerminatedEventName  = @"App terminated";
+
+// autoSetAppProperties keys naming
+static NSString *kKMABuildPropertkey   = @"App Build";
+static NSString *kKMAVersionPropertKey = @"App Version";
+
+// autoSetHardwareProperties keys naming
+static NSString *kKMAManufacturerPropertyKey  = @"Device Manufacturer";
+static NSString *kKMAPlatformPropertyKey      = @"Device Platform";
+static NSString *kKMAModelPropertyKey         = @"Device Model";
+static NSString *kKMASystemNamePropertyKey    = @"System Name";
+static NSString *kKMASystemVersionPropertyKey = @"System Version";
+
 
 @interface KISSmetricsAPI () <KMAVerificationDelegate>
 @end
@@ -227,33 +248,53 @@ static KMAVerification *_verification;
 }
 
 
-- (void)record:(NSString *)name
+- (void)record:(NSString *)eventName
 {
-    [self record:name withProperties:nil];
+    [self record:eventName withProperties:nil];
 }
 
 
-- (void)record:(NSString *)name withProperties:(NSDictionary *)properties
+- (void)record:(NSString *)eventName withProperties:(NSDictionary *)properties
 {
-    [_dataOpQueue addOperation:[_trackingOperations recordOperationWithName:name
+    [_dataOpQueue addOperation:[_trackingOperations recordOperationWithName:eventName
                                                                  properties:properties
+                                                                  condition:KMARecordAlways
                                                                    archiver:[KMAArchiver sharedArchiver]
                                                                       kmapi:self]];
 }
 
 
 // Deprecated method for record
-- (void)recordEvent:(NSString *)name withProperties:(NSDictionary *)properties
+- (void)recordEvent:(NSString *)eventName withProperties:(NSDictionary *)properties
 {
-    [self record:name withProperties:properties];
+    [self record:eventName withProperties:properties];
 }
 
 
-- (void)recordOnce:(NSString*)name
+- (void)record:(NSString *)eventName withProperties:(NSDictionary *)properties onCondition:(KMARecordCondition)condition
 {
-    [_dataOpQueue addOperation:[_trackingOperations recordOnceOperationWithName:name
-                                                                       archiver:[KMAArchiver sharedArchiver]
-                                                                          kmapi:self]];
+    [_dataOpQueue addOperation:[_trackingOperations recordOperationWithName:eventName
+                                                                 properties:properties
+                                                                  condition:condition
+                                                                   archiver:[KMAArchiver sharedArchiver]
+                                                                      kmapi:self]];
+}
+
+
+- (void)record:(NSString *)eventName onCondition:(KMARecordCondition)condition
+{
+    [_dataOpQueue addOperation:[_trackingOperations recordOperationWithName:eventName
+                                                                 properties:nil
+                                                                  condition:condition
+                                                                   archiver:[KMAArchiver sharedArchiver]
+                                                                      kmapi:self]];
+}
+
+
+// Deprecated method for recordOnce
+- (void)recordOnce:(NSString*)eventName
+{
+    [self record:eventName onCondition:KMARecordOncePerIdentity];
 }
 
 
@@ -286,13 +327,13 @@ static KMAVerification *_verification;
     // If no value previously set, this is a new app install on the device.
     // We expect the keychain value to persist between app install, upgrade and uninstall. 
     if (![[KMAArchiver sharedArchiver] keychainAppVersion]) {
-        [sharedAPI record:@"Installed App"];
+        [sharedAPI record:kKMAAppInstallEventName withProperties:nil onCondition:KMARecordOncePerInstall];
         [[KMAArchiver sharedArchiver] setKeychainAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
     }
     else {
         // If the existing value doesn't match the current, this is an update.
         if (![[[KMAArchiver sharedArchiver] keychainAppVersion] isEqualToString:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]]) {
-            [sharedAPI record:@"Updated App"];
+            [sharedAPI record:kKMAAppUpdatedEventName];
         }
     }
 }
@@ -301,7 +342,7 @@ static KMAVerification *_verification;
 - (void)autoRecordAppLifecycle
 {
     // Record application launch now, as it's too late to pick it up via NSNotificationCenter
-    [sharedAPI record:@"Launched App"];
+    [sharedAPI record:kKMALaunchEventName];
     [sharedAPI kma_beginObservingAppLifecycle];
 }
 
@@ -309,29 +350,29 @@ static KMAVerification *_verification;
 - (void)autoSetHardwareProperties
 {
     // Recording 'Device Manufaturer' to keep properties consistent between iOS and other mobile devices/systems
-    [[KISSmetricsAPI sharedAPI] setDistinct:@"Apple" forKey:@"Device Manufacturer"];
+    [[KISSmetricsAPI sharedAPI] setDistinct:@"Apple" forKey:kKMAManufacturerPropertyKey];
 
     // Device platform (iPhone, iPad)
-    [[KISSmetricsAPI sharedAPI] setDistinct:[[UIDevice currentDevice] model] forKey:@"Device Platform"];
+    [[KISSmetricsAPI sharedAPI] setDistinct:[[UIDevice currentDevice] model] forKey:kKMAPlatformPropertyKey];
     
     // Device model (iPhone 5S, iPhone 5C)
-    [[KISSmetricsAPI sharedAPI] setDistinct:[[UIDevice currentDevice] kmac_platformString] forKey:@"Device Model"];
+    [[KISSmetricsAPI sharedAPI] setDistinct:[[UIDevice currentDevice] kmac_platformString] forKey:kKMAModelPropertyKey];
     
     // System Name (iOS)
-    [[KISSmetricsAPI sharedAPI] setDistinct:[[UIDevice currentDevice] systemName] forKey:@"System Name"];
+    [[KISSmetricsAPI sharedAPI] setDistinct:[[UIDevice currentDevice] systemName] forKey:kKMASystemNamePropertyKey];
     
     // System Version (7.1)
-    [[KISSmetricsAPI sharedAPI] setDistinct:[[UIDevice currentDevice] systemVersion] forKey:@"System Version"];
+    [[KISSmetricsAPI sharedAPI] setDistinct:[[UIDevice currentDevice] systemVersion] forKey:kKMASystemVersionPropertyKey];
 }
 
 
 - (void)autoSetAppProperties
 {
     NSString *build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
-    [[KISSmetricsAPI sharedAPI] setDistinct:build forKey:@"App Build"];
+    [[KISSmetricsAPI sharedAPI] setDistinct:build forKey:kKMABuildPropertkey ];
     
     NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    [[KISSmetricsAPI sharedAPI] setDistinct:version forKey:@"App Version"];
+    [[KISSmetricsAPI sharedAPI] setDistinct:version forKey:kKMAVersionPropertKey];
 }
 
 
@@ -419,26 +460,22 @@ static KMAVerification *_verification;
 
 - (void)kma_handleLaunch:(NSNotification*)note
 {
-    KMALog(@"handleLaunch");
-    [[KISSmetricsAPI sharedAPI] record:@"Launched App"];
+    [[KISSmetricsAPI sharedAPI] record:kKMALaunchEventName];
 }
 
 - (void)kma_handleBackground:(NSNotification*)note
 {
-    KMALog(@"handleBackground");
-    [[KISSmetricsAPI sharedAPI] record:@"App moved to background"];
+    [[KISSmetricsAPI sharedAPI] record:kKMABackgroundEventName];
 }
 
 - (void)kma_handleActivity:(NSNotification*)note
 {
-    KMALog(@"handleActivity");
-    [[KISSmetricsAPI sharedAPI] record:@"App became active"];
+    [[KISSmetricsAPI sharedAPI] record:kKMAActiveEventName];
 }
 
 - (void)kma_handleTermination:(NSNotification *)note
 {
-    KMALog(@"handleTermination");
-    [[KISSmetricsAPI sharedAPI] record:@"App terminated"];
+    [[KISSmetricsAPI sharedAPI] record:kKMATerminatedEventName];
 }
 
 
@@ -519,8 +556,8 @@ static KMAVerification *_verification;
     return [KISSmetricsAPI sharedAPI];
 }
 
-- (void)recordEvent:(NSString *)name withProperties:(NSDictionary *)properties {
-    [[KISSmetricsAPI sharedAPI] record:name withProperties:properties];
+- (void)recordEvent:(NSString *)eventName withProperties:(NSDictionary *)properties {
+    [[KISSmetricsAPI sharedAPI] record:eventName withProperties:properties];
 }
 
 - (void)setProperties:(NSDictionary *)properties {

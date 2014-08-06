@@ -49,15 +49,9 @@
 
 - (NSOperation *)recordOperationWithName:(NSString *)name
                               properties:(NSDictionary *)properties
+                               condition:(KMARecordCondition)condition
                                 archiver:(KMAArchiver *)archiver
                                    kmapi:(KISSmetricsAPI *)kmapi {
-    return nil;
-}
-
-
-- (NSOperation *)recordOnceOperationWithName:(NSString *)name
-                                    archiver:(KMAArchiver *)archiver
-                                       kmapi:(KISSmetricsAPI *)kmapi {
     return nil;
 }
 

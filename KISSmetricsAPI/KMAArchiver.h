@@ -20,6 +20,7 @@
 
 
 #import <Foundation/Foundation.h>
+#import "KISSmetricsAPI.h"
 
 @interface KMAArchiver : NSObject
 
@@ -37,15 +38,14 @@
 - (void)archiveVerificationExpDate:(NSNumber *)expDate;
 - (void)archiveHasGenericIdentity:(BOOL)hasGenericIdentity;
 - (void)archiveFirstIdentity:(NSString*)firstIdentity;
-- (void)archiveEvent:(NSString *)name withProperties:(NSDictionary *)properties;
-- (void)archiveEventOnce:(NSString *)name;
+- (void)archiveEvent:(NSString *)name withProperties:(NSDictionary *)properties onCondition:(KMARecordCondition)condition;
 - (void)archiveProperties:(NSDictionary *)properties;
 - (void)archiveDistinctProperty:(NSString *)property value:(NSObject *)value;
 - (void)archiveIdentity:(NSString *)identity;
 - (void)archiveAlias:(NSString *)firstIdentity withIdentity:(NSString *)secondIdentity;
 
 - (void)clearSendQueue;
-- (void)clearSavedEvents;
+- (void)clearSavedIdEvents;
 - (void)clearSavedProperties;
 - (NSString *)getQueryStringAtIndex:(NSInteger)index;
 - (void)removeQueryStringAtIndex:(NSInteger)index;

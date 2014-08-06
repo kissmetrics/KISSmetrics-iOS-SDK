@@ -20,7 +20,7 @@
 
 
 #import <Foundation/Foundation.h>
-@class KISSmetricsAPI;
+#import "KISSmetricsAPI.h"
 @class KMAArchiver;
 
 
@@ -42,12 +42,9 @@
 
 - (NSOperation *)recordOperationWithName:(NSString *)name
                               properties:(NSDictionary *)properties
+                               condition:(KMARecordCondition)condition
                                 archiver:(KMAArchiver *)archiver
                                    kmapi:(KISSmetricsAPI *)kmapi;
-
-- (NSOperation *)recordOnceOperationWithName:(NSString *)name
-                                    archiver:(KMAArchiver *)archiver
-                                       kmapi:(KISSmetricsAPI *)kmapi;
 
 - (NSOperation *)setOperationWithProperties:(NSDictionary *)properties
                                    archiver:(KMAArchiver *)archiver
