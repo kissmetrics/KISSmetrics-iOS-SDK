@@ -10,33 +10,33 @@
 	<string>KISSmetrics-iOS-SDK</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>0BE6AFAF-DCB1-4A72-9B22-E3AFAC6A8AFA</key>
+		<key>8372B87BEE59222E93EC0068EBDE98ADE182F55F</key>
 		<string>ssh://github.com/willrust/MockNSURLConnection.git</string>
-		<key>AA7FB4BF-5400-41A1-A158-7137AF0D9FCE</key>
+		<key>F3D139DFC5397739DBA0D653ED16217BDC9EBFA2</key>
 		<string>ssh://github.com/kissmetrics/KISSmetrics-iOS-SDK.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>KISSmetrics-iOS-SDK.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>0BE6AFAF-DCB1-4A72-9B22-E3AFAC6A8AFA</key>
+		<key>8372B87BEE59222E93EC0068EBDE98ADE182F55F</key>
 		<string>../TestFrameworks/MockNSURLConnection</string>
-		<key>AA7FB4BF-5400-41A1-A158-7137AF0D9FCE</key>
+		<key>F3D139DFC5397739DBA0D653ED16217BDC9EBFA2</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>ssh://github.com/kissmetrics/KISSmetrics-iOS-SDK.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>AA7FB4BF-5400-41A1-A158-7137AF0D9FCE</string>
+	<string>F3D139DFC5397739DBA0D653ED16217BDC9EBFA2</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>AA7FB4BF-5400-41A1-A158-7137AF0D9FCE</string>
+			<string>F3D139DFC5397739DBA0D653ED16217BDC9EBFA2</string>
 			<key>IDESourceControlWCCName</key>
 			<string>KISSmetrics-iOS-SDK</string>
 		</dict>
@@ -44,7 +44,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>0BE6AFAF-DCB1-4A72-9B22-E3AFAC6A8AFA</string>
+			<string>8372B87BEE59222E93EC0068EBDE98ADE182F55F</string>
 			<key>IDESourceControlWCCName</key>
 			<string>MockNSURLConnection</string>
 		</dict>

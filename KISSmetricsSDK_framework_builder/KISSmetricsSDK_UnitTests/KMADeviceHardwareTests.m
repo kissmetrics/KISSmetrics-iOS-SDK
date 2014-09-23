@@ -43,7 +43,7 @@
 - (void)testkmac_platformReturnsPlatfromString
 {
     NSArray *expectedPlatforms = @[@"iFPGA",
-                                   @"iPhone1,1", @"iPhone1,2", @"iPhone 3G", @"iPhone2,1", @"iPhone3,1", @"iPhone3,2", @"iPhone3,3", @"iPhone4,1", @"iPhone5,1", @"iPhone5,2", @"iPhone5,3", @"iPhone5,4", @"iPhone6,1", @"iPhone6,2",
+                                   @"iPhone1,1", @"iPhone1,2", @"iPhone 3G", @"iPhone2,1", @"iPhone3,1", @"iPhone3,2", @"iPhone3,3", @"iPhone4,1", @"iPhone5,1", @"iPhone5,2", @"iPhone5,3", @"iPhone5,4", @"iPhone6,1", @"iPhone6,2", @"iPhone7,1", @"iPhone7,2",
                                    @"iPod1,1", @"iPod2,1", @"iPod2,2", @"iPod3,1", @"iPod4,1",
                                    @"ipad0,1", @"iPad3,2", @"iPad3,3", @"iPad4,1", @"iPad4,2", @"iPad4,3",
                                    @"iProd2,1",
@@ -127,6 +127,16 @@
 - (void)testkmac_platformTypeForString_iPhone6_2
 {
     XCTAssert(([UIDevice kmac_platformTypeForString:@"iPhone6,2"] == KMA_UIDeviceiPhone5SGSMCDMA), @"Expected iPhone6,2 to return KMA_UIDeviceiPhone5SGSMCDMA");
+}
+
+- (void)testkmac_platformTypeForString_iPhone7_1
+{
+    XCTAssert(([UIDevice kmac_platformTypeForString:@"iPhone7,1"] == KMA_UIDeviceiPhone6Plus), @"Expected iPhone7,1 to return KMA_UIDeviceiPhone6Plus");
+}
+
+- (void)testkmac_platformTypeForString_iPhone7_2
+{
+    XCTAssert(([UIDevice kmac_platformTypeForString:@"iPhone7,2"] == KMA_UIDeviceiPhone6), @"Expected iPhone7,2 to return KMA_UIDeviceiPhone6");
 }
 
 - (void)testkmac_platformTypeForString_iPod1
