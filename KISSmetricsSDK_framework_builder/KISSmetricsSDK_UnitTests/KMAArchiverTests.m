@@ -98,7 +98,7 @@
     
     _key = @"b8f68fe5004d29bcd21d3138b43ae755a16c12cf";
     _clientType  = @"mobile_app";
-    _userAgent   = @"kissmetrics-ios/2.1.0";
+    _userAgent   = @"kissmetrics-ios/2.2.0";
     
     [KMAArchiver sharedArchiverWithKey:_key];
     
@@ -851,7 +851,7 @@
 {
     NSMutableArray *sendQueue = [[KMAArchiver sharedArchiver] uth_getSendQueue];
     
-    [sendQueue addObject:@"https://trk.kissmetrics.com/a?_k=b8f68fe5004d29bcd21d3138b43ae755a16c12cf&_x=ios/2.1.0&_p=testnewuser%40example.com&_n=testolduser%40example.com"];
+    [sendQueue addObject:@"https://trk.kissmetrics.com/a?_k=b8f68fe5004d29bcd21d3138b43ae755a16c12cf&_x=ios/2.2.0&_p=testnewuser%40example.com&_n=testolduser%40example.com"];
     
     NSLog(@"sendQueue = %@", sendQueue);
     
