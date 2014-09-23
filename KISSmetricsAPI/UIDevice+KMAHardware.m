@@ -74,6 +74,8 @@
  iPhone5,4 ->    iPhone 5C/GSM+CDMA, N49
  iPhone6,1 ->    iPhone 5S/GSM, N51
  iPhone6,2 ->    iPhone 5S/GSM+CDMA, N53
+ iPhone7,1 ->    iPhone 6 Plus, N56
+ iPhone7,2 ->    iPhone 6, N61
  
  iPod1,1   ->    iPod touch 1, N45
  iPod2,1   ->    iPod touch 2, N72
@@ -257,6 +259,8 @@
     if ([platform isEqualToString:@"iPhone5,4"])    return KMA_UIDeviceiPhone5CGSMCDMA;
     if ([platform isEqualToString:@"iPhone6,1"])    return KMA_UIDeviceiPhone5SGSM;
     if ([platform isEqualToString:@"iPhone6,2"])    return KMA_UIDeviceiPhone5SGSMCDMA;
+    if ([platform isEqualToString:@"iPhone7,1"])    return KMA_UIDeviceiPhone6Plus;
+    if ([platform isEqualToString:@"iPhone7,2"])    return KMA_UIDeviceiPhone6;
     
     // iPod
     if ([platform hasPrefix:@"iPod1"])              return KMA_UIDeviceiPodTouch1;
@@ -340,6 +344,8 @@
         case KMA_UIDeviceiPhone5CGSMCDMA:       return KMA_IPHONE_5C_NAMESTRING;
         case KMA_UIDeviceiPhone5SGSM:           return KMA_IPHONE_5S_NAMESTRING;
         case KMA_UIDeviceiPhone5SGSMCDMA:       return KMA_IPHONE_5S_NAMESTRING;
+        case KMA_UIDeviceiPhone6:               return KMA_IPHONE_6_NAMESTRING;
+        case KMA_UIDeviceiPhone6Plus:           return KMA_IPHONE_6PLUS_NAMESTRING;
         case KMA_UIDeviceUnknowniPhone:         return KMA_IPHONE_UNKNOWN_NAMESTRING;
 			
         case KMA_UIDeviceiPodTouch1:            return KMA_IPOD_TOUCH_1_NAMESTRING;

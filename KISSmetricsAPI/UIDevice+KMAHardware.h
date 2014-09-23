@@ -22,6 +22,8 @@
 #define KMA_IPHONE_5_NAMESTRING             @"iPhone 5"
 #define KMA_IPHONE_5C_NAMESTRING            @"iPhone 5C"
 #define KMA_IPHONE_5S_NAMESTRING            @"iPhone 5S"
+#define KMA_IPHONE_6_NAMESTRING             @"iPhone 6"
+#define KMA_IPHONE_6PLUS_NAMESTRING         @"iPhone 6 Plus"
 #define KMA_IPHONE_UNKNOWN_NAMESTRING       @"Unknown iPhone"
 
 #define KMA_IPOD_TOUCH_1_NAMESTRING         @"iPod touch 1"
@@ -76,6 +78,8 @@ typedef enum {
     KMA_UIDeviceiPhone5CGSMCDMA,
     KMA_UIDeviceiPhone5SGSM,
     KMA_UIDeviceiPhone5SGSMCDMA,
+    KMA_UIDeviceiPhone6,
+    KMA_UIDeviceiPhone6Plus,
     
     KMA_UIDeviceiPodTouch1,
     KMA_UIDeviceiPodTouch2,
