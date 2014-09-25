@@ -1,6 +1,6 @@
 {
   "name": "KISSmetrics-iOS-SDK",
-  "version": "2.2.0",
+  "version": "2.2.0.0",
   "summary": "iOS SDK for KISSmetrics",
   "homepage": "http://www.kissmetrics.com",
   "documentation_url": "http://support.kissmetrics.com/apis/ios-v2",
@@ -29,6 +29,6 @@
     ]
   },
   "xcconfig": {
-    "FRAMEWORK_SEARCH_PATHS": "\"${PODS_ROOT}/KISSmetricsSDK\""
+    "FRAMEWORK_SEARCH_PATHS": "\"${PODS_ROOT}/KISSmetrics-iOS-SDK\""
   }
 }
