@@ -1,6 +1,6 @@
 {
   "name": "KISSmetrics-iOS-SDK",
-  "version": "2.2.0.0",
+  "version": "2.2.0",
   "summary": "iOS SDK for KISSmetrics",
   "homepage": "http://www.kissmetrics.com",
   "documentation_url": "http://support.kissmetrics.com/apis/ios-v2",
@@ -12,23 +12,18 @@
     "kissmetrics": "support@kissmetrics.com"
   },
   "source": {
-    "http": "https://github.com/kissmetrics/KISSmetrics-iOS-SDK/releases/download/v2.2.0/KISSmetricsSDK.framework.zip"
+    "git": "https://github.com/justin/KISSmetrics-iOS-SDK.git",
+    "tag": "v2.2.0"
   },
-  "public_header_files": "KISSmetricsSDK.framework/Headers/KISSmetricsAPI.h",
-  "vendored_frameworks": "KISSmetricsSDK.framework",
-  "source_files": "KISSmetricsSDK.framework/Headers/KISSmetricsAPI.h",
+  "public_header_files": "KISSmetricsAPI/KISSmetricsAPI.h",
+  "source_files": "KISSmetricsAPI/*.{h,m,c}",
   "platforms": {
-    "ios": "5.1"
+    "ios": "6.0"
   },
   "ios": {
-    "requires_arc": false,
-    "preserve_paths": "KISSmetricsSDK.framework",
+    "requires_arc": true,
     "frameworks": [
-      "Foundation",
-      "KISSmetricsSDK"
+      "Foundation"
     ]
-  },
-  "xcconfig": {
-    "FRAMEWORK_SEARCH_PATHS": "\"${PODS_ROOT}/KISSmetrics-iOS-SDK\""
   }
 }
