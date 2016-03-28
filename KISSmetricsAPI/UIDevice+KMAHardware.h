@@ -24,6 +24,8 @@
 #define KMA_IPHONE_5S_NAMESTRING            @"iPhone 5S"
 #define KMA_IPHONE_6_NAMESTRING             @"iPhone 6"
 #define KMA_IPHONE_6PLUS_NAMESTRING         @"iPhone 6 Plus"
+#define KMA_IPHONE_6S_NAMESTRING            @"iPhone 6s"
+#define KMA_IPHONE_6SPLUS_NAMESTRING        @"iPhone 6s Plus"
 #define KMA_IPHONE_UNKNOWN_NAMESTRING       @"Unknown iPhone"
 
 #define KMA_IPOD_TOUCH_1_NAMESTRING         @"iPod touch 1"
@@ -57,12 +59,12 @@
 
 typedef enum {
     KMA_UIDeviceUnknown,
-    
+
     KMA_UIDeviceiPhoneSimulator,
     KMA_UIDeviceiPhoneSimulatoriPhone, // Both regular and iPhone 4 devices
     KMA_UIDeviceiPhoneSimulatoriPad,
     KMA_UIDeviceSimulatorAppleTV,
-    
+
     KMA_UIDeviceiPhone1,
     KMA_UIDeviceiPhone3G,
     KMA_UIDeviceiPhone3GS,
@@ -80,13 +82,15 @@ typedef enum {
     KMA_UIDeviceiPhone5SGSMCDMA,
     KMA_UIDeviceiPhone6,
     KMA_UIDeviceiPhone6Plus,
-    
+    KMA_UIDeviceiPhone6S,
+    KMA_UIDeviceiPhone6SPlus,
+
     KMA_UIDeviceiPodTouch1,
     KMA_UIDeviceiPodTouch2,
     KMA_UIDeviceiPodTouch3,
     KMA_UIDeviceiPodTouch4,
     KMA_UIDeviceiPodTouch5,
-    
+
     KMA_UIDeviceiPad1,
     KMA_UIDeviceiPad2,
     KMA_UIDeviceiPad3,
@@ -98,13 +102,13 @@ typedef enum {
     KMA_UIDeviceAppleTV2,
     KMA_UIDeviceAppleTV3,
     KMA_UIDeviceAppleTV4,
-    
+
     KMA_UIDeviceUnknowniPhone,
     KMA_UIDeviceUnknowniPod,
     KMA_UIDeviceUnknowniPad,
     KMA_UIDeviceUnknownAppleTV,
     KMA_UIDeviceIFPGA,
-    
+
 } KMA_UIDevicePlatform;
 
 typedef enum {
@@ -113,7 +117,7 @@ typedef enum {
     KMA_UIDeviceFamilyiPad,
     KMA_UIDeviceFamilyAppleTV,
     KMA_UIDeviceFamilyUnknown,
-    
+
 } KMA_UIDeviceFamily;
 
 @interface UIDevice (KMAHardware)

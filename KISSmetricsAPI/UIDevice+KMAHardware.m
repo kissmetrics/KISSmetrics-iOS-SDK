@@ -58,9 +58,9 @@
 @implementation UIDevice (KMAHardware)
 /*
  Platforms
- 
+
  iFPGA ->        ??
- 
+
  iPhone1,1 ->    iPhone 1, M68
  iPhone1,2 ->    iPhone 3G, N82
  iPhone2,1 ->    iPhone 3GS, N88
@@ -76,14 +76,16 @@
  iPhone6,2 ->    iPhone 5S/GSM+CDMA, N53
  iPhone7,1 ->    iPhone 6 Plus, N56
  iPhone7,2 ->    iPhone 6, N61
- 
+ iPhone8,1 ->    iPhone 6S
+ iPhone8,2 ->    iPhone 6 Plus
+
  iPod1,1   ->    iPod touch 1, N45
  iPod2,1   ->    iPod touch 2, N72
  iPod2,2   ->    iPod touch 3, Prototype
  iPod3,1   ->    iPod touch 3, N18
  iPod4,1   ->    iPod touch 4, N81
  iPod5.1   ->    iPod touch 5
- 
+
  // Thanks NSForge
  ipad0,1   ->    iPad, Prototype
  iPad1,1   ->    iPad 1, WiFi and 3G, K48
@@ -101,11 +103,11 @@
  iPad4,2   ->    iPad Air, Cellular
  iPad4,4   ->    iPad mini (2G), WiFi
  iPad4,5   ->    iPad mini (2G), Cellular (Verizon:GSM+CDMA, AT&T:GSM)
- 
+
  iProd2,1   ->   AppleTV 2, Prototype
  AppleTV2,1 ->   AppleTV 2, K66
  AppleTV3,1 ->   AppleTV 3, ??
- 
+
  i386, x86_64 -> iPhone Simulator
 */
 
@@ -116,12 +118,12 @@
 {
     size_t size;
     sysctlbyname(typeSpecifier, NULL, &size, NULL, 0);
-    
+
     char *answer = malloc(size);
     sysctlbyname(typeSpecifier, answer, &size, NULL, 0);
-    
+
     NSString *results = @(answer);
-    
+
     free(answer);
     return results;
 }
@@ -216,7 +218,7 @@
 +( NSInteger )kma_getSubmodel:( NSString* )platform //private
 {
     NSInteger submodel = -1;
-    
+
     NSArray* components = [ platform componentsSeparatedByString:@"," ];
     if ( [ components count ] >= 2 ) {
         submodel = [ [ components objectAtIndex:1 ] intValue ];
@@ -244,7 +246,7 @@
 {
     // The ever mysterious iFPGA
     if ([platform isEqualToString:@"iFPGA"])        return KMA_UIDeviceIFPGA;
-	
+
     // iPhone
     if ([platform isEqualToString:@"iPhone1,1"])    return KMA_UIDeviceiPhone1;
     if ([platform isEqualToString:@"iPhone1,2"])    return KMA_UIDeviceiPhone3G;
@@ -261,7 +263,9 @@
     if ([platform isEqualToString:@"iPhone6,2"])    return KMA_UIDeviceiPhone5SGSMCDMA;
     if ([platform isEqualToString:@"iPhone7,1"])    return KMA_UIDeviceiPhone6Plus;
     if ([platform isEqualToString:@"iPhone7,2"])    return KMA_UIDeviceiPhone6;
-    
+    if ([platform isEqualToString:@"iPhone8,1"])    return KMA_UIDeviceiPhone6S;
+    if ([platform isEqualToString:@"iPhone8,2"])    return KMA_UIDeviceiPhone6SPlus;
+
     // iPod
     if ([platform hasPrefix:@"iPod1"])              return KMA_UIDeviceiPodTouch1;
     if ([platform isEqualToString:@"iPod2,2"])      return KMA_UIDeviceiPodTouch3;
@@ -269,11 +273,11 @@
     if ([platform hasPrefix:@"iPod3"])              return KMA_UIDeviceiPodTouch3;
     if ([platform hasPrefix:@"iPod4"])              return KMA_UIDeviceiPodTouch4;
     if ([platform hasPrefix:@"iPod5"])              return KMA_UIDeviceiPodTouch5;
-	
+
     // iPad
     if ([platform hasPrefix:@"iPad1"])              return KMA_UIDeviceiPad1;
     if ([platform hasPrefix:@"iPad2"]) {
-        
+
         NSInteger submodel = [ UIDevice kma_getSubmodel:platform ];
         if (submodel <= 4) {
             return KMA_UIDeviceiPad2;
@@ -283,9 +287,9 @@
             return KMA_UIDeviceiPadMini;
         }
     }
-    
+
     if ([platform hasPrefix:@"iPad3"]) {
-        
+
         NSInteger submodel = [ UIDevice kma_getSubmodel:platform ];
         if (submodel <= 3) {
             return KMA_UIDeviceiPad3;
@@ -295,9 +299,9 @@
             return KMA_UIDeviceiPad4;
         }
     }
-    
+
     if ([platform hasPrefix:@"iPad4"]) {
-        
+
         NSInteger submodel = [ UIDevice kma_getSubmodel:platform ];
         if (submodel <= 2) {
             return KMA_UIDeviceiPadAir;
@@ -307,22 +311,22 @@
             return KMA_UIDeviceiPadMini2;
         }
     }
-    
+
     // Apple TV
     if ([platform hasPrefix:@"AppleTV2"])   return KMA_UIDeviceAppleTV2;
     if ([platform hasPrefix:@"AppleTV3"])   return KMA_UIDeviceAppleTV3;
-	
+
     if ([platform hasPrefix:@"iPhone"])     return KMA_UIDeviceUnknowniPhone;
     if ([platform hasPrefix:@"iPod"])       return KMA_UIDeviceUnknowniPod;
     if ([platform hasPrefix:@"iPad"])       return KMA_UIDeviceUnknowniPad;
     if ([platform hasPrefix:@"AppleTV"])    return KMA_UIDeviceUnknownAppleTV;
-    
+
     // Simulator thanks Jordan Breeding
     if ([platform hasSuffix:@"86"] || [platform isEqual:@"x86_64"]) {
         BOOL smallerScreen = [[UIScreen mainScreen] bounds].size.width < 768;
         return smallerScreen ? KMA_UIDeviceiPhoneSimulatoriPhone : KMA_UIDeviceiPhoneSimulatoriPad;
     }
-	
+
     return KMA_UIDeviceUnknown;
 }
 
@@ -346,15 +350,17 @@
         case KMA_UIDeviceiPhone5SGSMCDMA:       return KMA_IPHONE_5S_NAMESTRING;
         case KMA_UIDeviceiPhone6:               return KMA_IPHONE_6_NAMESTRING;
         case KMA_UIDeviceiPhone6Plus:           return KMA_IPHONE_6PLUS_NAMESTRING;
+        case KMA_UIDeviceiPhone6S:              return KMA_IPHONE_6S_NAMESTRING;
+        case KMA_UIDeviceiPhone6SPlus:          return KMA_IPHONE_6SPLUS_NAMESTRING;
         case KMA_UIDeviceUnknowniPhone:         return KMA_IPHONE_UNKNOWN_NAMESTRING;
-			
+
         case KMA_UIDeviceiPodTouch1:            return KMA_IPOD_TOUCH_1_NAMESTRING;
         case KMA_UIDeviceiPodTouch2:            return KMA_IPOD_TOUCH_2_NAMESTRING;
         case KMA_UIDeviceiPodTouch3:            return KMA_IPOD_TOUCH_3_NAMESTRING;
         case KMA_UIDeviceiPodTouch4:            return KMA_IPOD_TOUCH_4_NAMESTRING;
         case KMA_UIDeviceiPodTouch5:            return KMA_IPOD_TOUCH_5_NAMESTRING;
         case KMA_UIDeviceUnknowniPod:           return KMA_IPOD_UNKNOWN_NAMESTRING;
-            
+
         case KMA_UIDeviceiPad1:                 return KMA_IPAD_1_NAMESTRING;
         case KMA_UIDeviceiPad2:                 return KMA_IPAD_2_NAMESTRING;
         case KMA_UIDeviceiPad3:                 return KMA_IPAD_3G_NAMESTRING;
@@ -363,19 +369,19 @@
         case KMA_UIDeviceiPadMini2:             return KMA_IPAD_MINI_2G_NAMESTRING;
         case KMA_UIDeviceiPadAir:               return KMA_IPAD_AIR_NAMESTRING;
         case KMA_UIDeviceUnknowniPad:           return KMA_IPAD_UNKNOWN_NAMESTRING;
-            
+
         case KMA_UIDeviceAppleTV2:              return KMA_APPLETV_2G_NAMESTRING;
         case KMA_UIDeviceAppleTV3:              return KMA_APPLETV_3G_NAMESTRING;
         case KMA_UIDeviceAppleTV4:              return KMA_APPLETV_4G_NAMESTRING;
         case KMA_UIDeviceUnknownAppleTV:        return KMA_APPLETV_UNKNOWN_NAMESTRING;
-            
+
         case KMA_UIDeviceiPhoneSimulator:       return KMA_IPHONE_SIMULATOR_NAMESTRING;
         case KMA_UIDeviceiPhoneSimulatoriPhone: return KMA_IPHONE_SIMULATOR_IPHONE_NAMESTRING;
         case KMA_UIDeviceiPhoneSimulatoriPad:   return KMA_IPHONE_SIMULATOR_IPAD_NAMESTRING;
         case KMA_UIDeviceSimulatorAppleTV:      return KMA_SIMULATOR_APPLETV_NAMESTRING;
-            
+
         case KMA_UIDeviceIFPGA:                 return KMA_IFPGA_NAMESTRING;
-            
+
         default:                                return KMA_IOS_FAMILY_UNKNOWN_DEVICE;
     }
 }
@@ -419,7 +425,7 @@
     if ([platform hasPrefix:@"iPod"]) return KMA_UIDeviceFamilyiPod;
     if ([platform hasPrefix:@"iPad"]) return KMA_UIDeviceFamilyiPad;
     if ([platform hasPrefix:@"AppleTV"]) return KMA_UIDeviceFamilyAppleTV;
-    
+
     return KMA_UIDeviceFamilyUnknown;
 }
 
@@ -437,34 +443,34 @@
     unsigned char       *ptr;
     struct if_msghdr    *ifm;
     struct sockaddr_dl  *sdl;
-    
+
     mib[0] = CTL_NET;
     mib[1] = AF_ROUTE;
     mib[2] = 0;
     mib[3] = AF_LINK;
     mib[4] = NET_RT_IFLIST;
-    
+
     if ((mib[5] = if_nametoindex("en0")) == 0) {
         printf("Error: if_nametoindex error\n");
         return NULL;
     }
-    
+
     if (sysctl(mib, 6, NULL, &len, NULL, 0) < 0) {
         printf("Error: sysctl, take 1\n");
         return NULL;
     }
-    
+
     if ((buf = malloc(len)) == NULL) {
         printf("Error: Memory allocation error\n");
         return NULL;
     }
-    
+
     if (sysctl(mib, 6, buf, &len, NULL, 0) < 0) {
         printf("Error: sysctl, take 2\n");
         free(buf); // Thanks, Remy "Psy" Demerest
         return NULL;
     }
-    
+
     ifm = (struct if_msghdr *)buf;
     sdl = (struct sockaddr_dl *)(ifm + 1);
     ptr = (unsigned char *)LLADDR(sdl);
@@ -476,5 +482,3 @@
 
 
 @end
-
-
