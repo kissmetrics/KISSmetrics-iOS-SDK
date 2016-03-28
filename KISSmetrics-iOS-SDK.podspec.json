@@ -15,13 +15,12 @@
     "http": "https://github.com/ivanbruel/KISSmetrics-iOS-SDK/releases/download/v2.3.0/KISSmetricsSDK.framework.zip"
   },
   "public_header_files": "KISSmetricsAPI/*.h",
-  "vendored_frameworks": "KISSmetricsSDK.framework",
   "source_files": "KISSmetricsAPI/*.{h,m,c}",
   "platforms": {
     "ios": "6.0"
   },
   "ios": {
-    "requires_arc": false,
+    "requires_arc": true,
     "frameworks": [
       "Foundation"
     ]
