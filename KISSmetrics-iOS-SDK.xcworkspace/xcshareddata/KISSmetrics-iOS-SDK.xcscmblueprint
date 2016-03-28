@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "F3D139DFC5397739DBA0D653ED16217BDC9EBFA2",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "F3D139DFC5397739DBA0D653ED16217BDC9EBFA2" : 0,
+    "8372B87BEE59222E93EC0068EBDE98ADE182F55F" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "4347BB70-5E8D-4005-9D2B-E0EBBA306829",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "F3D139DFC5397739DBA0D653ED16217BDC9EBFA2" : "KISSmetrics-iOS-SDK",
+    "8372B87BEE59222E93EC0068EBDE98ADE182F55F" : "KISSmetrics-iOS-SDK\/TestFrameworks\/MockNSURLConnection"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "KISSmetrics-iOS-SDK",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "KISSmetrics-iOS-SDK.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh:\/\/github.com\/willrust\/MockNSURLConnection.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8372B87BEE59222E93EC0068EBDE98ADE182F55F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh:\/\/github.com\/kissmetrics\/KISSmetrics-iOS-SDK.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F3D139DFC5397739DBA0D653ED16217BDC9EBFA2"
+    }
+  ]
+}
