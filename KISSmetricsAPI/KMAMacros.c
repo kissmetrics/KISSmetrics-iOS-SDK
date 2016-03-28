@@ -18,8 +18,9 @@
 // limitations under the License.
 
 
-
-#define KMALogVerbose 1
+#ifndef KMALogVerbose
+#  define KMALogVerbose 1
+#endif
 
 /* Our own internal logging */
 #ifndef KMALog
