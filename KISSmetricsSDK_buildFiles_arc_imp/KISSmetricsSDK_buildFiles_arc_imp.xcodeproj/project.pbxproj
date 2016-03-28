@@ -612,6 +612,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KISSmetricsSDK_buildFiles_arc_imp/KISSmetricsSDK_buildFiles_arc_imp-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/KISSmetricsSDK_buildFiles_arc_imp/KISSmetricsSDK_buildFiles_arc_imp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = KISSmetricsSDK_buildFiles_arc_imp;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -628,6 +629,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KISSmetricsSDK_buildFiles_arc_imp/KISSmetricsSDK_buildFiles_arc_imp-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/KISSmetricsSDK_buildFiles_arc_imp/KISSmetricsSDK_buildFiles_arc_imp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = KISSmetricsSDK_buildFiles_arc_imp;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
