@@ -34,9 +34,15 @@
 #pragma mark - Private methods
 - (void)sendTopRecord
 {
+    NSString *queryString = [[KMAArchiver sharedArchiver] getQueryStringAtIndex:0];
+
+    if (!queryString) {
+        return;
+    }
+
     // Assemble the full query string by prepending the current baseUrl as last archived.
     NSString *nextAPICall = [[KMAArchiver sharedArchiver] getBaseUrl];
-    nextAPICall = [nextAPICall stringByAppendingString:[[KMAArchiver sharedArchiver] getQueryStringAtIndex:0]];
+    nextAPICall = [nextAPICall stringByAppendingString:queryString];
     KMAConnection *connection = [self.sender getNewConnection];
     [connection sendRecordWithURLString:nextAPICall delegate:self.sender];
 }
