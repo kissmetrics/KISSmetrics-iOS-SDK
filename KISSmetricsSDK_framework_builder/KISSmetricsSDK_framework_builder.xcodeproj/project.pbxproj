@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -100,8 +100,8 @@
 
 /* Begin PBXFileReference section */
 		AF2011AE187C92620053D105 /* KISSmetricsAPI_UnitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "KISSmetricsAPI_UnitTests-Info.plist"; sourceTree = "<group>"; };
-		AF64FF4517C7CA3800316746 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		AF64FF4717C7CA3800316746 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		AF64FF4517C7CA3800316746 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		AF64FF4717C7CA3800316746 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		AF90D6E51869F6C000DE1074 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AF90D6E61869F6C000DE1074 /* KISSmetricsAPI_options.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KISSmetricsAPI_options.m; sourceTree = "<group>"; };
 		AF90D6E71869F6C000DE1074 /* KISSmetricsAPI_SingletonTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KISSmetricsAPI_SingletonTests.m; sourceTree = "<group>"; };
@@ -144,7 +144,7 @@
 		AFB6BFDF17F39A0E00FC9B9C /* KISSmetricsSDK_UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KISSmetricsSDK_UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFCC8DD117FC7CE2003691FA /* OCHamcrestIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCHamcrestIOS.framework; path = ../TestFrameworks/OCHamcrestIOS.framework; sourceTree = "<group>"; };
 		AFCC8DD217FC7CE2003691FA /* OCMockitoIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMockitoIOS.framework; path = ../TestFrameworks/OCMockitoIOS.framework; sourceTree = "<group>"; };
-		AFCC8DD517FC7E62003691FA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		AFCC8DD517FC7E62003691FA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		AFE6D05719464F7F00A6E074 /* KMASender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMASender.h; sourceTree = "<group>"; };
 		AFE6D05819464F7F00A6E074 /* KMASender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMASender.m; sourceTree = "<group>"; };
 		AFE6D05C19464FFB00A6E074 /* KMASenderStateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMASenderStateProtocol.h; sourceTree = "<group>"; };
@@ -349,7 +349,7 @@
 				};
 			};
 			buildConfigurationList = AFD0707917BDE49B00966422 /* Build configuration list for PBXProject "KISSmetricsSDK_framework_builder" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -485,11 +485,11 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"/KISSmetrics/development/objc/projects/KISSmetrics-iOS-SDK/TestFrameworks",
+					"$(PROJECT_DIR)/../TestFrameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KISSmetricsSDK_UnitTests/KISSmetricsAPI_UnitTests-Prefix.pch";
@@ -508,10 +508,7 @@
 				);
 				INFOPLIST_FILE = "KISSmetricsSDK_UnitTests/KISSmetricsAPI_UnitTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/KISSmetrics/development/objc/projects/KISSmetrics-iOS-SDK/TestFrameworks",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = " -ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kissmetrics.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -526,12 +523,12 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"/KISSmetrics/development/objc/projects/KISSmetrics-iOS-SDK/TestFrameworks",
+					"$(PROJECT_DIR)/../TestFrameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KISSmetricsSDK_UnitTests/KISSmetricsAPI_UnitTests-Prefix.pch";
@@ -546,10 +543,7 @@
 				);
 				INFOPLIST_FILE = "KISSmetricsSDK_UnitTests/KISSmetricsAPI_UnitTests-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/KISSmetrics/development/objc/projects/KISSmetrics-iOS-SDK/TestFrameworks",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = " -ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.kissmetrics.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
