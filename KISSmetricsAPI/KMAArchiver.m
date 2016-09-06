@@ -40,7 +40,7 @@ static NSString * const kKMADoSendKey = @"doSend";
 static NSString * const kKMABaseUrlKey = @"baseUrl";
 static NSString * const kKMABaseUrlDefault = @"https://trk.kissmetrics.com";
 static NSString * const kKMAAPIClientType  = @"mobile_app";
-static NSString * const kKMAAPIUserAgent   = @"kissmetrics-ios/2.2.0";
+static NSString * const kKMAAPIUserAgent   = @"kissmetrics-ios/2.3.0";
 static NSString * const kKMAKeychainAppVersionKey = @"KMAAppVersion";
 
 static KMAArchiver *sSharedArchiver = nil;
