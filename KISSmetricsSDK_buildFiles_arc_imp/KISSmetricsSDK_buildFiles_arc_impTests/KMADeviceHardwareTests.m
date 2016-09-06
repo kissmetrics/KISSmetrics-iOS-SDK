@@ -51,6 +51,7 @@
 }
 
 
+/*
 - (void)testkmac_hwmodelReturnsHardwareModelString
 {
     NSArray *expectedHardwareModels = @[@"MacBookPro10,1", // Macs
@@ -62,6 +63,7 @@
     
     XCTAssertTrue([expectedHardwareModels containsObject:hardwareModel], @"Expected test hardware model to be one of expected hardware models but was not");
 }
+*/
 
 
 // Minimal test of kmac_platformTypeForString

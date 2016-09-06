@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -42,9 +42,6 @@
 		AF90D6DD1868ABEA00DE1074 /* KISSmetricsAPI_options.m in Sources */ = {isa = PBXBuildFile; fileRef = AF90D6DC1868ABEA00DE1074 /* KISSmetricsAPI_options.m */; };
 		AF90D6DE1868ABEA00DE1074 /* KISSmetricsAPI_options.m in Sources */ = {isa = PBXBuildFile; fileRef = AF90D6DC1868ABEA00DE1074 /* KISSmetricsAPI_options.m */; };
 		AF92FD4A17F9F06600C47A73 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF92FD4917F9F06600C47A73 /* XCTest.framework */; };
-		AF92FD4E17F9F47800C47A73 /* KMAVCLifecycleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF92FD4D17F9F47800C47A73 /* KMAVCLifecycleTests.m */; };
-		AF9EB3CD17FA39A0002FF023 /* OCMockitoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9EB3CC17FA39A0002FF023 /* OCMockitoIOS.framework */; };
-		AF9EB3CF17FB3DCA002FF023 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9EB3CE17FB3DCA002FF023 /* OCHamcrestIOS.framework */; };
 		AFB99FF9188DA410004CD0AD /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFB99FF7188DA410004CD0AD /* Main_iPad.storyboard */; };
 		AFB99FFA188DA410004CD0AD /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AFB99FF8188DA410004CD0AD /* Main_iPhone.storyboard */; };
 		AFCC8DDA17FC917A003691FA /* KMAConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = AFCC8DD817FC9179003691FA /* KMAConnection.m */; };
@@ -62,6 +59,9 @@
 		AFE6D07D1946A06A00A6E074 /* KMASender.m in Sources */ = {isa = PBXBuildFile; fileRef = AFE6D0741946A06A00A6E074 /* KMASender.m */; };
 		AFE8242F180CF4AB00AD78AC /* KMAArchiverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AFE8242E180CF4AB00AD78AC /* KMAArchiverTests.m */; };
 		AFE82431180DA6CC00AD78AC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFE82430180DA6CC00AD78AC /* Security.framework */; };
+		CAC6FC431D1B5D690085E017 /* KMAVCLifecycleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF92FD4D17F9F47800C47A73 /* KMAVCLifecycleTests.m */; };
+		CAC6FC451D1B5FDE0085E017 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9EB3CE17FB3DCA002FF023 /* OCHamcrestIOS.framework */; };
+		CAC6FC461D1B5FE30085E017 /* OCMockitoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF9EB3CC17FA39A0002FF023 /* OCMockitoIOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,7 +124,7 @@
 		AF8C79A3180DF213005EF4DD /* UIDevice+KMAHardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+KMAHardware.m"; sourceTree = "<group>"; };
 		AF8C79B218105770005EF4DD /* KMADeviceHardwareTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMADeviceHardwareTests.m; sourceTree = "<group>"; };
 		AF90D6DC1868ABEA00DE1074 /* KISSmetricsAPI_options.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KISSmetricsAPI_options.m; sourceTree = "<group>"; };
-		AF92FD4917F9F06600C47A73 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		AF92FD4917F9F06600C47A73 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/MacOSX.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		AF92FD4D17F9F47800C47A73 /* KMAVCLifecycleTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMAVCLifecycleTests.m; sourceTree = "<group>"; };
 		AF9EB3CC17FA39A0002FF023 /* OCMockitoIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMockitoIOS.framework; path = ../TestFrameworks/OCMockitoIOS.framework; sourceTree = "<group>"; };
 		AF9EB3CE17FB3DCA002FF023 /* OCHamcrestIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCHamcrestIOS.framework; path = ../TestFrameworks/OCHamcrestIOS.framework; sourceTree = "<group>"; };
@@ -167,10 +167,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF92FD4A17F9F06600C47A73 /* XCTest.framework in Frameworks */,
-				AF9EB3CD17FA39A0002FF023 /* OCMockitoIOS.framework in Frameworks */,
-				AF9EB3CF17FB3DCA002FF023 /* OCHamcrestIOS.framework in Frameworks */,
+				CAC6FC451D1B5FDE0085E017 /* OCHamcrestIOS.framework in Frameworks */,
 				AF89B99017F9E08500B7E21E /* UIKit.framework in Frameworks */,
 				AF89B98F17F9E08500B7E21E /* Foundation.framework in Frameworks */,
+				CAC6FC461D1B5FE30085E017 /* OCMockitoIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,7 +358,7 @@
 				AF89B98817F9E08500B7E21E /* Sources */,
 				AF89B98917F9E08500B7E21E /* Frameworks */,
 				AF89B98A17F9E08500B7E21E /* Resources */,
-				AFABD23D1948C9ED00178C77 /* ShellScript */,
+				AFABD23D1948C9ED00178C77 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -376,7 +376,7 @@
 		AF89B96017F9E08500B7E21E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = KISSmetrics;
 				TargetAttributes = {
 					AF89B96717F9E08500B7E21E = {
@@ -388,7 +388,7 @@
 				};
 			};
 			buildConfigurationList = AF89B96317F9E08500B7E21E /* Build configuration list for PBXProject "KISSmetricsSDK_buildFiles_arc_imp" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -429,13 +429,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		AFABD23D1948C9ED00178C77 /* ShellScript */ = {
+		AFABD23D1948C9ED00178C77 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -479,6 +480,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAC6FC431D1B5D690085E017 /* KMAVCLifecycleTests.m in Sources */,
 				AFE6D07D1946A06A00A6E074 /* KMASender.m in Sources */,
 				AFE6D0791946A06A00A6E074 /* KMASenderReadyState.m in Sources */,
 				AF8ACA04190B287D00C02B43 /* MockNSURLConnection.m in Sources */,
@@ -491,7 +493,6 @@
 				AF65F4731857B6570075949D /* KMAQueryEncoder.m in Sources */,
 				AF89B99A17F9E08500B7E21E /* KISSmetricsSDK_buildFiles_arc_impTests.m in Sources */,
 				AF8C79B318105770005EF4DD /* KMADeviceHardwareTests.m in Sources */,
-				AF92FD4E17F9F47800C47A73 /* KMAVCLifecycleTests.m in Sources */,
 				AFE6D07B1946A06A00A6E074 /* KMASenderDisabledState.m in Sources */,
 				AFCC8DDA17FC917A003691FA /* KMAConnection.m in Sources */,
 				AFE6D0771946A06A00A6E074 /* KMASenderSendingState.m in Sources */,
@@ -548,6 +549,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -562,7 +564,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -595,7 +597,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -612,6 +614,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KISSmetricsSDK_buildFiles_arc_imp/KISSmetricsSDK_buildFiles_arc_imp-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/KISSmetricsSDK_buildFiles_arc_imp/KISSmetricsSDK_buildFiles_arc_imp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kissmetrics.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = KISSmetricsSDK_buildFiles_arc_imp;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -628,6 +632,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KISSmetricsSDK_buildFiles_arc_imp/KISSmetricsSDK_buildFiles_arc_imp-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/KISSmetricsSDK_buildFiles_arc_imp/KISSmetricsSDK_buildFiles_arc_imp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kissmetrics.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = KISSmetricsSDK_buildFiles_arc_imp;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -640,10 +646,10 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/KISSmetricsSDK_buildFiles_arc_imp.app/KISSmetricsSDK_buildFiles_arc_imp";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"/KISSmetrics/development/objc/projects/KISSmetrics-iOS-SDK/TestFrameworks",
+					"$(PROJECT_DIR)/../TestFrameworks",
+					"$(SDKROOT)/Developer/Library/PrivateFrameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KISSmetricsSDK_buildFiles_arc_imp/KISSmetricsSDK_buildFiles_arc_imp-Prefix.pch";
@@ -653,7 +659,12 @@
 				);
 				INFOPLIST_FILE = "KISSmetricsSDK_buildFiles_arc_impTests/KISSmetricsSDK_buildFiles_arc_impTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kissmetrics.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = KISSmetricsSDK_buildFiles_arc_impTests;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
+				SDKROOT = iphoneos;
+				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -665,16 +676,21 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/KISSmetricsSDK_buildFiles_arc_imp.app/KISSmetricsSDK_buildFiles_arc_imp";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"/KISSmetrics/development/objc/projects/KISSmetrics-iOS-SDK/TestFrameworks",
+					"$(PROJECT_DIR)/../TestFrameworks",
+					"$(SDKROOT)/Developer/Library/PrivateFrameworks",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KISSmetricsSDK_buildFiles_arc_imp/KISSmetricsSDK_buildFiles_arc_imp-Prefix.pch";
 				INFOPLIST_FILE = "KISSmetricsSDK_buildFiles_arc_impTests/KISSmetricsSDK_buildFiles_arc_impTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kissmetrics.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = KISSmetricsSDK_buildFiles_arc_impTests;
+				PUBLIC_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Headers";
+				SDKROOT = iphoneos;
+				SHARED_PRECOMPS_DIR = "$(CACHE_ROOT)/SharedPrecompiledHeaders";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
