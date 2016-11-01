@@ -33,6 +33,8 @@
 #define MOCKITO_SHORTHAND
 #import <OCMockitoIOS/OCMockitoIOS.h>
 
+#import "KISSmetricsSDK_UnitTests.h"
+
 
 // Exposing KMAArchiver private methods for testing
 @interface KMAArchiver (privateTestMethods)
@@ -96,7 +98,7 @@
     
     NSLog(@"KMAArchiverTests setUp");
     
-    _key = @"b8f68fe5004d29bcd21d3138b43ae755a16c12cf";
+    _key = API_KEY;
     _clientType  = @"mobile_app";
     _userAgent   = @"kissmetrics-ios/2.3.0";
     

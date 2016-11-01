@@ -33,6 +33,8 @@
 #define MOCKITO_SHORTHAND
 #import <OCMockitoIOS/OCMockitoIOS.h>
 
+#import "KISSmetricsSDK_UnitTests.h"
+
 
 @interface KISSmetricsAPI_SingletonTests : XCTestCase
 
@@ -54,7 +56,7 @@
     // Set-up
     
     // initialize with key otherwise all subsequent calls to [KISSmetricsAPI sharedAPI] will return nil
-    [KISSmetricsAPI sharedAPIWithKey:@"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"];
+    [KISSmetricsAPI sharedAPIWithKey: API_KEY];
 }
 
 

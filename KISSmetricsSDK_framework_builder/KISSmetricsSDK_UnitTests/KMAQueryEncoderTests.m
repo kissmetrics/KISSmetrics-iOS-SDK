@@ -25,6 +25,7 @@
 // Test support
 #import <XCTest/XCTest.h>
 
+#import "KISSmetricsSDK_UnitTests.h"
 
 @interface KMAQueryEncoderTests : XCTestCase
 @end
@@ -51,7 +52,7 @@
     
     NSLog(@"KMAArchiverTests setUp");
     
-    _key = @"b8f68fe5004d29bcd21d3138b43ae755a16c12cf";
+    _key = API_KEY;
     _clientType  = @"mobile_app";
     _userAgent   = @"kissmetrics-ios/2.3.0";
     
