@@ -75,6 +75,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C8E79351DCB75B300F56CA3 /* KISSmetricsSDK_buildFiles_arc_imp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KISSmetricsSDK_buildFiles_arc_imp.entitlements; sourceTree = "<group>"; };
 		AF2E0E9B18734C040016E767 /* TestableKMAConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestableKMAConnection.h; sourceTree = "<group>"; };
 		AF2E0E9C18734C040016E767 /* TestableKMAConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestableKMAConnection.m; sourceTree = "<group>"; };
 		AF3103AB18610AA10030713B /* KMATrackingOperations_TrackingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMATrackingOperations_TrackingState.h; sourceTree = "<group>"; };
@@ -214,6 +215,7 @@
 		AF89B97117F9E08500B7E21E /* KISSmetricsSDK_buildFiles_arc_imp */ = {
 			isa = PBXGroup;
 			children = (
+				2C8E79351DCB75B300F56CA3 /* KISSmetricsSDK_buildFiles_arc_imp.entitlements */,
 				AFB99FF7188DA410004CD0AD /* Main_iPad.storyboard */,
 				AFB99FF8188DA410004CD0AD /* Main_iPhone.storyboard */,
 				AF89B97A17F9E08500B7E21E /* AppDelegate.h */,
@@ -381,6 +383,11 @@
 				TargetAttributes = {
 					AF89B96717F9E08500B7E21E = {
 						DevelopmentTeam = QQM2852RV8;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					AF89B98B17F9E08500B7E21E = {
 						TestTargetID = AF89B96717F9E08500B7E21E;
@@ -609,6 +616,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = KISSmetricsSDK_buildFiles_arc_imp/KISSmetricsSDK_buildFiles_arc_imp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -627,6 +635,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = KISSmetricsSDK_buildFiles_arc_imp/KISSmetricsSDK_buildFiles_arc_imp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
