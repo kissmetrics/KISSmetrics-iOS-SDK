@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2C1DDE231DE1F8C300DC2628 /* KMACompleteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C1DDE221DE1F8C300DC2628 /* KMACompleteTests.m */; };
 		AF2011B0187C95630053D105 /* KMAArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = AF90D7051869F9AF00DE1074 /* KMAArchiver.m */; };
 		AF90D6F41869F6C000DE1074 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AF90D6E41869F6C000DE1074 /* InfoPlist.strings */; };
 		AF90D6F61869F6C000DE1074 /* KISSmetricsAPI_SingletonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AF90D6E71869F6C000DE1074 /* KISSmetricsAPI_SingletonTests.m */; };
@@ -99,6 +100,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C1DDE211DE1E1BE00DC2628 /* KISSmetricsSDK_UnitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KISSmetricsSDK_UnitTests.h; sourceTree = "<group>"; };
+		2C1DDE221DE1F8C300DC2628 /* KMACompleteTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMACompleteTests.m; sourceTree = "<group>"; };
 		AF2011AE187C92620053D105 /* KISSmetricsAPI_UnitTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "KISSmetricsAPI_UnitTests-Info.plist"; sourceTree = "<group>"; };
 		AF64FF4517C7CA3800316746 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		AF64FF4717C7CA3800316746 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -194,6 +197,7 @@
 		AF90D6E31869F6C000DE1074 /* KISSmetricsSDK_UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				2C1DDE211DE1E1BE00DC2628 /* KISSmetricsSDK_UnitTests.h */,
 				AF2011AE187C92620053D105 /* KISSmetricsAPI_UnitTests-Info.plist */,
 				AF90D6E41869F6C000DE1074 /* InfoPlist.strings */,
 				AF90D6E61869F6C000DE1074 /* KISSmetricsAPI_options.m */,
@@ -206,6 +210,7 @@
 				AF90D6EF1869F6C000DE1074 /* KMASwizzledClass.h */,
 				AF90D6F01869F6C000DE1074 /* KMASwizzledClass.m */,
 				AF90D6F11869F6C000DE1074 /* KMASwizzlerTests.m */,
+				2C1DDE221DE1F8C300DC2628 /* KMACompleteTests.m */,
 			);
 			path = KISSmetricsSDK_UnitTests;
 			sourceTree = "<group>";
@@ -408,6 +413,7 @@
 			files = (
 				AF2011B0187C95630053D105 /* KMAArchiver.m in Sources */,
 				AFE6D06C1946506300A6E074 /* KMASenderDisabledState.m in Sources */,
+				2C1DDE231DE1F8C300DC2628 /* KMACompleteTests.m in Sources */,
 				AF90D6F61869F6C000DE1074 /* KISSmetricsAPI_SingletonTests.m in Sources */,
 				AF90D6F91869F6C000DE1074 /* KMAArchiverTests.m in Sources */,
 				AF90D74B1869F9AF00DE1074 /* KMATrackingOperations_NonTrackingState.m in Sources */,

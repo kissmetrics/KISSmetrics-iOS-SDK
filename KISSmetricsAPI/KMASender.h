@@ -27,6 +27,7 @@
 
 
 - (id)initDisabled:(BOOL)disabled;
+- (void) forTesting;
 
 - (KMAConnection *)getNewConnection;
 

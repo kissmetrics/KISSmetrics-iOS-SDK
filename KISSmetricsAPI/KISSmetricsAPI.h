@@ -57,7 +57,17 @@ typedef NS_ENUM(NSInteger, KMARecordCondition) {
 //---
 + (KISSmetricsAPI *)sharedAPI;
 
-
+//------------
+// - forTesting:
+//
+// Prepares the API to be used for unit testing.
+//
+// Discussion:
+// The API initializes in a state that does not send events to the server. Sending is enabled in the verification process which happens asynchronously.
+// When performing end-to-end testing, a race condition occurs where test events get sent before verification completes. This method ensures the verification
+// processc completes before events are sent.
+//---
+- (void) forTesting;
 
 //------------
 // - identify:

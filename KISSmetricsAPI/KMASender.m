@@ -47,6 +47,11 @@
     return [KMAConnection new];
 }
 
+- (void) forTesting
+{
+    [_connectionOpQueue waitUntilAllOperationsAreFinished];
+}
+
 
 #pragma mark - Forwarded methods
 - (void)startSending

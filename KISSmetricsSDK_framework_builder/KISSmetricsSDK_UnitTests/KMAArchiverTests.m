@@ -402,6 +402,30 @@
     XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], expectedRecord, @"Records do not match");
 }
 
+- (void)testArchiveEventWithLargeProperties
+{
+    NSString *userNameString = @"testuser@example.com";
+    
+    NSString *eventNameString = @"testArchiveRecord";
+    
+    NSDictionary *propertiesDictionary = LARGE_TEST_PROPERTIES;
+    
+    // Only using this to set an expected identity
+    [[KMAArchiver sharedArchiver] archiveFirstIdentity:userNameString];
+    
+    int timestamp = [[NSDate date] timeIntervalSince1970];
+    NSString *expectedRecord = [_queryEncoder createEventQueryWithName:eventNameString properties:propertiesDictionary identity:userNameString timestamp:timestamp];
+    
+    
+    // User archiveRecord to create a similar record. (timestamp may not match expected record)
+    [[KMAArchiver sharedArchiver] archiveEvent:eventNameString withProperties:propertiesDictionary onCondition:KMARecordAlways];
+    
+    // !!!: The timestamp of archiveRecord and the expectedRecord may not match.
+    // If this is a frequent result we should remove the &t=xxxxxxxxx from
+    // both the archiveRecord and expectedRecord prior to comparison.
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], expectedRecord, @"Records do not match");
+}
+
 
 - (void)testArchiveEventIgnoresNil
 {
