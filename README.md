@@ -69,7 +69,7 @@ The API has been successfully tested and called from Swift project.
 
 Create a Swift Bridging Header using "How to create a Swift Bridging Header Manually" instructions in http://www.learnswiftonline.com/getting-started/adding-swift-bridging-header/
 
-Your header will look something like thisL\
+Your header will look something like this:
 
 ```objective-c
 //
@@ -89,14 +89,17 @@ Your header will look something like thisL\
 
 Call the API like this:
 
+```swift
 KISSmetricsAPI.sharedAPI(withKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 KISSmetricsAPI.shared().record("/app_launched")
-
+```
 
 Tests:
 ---------------------------------
 The SDK will support both ARC/non-ARC and 32bit/64bit projects.
 One test project is included in this workspace for running application integration tests against the build files directly.
+
+Note: the testAppVersionKeychainSetter and testAppVersionKeychainGetter test require setting up Keychain entitlements for the KISSmetricsSDK_buildFiles_arc_imp project
 
 
 File organization:
