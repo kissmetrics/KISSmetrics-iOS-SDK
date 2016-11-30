@@ -56,11 +56,15 @@ Usage:
 
 After initializing the API and configuring events as described above, record an event with: 
 
+```objective-c
 [[KISSmetricsAPI sharedAPI] record:@"/app_launched"];
+```
 
 To record an event with properties:
 
+```objective-c
 [[KISSmetricsAPI sharedAPI] record:@"/content_view" withProperties: @{ @"Content Name": @"Rouge One"}];
+```
 
 Swift:
 ------
