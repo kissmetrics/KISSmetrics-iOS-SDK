@@ -141,6 +141,8 @@ static float const kKMAConnectionTimeout = 20.0f;
             error.code == NSURLErrorDataLengthExceedsMaximum) {
             
             [self.delegate connectionSuccessful:NO forUrlString:_urlString isMalformedRequest:YES];
+        }else{
+            [self.delegate connectionSuccessful:NO forUrlString:_urlString isMalformedRequest:NO];
         }
     }
     
