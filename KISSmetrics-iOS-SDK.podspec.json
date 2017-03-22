@@ -3,7 +3,7 @@
   "version": "2.3.0",
   "summary": "iOS SDK for KISSmetrics",
   "homepage": "http://www.kissmetrics.com",
-  "documentation_url": "http://support.kissmetrics.com/apis/ios-v2",
+  "documentation_url": "http://support.kissmetrics.com/article/show/ios-sdk-v2",
   "license": {
     "type": "Apache 2.0",
     "text": "http://www.apache.org/licenses/LICENSE-2.0.txt"
