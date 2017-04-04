@@ -72,10 +72,10 @@ static NSString * const kKMAAliasPath = @"/a";
 
 - (NSString*)encodeQueryString:(NSString*)queryString
 {
-    NSString * encoded = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                                                      (CFStringRef)queryString, NULL,
-                                                                                      (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                      kCFStringEncodingUTF8 );
+    NSString * encoded = CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                                                   (CFStringRef)queryString, NULL,
+                                                                                   (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                                                   kCFStringEncodingUTF8 ));
     return encoded;
 }
 
