@@ -33,6 +33,8 @@
 #define MOCKITO_SHORTHAND
 #import <OCMockitoIOS/OCMockitoIOS.h>
 
+#import "KISSmetricsSDK_UnitTests.h"
+
 
 // Exposing KMAArchiver private methods for testing
 @interface KMAArchiver (privateTestMethods)
@@ -96,7 +98,7 @@
     
     NSLog(@"KMAArchiverTests setUp");
     
-    _key = @"b8f68fe5004d29bcd21d3138b43ae755a16c12cf";
+    _key = API_KEY;
     _clientType  = @"mobile_app";
     _userAgent   = @"kissmetrics-ios/2.3.1";
     
@@ -383,6 +385,30 @@
     
     NSDictionary *propertiesDictionary = @{@"propertyOne" : @"testPropertyOne",
                                            @"propertyTwo" : @"testPropertyTwo"};
+    
+    // Only using this to set an expected identity
+    [[KMAArchiver sharedArchiver] archiveFirstIdentity:userNameString];
+    
+    int timestamp = [[NSDate date] timeIntervalSince1970];
+    NSString *expectedRecord = [_queryEncoder createEventQueryWithName:eventNameString properties:propertiesDictionary identity:userNameString timestamp:timestamp];
+    
+    
+    // User archiveRecord to create a similar record. (timestamp may not match expected record)
+    [[KMAArchiver sharedArchiver] archiveEvent:eventNameString withProperties:propertiesDictionary onCondition:KMARecordAlways];
+    
+    // !!!: The timestamp of archiveRecord and the expectedRecord may not match.
+    // If this is a frequent result we should remove the &t=xxxxxxxxx from
+    // both the archiveRecord and expectedRecord prior to comparison.
+    XCTAssertEqualObjects([[KMAArchiver sharedArchiver] getQueryStringAtIndex:0], expectedRecord, @"Records do not match");
+}
+
+- (void)testArchiveEventWithLargeProperties
+{
+    NSString *userNameString = @"testuser@example.com";
+    
+    NSString *eventNameString = @"testArchiveRecord";
+    
+    NSDictionary *propertiesDictionary = LARGE_TEST_PROPERTIES;
     
     // Only using this to set an expected identity
     [[KMAArchiver sharedArchiver] archiveFirstIdentity:userNameString];

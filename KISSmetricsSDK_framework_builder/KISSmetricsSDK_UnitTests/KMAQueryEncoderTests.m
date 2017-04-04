@@ -25,6 +25,7 @@
 // Test support
 #import <XCTest/XCTest.h>
 
+#import "KISSmetricsSDK_UnitTests.h"
 
 @interface KMAQueryEncoderTests : XCTestCase
 @end
@@ -51,7 +52,7 @@
     
     NSLog(@"KMAArchiverTests setUp");
     
-    _key = @"b8f68fe5004d29bcd21d3138b43ae755a16c12cf";
+    _key = API_KEY;
     _clientType  = @"mobile_app";
     _userAgent   = @"kissmetrics-ios/2.3.1";
     
@@ -152,7 +153,7 @@
                                                           identity:@"testuser@example.com"
                                                          timestamp:timestamp];
     
-    NSString *expectedUrl = @"/e?_k=b8f68fe5004d29bcd21d3138b43ae755a16c12cf&_c=mobile_app&_u=kissmetrics-ios/2.3.1&_p=testuser%40example.com";
+    NSString *expectedUrl = [NSString stringWithFormat:@"/e?_k=%@&_c=mobile_app&_u=kissmetrics-ios/2.3.0&_p=testuser%%40example.com", API_KEY];
     expectedUrl = [expectedUrl stringByAppendingString:[NSString stringWithFormat:@"&_n=testEvent&_d=1&_t=%i&propertyOne=testPropertyOne&propertyTwo=testPropertyTwo", timestamp]];
 
     XCTAssertEqualObjects(createdUrl, expectedUrl, @"URL incorrect");
@@ -167,7 +168,7 @@
                                                                      identity:@"testuser@example.com"
                                                                     timestamp:timestamp];
     
-    NSString *expectedUrl = @"/s?_k=b8f68fe5004d29bcd21d3138b43ae755a16c12cf&_c=mobile_app&_u=kissmetrics-ios/2.3.1&_p=testuser%40example.com&_d=1&_t=";
+    NSString *expectedUrl = [NSString stringWithFormat:@"/s?_k=%@&_c=mobile_app&_u=kissmetrics-ios/2.3.0&_p=testuser%%40example.com&_d=1&_t=", API_KEY];
     
     expectedUrl = [expectedUrl stringByAppendingString:[NSString stringWithFormat:@"%i", timestamp]];
     expectedUrl = [expectedUrl stringByAppendingString:@"&propertyOne=testPropertyOne&propertyTwo=testPropertyTwo"];
@@ -180,7 +181,7 @@
 
     NSString *createdUrl = [_queryEncoder createAliasQueryWithAlias:@"testnewuser@example.com" andIdentity:@"testolduser@example.com"];
     
-    NSString *expectedUrl = @"/a?_k=b8f68fe5004d29bcd21d3138b43ae755a16c12cf&_c=mobile_app&_u=kissmetrics-ios/2.3.1&_p=testnewuser%40example.com&_n=testolduser%40example.com";
+    NSString *expectedUrl = [NSString stringWithFormat:@"/a?_k=%@&_c=mobile_app&_u=kissmetrics-ios/2.3.0&_p=testnewuser%%40example.com&_n=testolduser%%40example.com", API_KEY];
     
     XCTAssertEqualObjects(createdUrl, expectedUrl, @"URL incorrect");
 }

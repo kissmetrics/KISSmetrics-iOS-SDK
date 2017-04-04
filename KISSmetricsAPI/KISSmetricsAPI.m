@@ -78,7 +78,7 @@ static NSString *kKMASystemVersionPropertyKey = @"System Version";
 @implementation KISSmetricsAPI
 {
   @private
-    NSOperationQueue *_dataOpQueue;
+    NSOperationQueue *_dataOpQueue, *_verificationQueue;
     KMASender *_sender;
     id <KMATrackingOperations> _trackingOperations;
 }
@@ -194,7 +194,7 @@ static NSString *kKMASystemVersionPropertyKey = @"System Version";
         [[KMAArchiver sharedArchiver] archiveFirstIdentity:[self kma_generateID]];
     }
         
-    [self kma_verifiyForTracking];
+    _verificationQueue = [self kma_verifiyForTracking];
     
     // KISSmetricsAPI_options.m defined options constants for automatic tracking
     if (kKMARecordApplicationLifecycle) {
@@ -214,6 +214,13 @@ static NSString *kKMASystemVersionPropertyKey = @"System Version";
     }
 }
 
+- (void) forTesting
+{
+    // clear the verification queue first so that sending will be enabled if appropriate
+    if (_verificationQueue) [_verificationQueue waitUntilAllOperationsAreFinished];
+    if (_dataOpQueue) [_dataOpQueue waitUntilAllOperationsAreFinished];
+    [_sender forTesting];
+}
 
 
 #pragma mark - sharedAPI public methods
@@ -437,21 +444,25 @@ static NSString *kKMASystemVersionPropertyKey = @"System Version";
 }
 
 
-- (void)kma_verifiyForTracking
+- (NSOperationQueue *) kma_verifiyForTracking
 {
     // If not expired
     if ((NSInteger)[[NSDate date] timeIntervalSince1970] < [[[KMAArchiver sharedArchiver] getVerificationExpDate] intValue]) {
-        return;
+        return nil;
     }
     
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    
     // Run verification in background thread
-    [[[NSOperationQueue alloc] init] addOperationWithBlock:^{
+    [queue addOperationWithBlock:^{
         
         NSString *installUuid = [[KMAArchiver sharedArchiver] getInstallUuid];
         [[KISSmetricsAPI kma_verification] verifyTrackingForProductKey:[KMAArchiver sharedArchiver].key
                                                            installUuid:installUuid
                                                               delegate:self];
     }];
+    
+    return queue;
 }
 
 

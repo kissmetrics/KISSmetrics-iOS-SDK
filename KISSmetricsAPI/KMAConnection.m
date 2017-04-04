@@ -61,10 +61,39 @@ static float const kKMAConnectionTimeout = 20.0f;
     // Retain the urlString, we'll need to pass this back to the delegate
     _urlString = urlString;
     
-    // We use the default cachePolicy but set our own timeoutInterval
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]
+    NSURL* url = [NSURL URLWithString:urlString];
+    
+    long query_length = (long) url.query.length;
+    
+    NSMutableURLRequest *request;
+    
+    if (query_length > 2000)
+    {
+        // NOTE! missing the port number here as KM doesn't seem to use it
+        NSString* reducedUrl = [NSString stringWithFormat:
+                            @"%@://%@%@",
+                            url.scheme,
+                            url.host,
+                            url.path];
+    
+        // We use the default cachePolicy but set our own timeoutInterval
+        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:reducedUrl]
                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
                                          timeoutInterval:kKMAConnectionTimeout];
+    
+        [request setHTTPMethod:@"POST"];
+    
+        [request setValue:[NSString stringWithFormat:@"%li", query_length] forHTTPHeaderField:@"Content-length"];
+    
+        [request setHTTPBody:[url.query dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    else
+    {
+        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]
+                                          cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                      timeoutInterval:kKMAConnectionTimeout];
+    }
+    
     // ----- Runloop retention
     // Attempting to keep connection running in current thread without
     // manually holding up the runloop unti we get success or failure.

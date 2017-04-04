@@ -33,6 +33,8 @@
 #define MOCKITO_SHORTHAND
 #import <OCMockitoIOS/OCMockitoIOS.h>
 
+#import "KISSmetricsSDK_UnitTests.h"
+
 
 @interface KISSmetricsAPI_SingletonTests : XCTestCase
 
@@ -52,6 +54,9 @@
 {
     [super setUp];
     // Set-up
+    
+    // initialize with key otherwise all subsequent calls to [KISSmetricsAPI sharedAPI] will return nil
+    [KISSmetricsAPI sharedAPIWithKey: API_KEY];
 }
 
 
@@ -61,6 +66,9 @@
     
     [super tearDown];
 }
+
+// set to false to run tests in foreground so you can see any exceptions thrown
+#define doRunInSubprocess true
 
 
 //We use this to ensure that no two test runs use the same instance.
@@ -90,7 +98,7 @@
 
 - (void) testSharedInstanceMethod
 {
-	if (!isInSubprocess)
+	if (!isInSubprocess && doRunInSubprocess)
     {
 		[self runTestInSubprocess:_cmd];
 		return;
@@ -106,7 +114,7 @@
 
 - (void) testAllocInit
 {
-	if (!isInSubprocess) {
+	if (!isInSubprocess && doRunInSubprocess) {
 		[self runTestInSubprocess:_cmd];
 		return;
 	}
@@ -121,7 +129,7 @@
 
 - (void) testOnlyOneInstance
 {
-	if (!isInSubprocess) {
+	if (!isInSubprocess && doRunInSubprocess) {
 		[self runTestInSubprocess:_cmd];
 		return;
 	}
