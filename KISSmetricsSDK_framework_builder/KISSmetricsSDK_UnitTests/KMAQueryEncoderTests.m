@@ -54,7 +54,7 @@
     
     _key = API_KEY;
     _clientType  = @"mobile_app";
-    _userAgent   = @"kissmetrics-ios/2.3.0";
+    _userAgent   = @"kissmetrics-ios/2.3.1";
     
     _queryEncoder = [[KMAQueryEncoder alloc] initWithKey:_key
                                               clientType:_clientType
