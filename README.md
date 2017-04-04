@@ -43,11 +43,67 @@ and deliver it along with KISSmetricsAPI.framework and ``KISSmetricsAPI.h``.
 If this file is included, attemps to initialize with sharedAPIWithKey will be ignored. 
 Even if the provided key is different than the key set in ``KISSmetricsAPI_options.m``.
 
+Configuration:
+--------------
+Events to be tracked must be configured in KISSmetrics.
+
+Log in to https://app.kissmetrics.com and go to the "Events" tab. Click on "Create new tracking rule" to create a new event.
+Note that events expect a URL; just create a dummy URL to represent the event. For example, for "App Launched"  use "/app_launched".
+You must use this exact URL when you record the event via the API.
+
+Usage:
+------
+
+After initializing the API and configuring events as described above, record an event with: 
+
+```objective-c
+[[KISSmetricsAPI sharedAPI] record:@"/app_launched"];
+```
+
+To record an event with properties:
+
+```objective-c
+[[KISSmetricsAPI sharedAPI] record:@"/content_view" withProperties: @{ @"Content Name": @"Rouge One"}];
+```
+
+Swift:
+------
+
+The API has been successfully tested and called from Swift project.
+
+Create a Swift Bridging Header using "How to create a Swift Bridging Header Manually" instructions in http://www.learnswiftonline.com/getting-started/adding-swift-bridging-header/
+
+Your header will look something like this:
+
+```objective-c
+//
+//  FlappyBird-Bridging-Header.h
+//  FlappyBird
+//
+//  Created by Peter O'Leary on 11/19/16.
+//
+
+#ifndef FlappyBird_Bridging_Header_h
+#define FlappyBird_Bridging_Header_h
+
+#import "KISSmetrics-iOS-SDK/KISSmetricsAPI.h"
+
+#endif /* FlappyBird_Bridging_Header_h */
+```
+
+Call the API like this:
+
+```swift
+KISSmetricsAPI.sharedAPI(withKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+KISSmetricsAPI.shared().record("/app_launched")
+```
 
 Tests:
 ---------------------------------
 The SDK will support both ARC/non-ARC and 32bit/64bit projects.
 One test project is included in this workspace for running application integration tests against the build files directly.
+
+Note: the testAppVersionKeychainSetter and testAppVersionKeychainGetter test require setting up Keychain entitlements for the KISSmetricsSDK_buildFiles_arc_imp project
 
 
 File organization:
