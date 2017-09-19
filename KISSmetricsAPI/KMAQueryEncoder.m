@@ -70,13 +70,13 @@ static NSString * const kKMAAliasPath = @"/a";
 
 # pragma mark - Public methods
 
-- (NSString*)encodeQueryString:(NSString*)queryString
+- (NSString *)encodeQueryString:(NSString *)queryString
 {
-    NSString * encoded = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(NULL,
-                                                                                      (CFStringRef)queryString, NULL,
-                                                                                      (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                                                                      kCFStringEncodingUTF8 );
-    return encoded;
+    CFStringRef urlRef = CFURLCreateStringByAddingPercentEscapes(NULL,
+                                                              (CFStringRef)queryString, NULL,
+                                                              (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+                                                              kCFStringEncodingUTF8 );
+    return (NSString *)CFBridgingRelease(urlRef);
 }
 
 
