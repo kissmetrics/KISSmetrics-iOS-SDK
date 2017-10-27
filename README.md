@@ -43,14 +43,6 @@ and deliver it along with KISSmetricsAPI.framework and ``KISSmetricsAPI.h``.
 If this file is included, attemps to initialize with sharedAPIWithKey will be ignored. 
 Even if the provided key is different than the key set in ``KISSmetricsAPI_options.m``.
 
-Configuration:
---------------
-Events to be tracked must be configured in KISSmetrics.
-
-Log in to https://app.kissmetrics.com and go to the "Events" tab. Click on "Create new tracking rule" to create a new event.
-Note that events expect a URL; just create a dummy URL to represent the event. For example, for "App Launched"  use "/app_launched".
-You must use this exact URL when you record the event via the API.
-
 Usage:
 ------
 
