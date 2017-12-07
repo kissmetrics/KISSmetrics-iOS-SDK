@@ -48,16 +48,23 @@ static NSString * const kKMAVerificationUrl = @"https://et.kissmetrics.com/m/trk
     return [[NSURLConnection alloc] initWithRequest:request delegate:delegate startImmediately:startImmediately];
 }
 
+- (NSDateFormatter *)kma_dateFormatter
+{
+    static NSDateFormatter *_dateFormatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+        [_dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
+        [_dateFormatter setDateFormat:@"EEE',' dd' 'MMM' 'yyyy HH':'mm':'ss zzz"];
+    });
+    return _dateFormatter;
+}
 
 - (NSNumber *)kma_unixTimestampFromDateString:(NSString *)dateString
 {
     // Convert expiration date string to unix timestamp
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
-    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
-    [dateFormatter setDateFormat:@"EEE',' dd' 'MMM' 'yyyy HH':'mm':'ss zzz"];
-    
-    return @([[dateFormatter dateFromString:dateString] timeIntervalSince1970]);
+    return @([[[self kma_dateFormatter] dateFromString:dateString] timeIntervalSince1970]);
 }
 
 
