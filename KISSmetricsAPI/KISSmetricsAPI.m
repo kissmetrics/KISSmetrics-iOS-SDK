@@ -341,6 +341,7 @@ static NSString *kKMASystemVersionPropertyKey = @"System Version";
         // If the existing value doesn't match the current, this is an update.
         if (![[[KMAArchiver sharedArchiver] keychainAppVersion] isEqualToString:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]]) {
             [sharedAPI record:kKMAAppUpdatedEventName];
+            [[KMAArchiver sharedArchiver] setKeychainAppVersion:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
         }
     }
 }
