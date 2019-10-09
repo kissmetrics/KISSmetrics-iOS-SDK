@@ -356,7 +356,7 @@
     
     [MockNSURLConnection beginStubbing];
 
-    NSError *error = [[NSError alloc] initWithDomain:@"http://www.kissmetrics.com" code:NSURLErrorBadURL userInfo:nil];
+    NSError *error = [[NSError alloc] initWithDomain:@"https://www.kissmetrics.io" code:NSURLErrorBadURL userInfo:nil];
     [MockNSURLConnection stubEveryResponseError:error];
     
     for (int i=0; i<testRecordCount; i++) {
@@ -466,7 +466,7 @@
      [MockNSURLConnection beginStubbing];
  
      // Mock connection timeout or KM service outage via timeout
-     NSError *error = [[NSError alloc] initWithDomain:@"http://www.kissmetrics.com" code:NSURLErrorTimedOut userInfo:nil];
+     NSError *error = [[NSError alloc] initWithDomain:@"https://www.kissmetrics.io" code:NSURLErrorTimedOut userInfo:nil];
      [MockNSURLConnection stubEveryResponseError:error];
  
      for (int i=0; i<=testRecordCount; i++) {

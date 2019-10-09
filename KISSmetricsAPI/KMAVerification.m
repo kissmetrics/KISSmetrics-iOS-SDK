@@ -23,7 +23,7 @@
 #import "KMAVerification.h"
 
 static float const kKMAVerificationTimeout = 20.0f;
-static NSString * const kKMAVerificationUrl = @"https://et.kissmetrics.com/m/trk";
+static NSString * const kKMAVerificationUrl = @"https://et.kissmetrics.io/m/trk";
 
 
 @implementation KMAVerification {
@@ -135,7 +135,7 @@ static NSString * const kKMAVerificationUrl = @"https://et.kissmetrics.com/m/trk
     
     if (!jsonParsingError) {
         // Parse JSON for expected data
-        // Expected JSON payload = { "reason": "PRODUCT_SAMPLING", "tracking": false, "tracking_endpoint": "trk.kissmetrics.com"}
+        // Expected JSON payload = { "reason": "PRODUCT_SAMPLING", "tracking": false, "tracking_endpoint": "trc.kissmetrics.io"}
         _success = YES;
         _expirationDate = [self kma_unixTimestampFromDateString:_expiresHeaderString];
         _doTrack = [[jsonDict objectForKey:@"tracking"] boolValue];

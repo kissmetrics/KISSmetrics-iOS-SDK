@@ -222,7 +222,7 @@
 
 - (void)testArchiveBaseUrlRetainsBaseUrlInSettings
 {
-    NSString *expectedBaseUrl = @"http://www.kissmetrics.com";
+    NSString *expectedBaseUrl = @"https://www.kissmetrics.io";
     [[KMAArchiver sharedArchiver] archiveBaseUrl:expectedBaseUrl];
     
     NSMutableDictionary *settings = [[KMAArchiver sharedArchiver] uth_getSettings];
@@ -877,7 +877,7 @@
 {
     NSMutableArray *sendQueue = [[KMAArchiver sharedArchiver] uth_getSendQueue];
     
-    [sendQueue addObject:@"https://trk.kissmetrics.com/a?_k=b8f68fe5004d29bcd21d3138b43ae755a16c12cf&_x=ios/2.3.1&_p=testnewuser%40example.com&_n=testolduser%40example.com"];
+    [sendQueue addObject:@"https://trc.kissmetrics.io/a?_k=b8f68fe5004d29bcd21d3138b43ae755a16c12cf&_x=ios/2.3.1&_p=testnewuser%40example.com&_n=testolduser%40example.com"];
     
     NSLog(@"sendQueue = %@", sendQueue);
     
