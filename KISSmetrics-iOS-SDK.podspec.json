@@ -1,6 +1,6 @@
 {
   "name": "KISSmetrics-iOS-SDK",
-  "version": "2.3.1",
+  "version": "2.4.0",
   "summary": "iOS SDK for KISSmetrics",
   "homepage": "https://www.kissmetrics.io",
   "documentation_url": "https://support.kissmetrics.io/reference#ios-v2",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/kissmetrics/KISSmetrics-iOS-SDK.git",
-    "tag": "v2.3.1"
+    "tag": "v2.4.0"
   },
   "public_header_files": "KISSmetricsAPI/*.h",
   "source_files": "KISSmetricsAPI/*.{h,m,c}",
