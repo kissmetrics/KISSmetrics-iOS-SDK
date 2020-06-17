@@ -38,9 +38,9 @@ static NSString * const kKMAVerificationExpDateKey = @"verificationExpDate";
 static NSString * const kKMADoTrackKey = @"doTrack";
 static NSString * const kKMADoSendKey = @"doSend";
 static NSString * const kKMABaseUrlKey = @"baseUrl";
-static NSString * const kKMABaseUrlDefault = @"https://trk.kissmetrics.com";
+static NSString * const kKMABaseUrlDefault = @"https://trk.kissmetrics.io";
 static NSString * const kKMAAPIClientType  = @"mobile_app";
-static NSString * const kKMAAPIUserAgent   = @"kissmetrics-ios/2.3.1";
+static NSString * const kKMAAPIUserAgent   = @"kissmetrics-ios/2.4.0";
 static NSString * const kKMAKeychainAppVersionKey = @"KMAAppVersion";
 
 static KMAArchiver *sSharedArchiver = nil;
@@ -144,27 +144,27 @@ static KMAArchiver *sSharedArchiver = nil;
 {
     if ((self = [super init])) {
         KMALog(@"------------------KMAArchiver init");
-        
+
         // Ensure Library URL exists
         if (![self kma_directoryExistsAtUrl:[self kma_libraryUrlWithPathComponent:@"KISSmetrics"]]) {
             [self kma_createLibraryDirectoryAtURL:[self kma_libraryUrlWithPathComponent:@"KISSmetrics"]];
         }
-        
+
         [self kma_defineDefaultUrls];
         [self kma_unarchiveSettings];
-        
+
         // Perform any required migrations base on settings values (schemaVersion)
         [self kma_migrateFromVersion:[self getSchemaVersion] toVersion:kKMASchemaVersion];
-        
+
         [self kma_unarchiveIdentity];
         [self kma_unarchiveSendQueue];
         [self kma_unarchiveSavedIdEvents];
         [self kma_unarchiveSavedInstallEvents];
         [self kma_unarchiveSavedProperties];
-        
+
         [self keychainAppVersion];
     }
-    
+
     return self;
 }
 
@@ -185,7 +185,7 @@ static KMAArchiver *sSharedArchiver = nil;
 {
     BOOL isDir;
     BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:dirUrl.path isDirectory:&isDir];
-    
+
     if (exists && isDir) {
         return YES;
     }
@@ -204,7 +204,7 @@ static KMAArchiver *sSharedArchiver = nil;
         KMALog(@"KISSmetricsAPI_Archiver - !WARNING! - KISSmetrics library directory could not be created");
         return;
     }
-    
+
     // Prevent iCloud backup
     [self kma_addSkipBackupAttributeToItemAtURL:dirUrl];
 }
@@ -214,7 +214,7 @@ static KMAArchiver *sSharedArchiver = nil;
 - (BOOL)kma_addSkipBackupAttributeToItemAtURL:(NSURL *)URL
 {
     assert([[NSFileManager defaultManager] fileExistsAtPath: [URL path]]);
-    
+
     NSError *error = nil;
     BOOL success = [URL setResourceValue: [NSNumber numberWithBool: YES]
                                   forKey: NSURLIsExcludedFromBackupKey error: &error];
@@ -241,21 +241,21 @@ static KMAArchiver *sSharedArchiver = nil;
     @synchronized(self)
     {
         switch (fromVersion + 1) {
-            
+
             case 2: {
                 KMALog(@"KISSmetricsAPI_Archiver - migrating from v1 to v2");
-                
+
                 // Migrating from v1 to v2:
                 // The v1 SDK stored the identity archive directly to the NSLibrary dir.
                 // Version 2 stores all archive files under a KISSmetrics directory in the NSLibrary dir.
                 // There is no need to migrate the v1 actions archive from the caches directory as it will have been
                 // removed during the app update which applies the Version 2 SDK.
-            
+
                 NSString *oldIdentityPath = [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) lastObject]
                                              stringByAppendingPathComponent:@"KISSMetrics.identity"];
-                
+
                 if ([[NSFileManager defaultManager] fileExistsAtPath:oldIdentityPath]) {
-                
+
                     NSError *moveError;
                     [[NSFileManager defaultManager] copyItemAtPath:oldIdentityPath
                                                             toPath:self.identityUrl.path
@@ -284,11 +284,11 @@ static KMAArchiver *sSharedArchiver = nil;
     if (installUuid == nil ||
         installUuid.length == 0 ||
         [self.settings objectForKey:kKMAInstallUuidKey]) {
-        
+
         KMALog(@"KISSmetricsAPI_Archiver - !WARNING! - installUuid not valid to save");
         return;
     }
-    
+
     @synchronized(self)
     {
         [self.settings setObject:installUuid forKey:kKMAInstallUuidKey];
@@ -385,7 +385,7 @@ static KMAArchiver *sSharedArchiver = nil;
     if (firstIdentity == nil || firstIdentity.length == 0) {
         return;
     }
-    
+
     @synchronized(self)
     {
         KMALog(@"archiveFirstIdentity");
@@ -445,19 +445,19 @@ static KMAArchiver *sSharedArchiver = nil;
 - (void)archiveEvent:(NSString *)name withProperties:(NSDictionary *)properties onCondition:(KMARecordCondition)condition
 {
     KMALog(@"KMAArchiver archiveEvent withProperties onCondition");
-    
+
     if (name == nil || [name length] == 0) {
         KMALog(@"KISSmetricsAPI - !WARNING! - Tried to record event with empty or nil name. Ignoring.");
         return;
     }
-    
+
     switch (condition) {
         case KMARecordAlways:
             // Nothing else to check, continue with archiving the event.
             break;
-                
+
         case KMARecordOncePerIdentity:
-            
+
             @synchronized(self)
             {
                 if ([self.savedIdEvents containsObject:name]) {
@@ -468,9 +468,9 @@ static KMAArchiver *sSharedArchiver = nil;
                     [self kma_archiveSavedIdEvents];
                 }
             }
-            
+
             break;
-                
+
         case KMARecordOncePerInstall:
 
             @synchronized(self)
@@ -485,12 +485,12 @@ static KMAArchiver *sSharedArchiver = nil;
             }
 
             break;
-        
+
         default:
             // Continue with archiving the event.
             break;
     }
-    
+
     // Intentionally called outside of @synchronized, method is already synchronized
     [self kma_archiveEvent:name withProperties:properties];
 }
@@ -500,16 +500,16 @@ static KMAArchiver *sSharedArchiver = nil;
 - (void)archiveProperties:(NSDictionary *)properties
 {
     KMALog(@"archiveProperties");
-    
+
     if (properties == nil || [properties count] == 0) {
         KMALog(@"KISSmetricsAPI - !WARNING! - Tried to set properties with no properties in it..");
         return;
     }
-    
+
     @synchronized(self)
     {
         int actualTimeOfEvent = (int)[[NSDate date] timeIntervalSince1970];
-        
+
         NSString *theUrl = [self.queryEncoder createPropertiesQueryWithProperties:properties
                                                                           identity:self.identity
                                                                          timestamp:actualTimeOfEvent];
@@ -522,22 +522,22 @@ static KMAArchiver *sSharedArchiver = nil;
 - (void)archiveIdentity:(NSString *)identity
 {
     KMALog(@"KMAArchiver archiveIdentity");
-    
+
     if (identity == nil || [identity length] == 0 || identity == self.identity) {
         KMALog(@"KISSmetricsAPI - !WARNING! - attempted to use nil, empty or existing identity. Ignoring.");
         return;
     }
-    
+
     NSString *theUrl = [self.queryEncoder createAliasQueryWithAlias:identity andIdentity:self.identity];
-    
+
     @synchronized(self)
     {
         self.identity = identity;
-        
+
         if (![NSKeyedArchiver archiveRootObject:self.identity toFile:self.identityUrl.path]) {
             KMALog(@"KISSmetricsAPI - !WARNING! - Unable to archive new identity!");
         }
-        
+
         // Only add the alias query if the current identity is a generic identity
         if ([self hasGenericIdentity]) {
             [self archiveHasGenericIdentity:NO];
@@ -557,7 +557,7 @@ static KMAArchiver *sSharedArchiver = nil;
 - (void)archiveAlias:(NSString *)alias withIdentity:(NSString *)identity
 {
     KMALog(@"KMAArchiver archiveAlias");
-    
+
     if (alias == nil || [alias length] == 0 || identity == nil || [identity length] == 0) {
         KMALog(@"KISSmetricsAPI - !WARNING! - attempted to use nil or empty identities in alias (%@ and %@). Ignoring.",
                alias, identity);
@@ -565,7 +565,7 @@ static KMAArchiver *sSharedArchiver = nil;
     }
 
     NSString *theUrl = [self.queryEncoder createAliasQueryWithAlias:alias andIdentity:identity];
-    
+
     @synchronized(self)
     {
         [self.sendQueue addObject:theUrl];
@@ -576,7 +576,7 @@ static KMAArchiver *sSharedArchiver = nil;
 - (void)archiveDistinctProperty:(NSString*)name value:(NSObject*)value
 {
     NSString *valueString;
-    
+
     // Confirm value is of type NSString or NSNumber
     if ([value isKindOfClass:[NSString class]]) {
         valueString = (NSString*)value;
@@ -589,7 +589,7 @@ static KMAArchiver *sSharedArchiver = nil;
         KMALog(@"KISSmetricsAPI - !WARNING! - Property values must be NSString or NSNumber objects!");
         return;
     }
-    
+
     @synchronized(self)
     {
         // All property values are archived as NSStrings
@@ -603,7 +603,7 @@ static KMAArchiver *sSharedArchiver = nil;
             [self kma_archiveSavedProperties];
         }
     }
-    
+
     [self archiveProperties:@{name:valueString}];
 }
 
@@ -623,7 +623,7 @@ static KMAArchiver *sSharedArchiver = nil;
     if ([self.settings objectForKey:kKMAVerificationExpDateKey]) {
         return [self.settings objectForKey:kKMAVerificationExpDateKey];
     }
-    
+
     return @(kKMAVerificationExpDateDefault);
 }
 
@@ -633,7 +633,7 @@ static KMAArchiver *sSharedArchiver = nil;
     if ([self.settings objectForKey:kKMAHasGenericIdentityKey]) {
         return [[self.settings objectForKey:kKMAHasGenericIdentityKey] boolValue];
     }
-    
+
     return kKMAHasGenericIdentityDefault;
 }
 
@@ -643,7 +643,7 @@ static KMAArchiver *sSharedArchiver = nil;
     if ([self.settings objectForKey:kKMADoSendKey]) {
         return [[self.settings objectForKey:kKMADoSendKey] boolValue];
     }
-    
+
     return kKMADoSendDefault;
 }
 
@@ -653,7 +653,7 @@ static KMAArchiver *sSharedArchiver = nil;
     if ([self.settings objectForKey:kKMADoTrackKey]) {
         return [[self.settings objectForKey:kKMADoTrackKey] boolValue];
     }
-    
+
     return kKMADoTrackDefault;
 }
 
@@ -663,7 +663,7 @@ static KMAArchiver *sSharedArchiver = nil;
     if ([self.settings objectForKey:kKMABaseUrlKey]) {
         return (NSString *)[self.settings objectForKey:kKMABaseUrlKey];
     }
-    
+
     return (NSString *)kKMABaseUrlDefault;
 }
 
@@ -674,19 +674,19 @@ static KMAArchiver *sSharedArchiver = nil;
 - (void)kma_archiveEvent:(NSString *)name withProperties:(NSDictionary *)properties
 {
     KMALog(@"KMAArchiver archiveEvent withProperties");
-    
+
     @synchronized(self)
     {
         // We'll store and use the actual time of the record event in case of disconnected operation.
         int actualTimeOfEvent = (int)[[NSDate date] timeIntervalSince1970];
-        
+
         NSString *theUrl = [self.queryEncoder createEventQueryWithName:name
                                                             properties:properties
                                                               identity:self.identity
                                                              timestamp:actualTimeOfEvent];
         // Queue up call
         [self.sendQueue addObject:theUrl];
-        
+
         // Persist the new queue
         [self kma_archiveSendQueue];
     }
@@ -721,7 +721,7 @@ static KMAArchiver *sSharedArchiver = nil;
                        kKMABaseUrlKey: kKMABaseUrlDefault,
                        kKMAVerificationExpDateKey: @(kKMAVerificationExpDateDefault),
                        kKMAHasGenericIdentityKey: @(kKMAHasGenericIdentityDefault)} mutableCopy];
-    
+
     [self kma_archiveSettings];
 }
 
