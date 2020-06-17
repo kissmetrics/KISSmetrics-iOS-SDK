@@ -5,7 +5,7 @@ KISSmetrics-iOS-SDK
 This workspace contains the source files that build the SDK as a framework (``KISSmetricsSDK.framework``) and the required public interface (``KISSmetricsAPI.h``). The source files included here are not intended to be used directly in your app.
 
 
-For implementation details please see: https://support.kissmetrics.io/article/show/ios-sdk-v2
+For implementation details please see: https://support.kissmetrics.io/reference#ios-v2
 
 
 Framework project setup:
@@ -20,7 +20,7 @@ Add ``pod 'KISSmetrics-iOS-SDK'`` to your Podfile.
 
 Inclusion:
 ----------
-Import the API class in your AppDelegate and in any classes where you'll be tracking from: 
+Import the API class in your AppDelegate and in any classes where you'll be tracking from:
 
 ```objective-c
 #import <KISSmetricsSDK/KISSmetricsAPI.h>
@@ -38,15 +38,15 @@ At the top of the application delegate's ``didFinishLaunchingWithOptions`` metho
 
 Automatic: (Requires ``KISSmetricsAPI_options.m``)
 The customer's settings, including their API key, will live in ``KISSmetricsAPI_options.m``
-We can build this file for them based on selections made during new KM Product setup 
+We can build this file for them based on selections made during new KM Product setup
 and deliver it along with KISSmetricsAPI.framework and ``KISSmetricsAPI.h``.
-If this file is included, attemps to initialize with sharedAPIWithKey will be ignored. 
+If this file is included, attemps to initialize with sharedAPIWithKey will be ignored.
 Even if the provided key is different than the key set in ``KISSmetricsAPI_options.m``.
 
 Usage:
 ------
 
-After initializing the API and configuring events as described above, record an event with: 
+After initializing the API and configuring events as described above, record an event with:
 
 ```objective-c
 [[KISSmetricsAPI sharedAPI] record:@"/app_launched"];
