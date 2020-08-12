@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '8.0'
+
+target 'KISSmetrics-iOS-SDK_Example' do
+  pod 'KISSmetrics-iOS-SDK', :path => '../'
+
+  target 'KISSmetrics-iOS-SDK_Tests' do
+    pod 'OCMockito'
+    inherit! :search_paths
+
+  end
+end

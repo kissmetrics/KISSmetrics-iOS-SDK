@@ -8,14 +8,16 @@ This workspace contains the source files that build the SDK as a framework (``KI
 For implementation details please see: https://support.kissmetrics.io/reference#ios-v2
 
 
-Framework project setup:
-------------------------
-Setting up a framework project requires several steps and may change from one version of Xcode to the next. Rather than listing all the steps here, please refer to this tutorial: http://blog.db-in.com/universal-framework-for-ios/
-
-
 CocoaPods:
 ----------
 Add ``pod 'KISSmetrics-iOS-SDK'`` to your Podfile.
+
+
+Adding Manually:
+--------
+
+* Add the `Framework/KISSmetricsSDK.xcodeproj`  to your existing project.
+* In your app's Target go to `Build Phases` and under `Dependencies` add the `KISSmetricsSDK`
 
 
 Inclusion:
@@ -23,7 +25,7 @@ Inclusion:
 Import the API class in your AppDelegate and in any classes where you'll be tracking from:
 
 ```objective-c
-#import <KISSmetricsSDK/KISSmetricsAPI.h>
+import <KISSmetricsSDK/KISSmetricsAPI.h>
 ```
 
 
@@ -111,27 +113,7 @@ Style:
 * Unit test helper methods - prefix with ``uth_``
 
 
-Building:
---------
-* Select `KISSmetricsAPI Scheme > iPhone Simulator` and `Run`
-* Select `KISSmetricsSDK Scheme > iOS Device` and `Run`
-* Select `UniversaliOS Scheme > iOS Device` and `Run`
 
-
-You should find the compiled framework `KISSmetricsAPI.framework` in this repo's root dir.
-
-
-32bit and 64bit architectures:
---------------------------
-In order to support arm64, arm7, arm7s both the KISSmetricsAPI lib target and
-UniversaliOS aggregate target need to be built targeting iOS7 with
-Standard architectures (including 64-bit)(armv7, armv7s, arm64).
-To confirm that the these architectures were included in the final framework build,
-cd into the built KISSmetricsAPI.framework dir and run:
-
-```bash
-otool -V -f KISSmetricsSDK
-```
 
 Logging:
 -------

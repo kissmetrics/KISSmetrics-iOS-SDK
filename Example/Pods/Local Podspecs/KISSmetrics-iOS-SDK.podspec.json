@@ -1,0 +1,23 @@
+{
+  "name": "KISSmetrics-iOS-SDK",
+  "module_name": "KissmetricsSDK",
+  "version": "2.5.0a",
+  "summary": "iOS SDK for KISSmetrics",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://www.kissmetrics.io",
+  "license": {
+    "type": "Apache 2.0",
+    "text": "http://www.apache.org/licenses/LICENSE-2.0.txt"
+  },
+  "authors": {
+    "kissmetrics": "support@kissmetrics.io"
+  },
+  "source": {
+    "git": "https://github.com/kissmetrics/KISSmetrics-iOS-SDK.git",
+    "tag": "2.5.0a"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "KISSmetrics-iOS-SDK/Classes/**/*"
+}

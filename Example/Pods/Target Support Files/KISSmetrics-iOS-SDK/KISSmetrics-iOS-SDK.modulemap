@@ -1,0 +1,6 @@
+framework module KissmetricsSDK {
+  umbrella header "KISSmetrics-iOS-SDK-umbrella.h"
+
+  export *
+  module * { export * }
+}

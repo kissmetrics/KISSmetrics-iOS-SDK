@@ -1,0 +1,468 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E2A7642B24E4938500A5014E /* KMASwizzler.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7640724E4938300A5014E /* KMASwizzler.h */; };
+		E2A7642C24E4938500A5014E /* KMAQueryEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7640824E4938300A5014E /* KMAQueryEncoder.m */; };
+		E2A7642D24E4938500A5014E /* KISSmetricsAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7640924E4938300A5014E /* KISSmetricsAPI.h */; };
+		E2A7642E24E4938500A5014E /* KMAQueryEncoder.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7640A24E4938300A5014E /* KMAQueryEncoder.h */; };
+		E2A7642F24E4938500A5014E /* KMATrackingOperations.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7640B24E4938300A5014E /* KMATrackingOperations.h */; };
+		E2A7643024E4938500A5014E /* KMASwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7640C24E4938300A5014E /* KMASwizzler.m */; };
+		E2A7643124E4938500A5014E /* UIViewController+KMAVCLifecycle.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7640D24E4938300A5014E /* UIViewController+KMAVCLifecycle.m */; };
+		E2A7643224E4938500A5014E /* UIDevice+KMAHardware.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7640E24E4938300A5014E /* UIDevice+KMAHardware.h */; };
+		E2A7643324E4938500A5014E /* KISSmetricsAPI_options.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7640F24E4938300A5014E /* KISSmetricsAPI_options.h */; };
+		E2A7643424E4938500A5014E /* KMAVerificationDelegateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7641024E4938300A5014E /* KMAVerificationDelegateProtocol.h */; };
+		E2A7643524E4938500A5014E /* KMASenderStateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7641124E4938300A5014E /* KMASenderStateProtocol.h */; };
+		E2A7643624E4938500A5014E /* KMATrackingOperations_NonTrackingState.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7641224E4938300A5014E /* KMATrackingOperations_NonTrackingState.m */; };
+		E2A7643724E4938500A5014E /* UIViewController+KMAVCLifecycle.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7641324E4938300A5014E /* UIViewController+KMAVCLifecycle.h */; };
+		E2A7643824E4938500A5014E /* KMAArchiver.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7641424E4938300A5014E /* KMAArchiver.h */; };
+		E2A7643924E4938500A5014E /* KMAKeychainItemWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7641524E4938300A5014E /* KMAKeychainItemWrapper.h */; };
+		E2A7643A24E4938500A5014E /* KMASenderDisabledState.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7641624E4938300A5014E /* KMASenderDisabledState.h */; };
+		E2A7643B24E4938500A5014E /* KMASenderReadyState.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7641724E4938400A5014E /* KMASenderReadyState.m */; };
+		E2A7643C24E4938500A5014E /* UIDevice+KMAHardware.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7641824E4938400A5014E /* UIDevice+KMAHardware.m */; };
+		E2A7643D24E4938500A5014E /* KMAKeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7641924E4938400A5014E /* KMAKeychainItemWrapper.m */; };
+		E2A7643E24E4938500A5014E /* KMAConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7641A24E4938400A5014E /* KMAConnection.h */; };
+		E2A7643F24E4938500A5014E /* KISSmetricsAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7641B24E4938400A5014E /* KISSmetricsAPI.m */; };
+		E2A7644024E4938500A5014E /* KMATrackingOperations_NonTrackingState.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7641C24E4938400A5014E /* KMATrackingOperations_NonTrackingState.h */; };
+		E2A7644124E4938500A5014E /* KMATrackingOperations_TrackingState.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7641D24E4938400A5014E /* KMATrackingOperations_TrackingState.m */; };
+		E2A7644224E4938500A5014E /* KMASenderReadyState.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7641E24E4938400A5014E /* KMASenderReadyState.h */; };
+		E2A7644324E4938500A5014E /* KMAMacros.c in Sources */ = {isa = PBXBuildFile; fileRef = E2A7641F24E4938400A5014E /* KMAMacros.c */; };
+		E2A7644424E4938500A5014E /* KMAConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7642024E4938400A5014E /* KMAConnection.m */; };
+		E2A7644524E4938500A5014E /* KMAConnectionDelegateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7642124E4938400A5014E /* KMAConnectionDelegateProtocol.h */; };
+		E2A7644624E4938500A5014E /* KMASenderSendingState.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7642224E4938400A5014E /* KMASenderSendingState.h */; };
+		E2A7644724E4938500A5014E /* KMAVerification.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7642324E4938400A5014E /* KMAVerification.h */; };
+		E2A7644824E4938500A5014E /* KMASenderSendingState.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7642424E4938400A5014E /* KMASenderSendingState.m */; };
+		E2A7644924E4938500A5014E /* KMATrackingOperations_TrackingState.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7642524E4938400A5014E /* KMATrackingOperations_TrackingState.h */; };
+		E2A7644A24E4938500A5014E /* KMAArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7642624E4938400A5014E /* KMAArchiver.m */; };
+		E2A7644B24E4938500A5014E /* KMAVerification.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7642724E4938400A5014E /* KMAVerification.m */; };
+		E2A7644C24E4938500A5014E /* KMASender.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7642824E4938400A5014E /* KMASender.m */; };
+		E2A7644D24E4938500A5014E /* KMASenderDisabledState.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A7642924E4938400A5014E /* KMASenderDisabledState.m */; };
+		E2A7644E24E4938500A5014E /* KMASender.h in Headers */ = {isa = PBXBuildFile; fileRef = E2A7642A24E4938500A5014E /* KMASender.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		E2A763FC24E4935900A5014E /* KISSmetricsSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KISSmetricsSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2A7640024E4935900A5014E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2A7640724E4938300A5014E /* KMASwizzler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMASwizzler.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMASwizzler.h"; sourceTree = "<group>"; };
+		E2A7640824E4938300A5014E /* KMAQueryEncoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMAQueryEncoder.m; path = "../../KISSmetrics-iOS-SDK/Classes/KMAQueryEncoder.m"; sourceTree = "<group>"; };
+		E2A7640924E4938300A5014E /* KISSmetricsAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KISSmetricsAPI.h; path = "../../KISSmetrics-iOS-SDK/Classes/KISSmetricsAPI.h"; sourceTree = "<group>"; };
+		E2A7640A24E4938300A5014E /* KMAQueryEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMAQueryEncoder.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMAQueryEncoder.h"; sourceTree = "<group>"; };
+		E2A7640B24E4938300A5014E /* KMATrackingOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMATrackingOperations.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMATrackingOperations.h"; sourceTree = "<group>"; };
+		E2A7640C24E4938300A5014E /* KMASwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMASwizzler.m; path = "../../KISSmetrics-iOS-SDK/Classes/KMASwizzler.m"; sourceTree = "<group>"; };
+		E2A7640D24E4938300A5014E /* UIViewController+KMAVCLifecycle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+KMAVCLifecycle.m"; path = "../../KISSmetrics-iOS-SDK/Classes/UIViewController+KMAVCLifecycle.m"; sourceTree = "<group>"; };
+		E2A7640E24E4938300A5014E /* UIDevice+KMAHardware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIDevice+KMAHardware.h"; path = "../../KISSmetrics-iOS-SDK/Classes/UIDevice+KMAHardware.h"; sourceTree = "<group>"; };
+		E2A7640F24E4938300A5014E /* KISSmetricsAPI_options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KISSmetricsAPI_options.h; path = "../../KISSmetrics-iOS-SDK/Classes/KISSmetricsAPI_options.h"; sourceTree = "<group>"; };
+		E2A7641024E4938300A5014E /* KMAVerificationDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMAVerificationDelegateProtocol.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMAVerificationDelegateProtocol.h"; sourceTree = "<group>"; };
+		E2A7641124E4938300A5014E /* KMASenderStateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMASenderStateProtocol.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMASenderStateProtocol.h"; sourceTree = "<group>"; };
+		E2A7641224E4938300A5014E /* KMATrackingOperations_NonTrackingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMATrackingOperations_NonTrackingState.m; path = "../../KISSmetrics-iOS-SDK/Classes/KMATrackingOperations_NonTrackingState.m"; sourceTree = "<group>"; };
+		E2A7641324E4938300A5014E /* UIViewController+KMAVCLifecycle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+KMAVCLifecycle.h"; path = "../../KISSmetrics-iOS-SDK/Classes/UIViewController+KMAVCLifecycle.h"; sourceTree = "<group>"; };
+		E2A7641424E4938300A5014E /* KMAArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMAArchiver.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMAArchiver.h"; sourceTree = "<group>"; };
+		E2A7641524E4938300A5014E /* KMAKeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMAKeychainItemWrapper.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMAKeychainItemWrapper.h"; sourceTree = "<group>"; };
+		E2A7641624E4938300A5014E /* KMASenderDisabledState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMASenderDisabledState.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMASenderDisabledState.h"; sourceTree = "<group>"; };
+		E2A7641724E4938400A5014E /* KMASenderReadyState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMASenderReadyState.m; path = "../../KISSmetrics-iOS-SDK/Classes/KMASenderReadyState.m"; sourceTree = "<group>"; };
+		E2A7641824E4938400A5014E /* UIDevice+KMAHardware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIDevice+KMAHardware.m"; path = "../../KISSmetrics-iOS-SDK/Classes/UIDevice+KMAHardware.m"; sourceTree = "<group>"; };
+		E2A7641924E4938400A5014E /* KMAKeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMAKeychainItemWrapper.m; path = "../../KISSmetrics-iOS-SDK/Classes/KMAKeychainItemWrapper.m"; sourceTree = "<group>"; };
+		E2A7641A24E4938400A5014E /* KMAConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMAConnection.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMAConnection.h"; sourceTree = "<group>"; };
+		E2A7641B24E4938400A5014E /* KISSmetricsAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KISSmetricsAPI.m; path = "../../KISSmetrics-iOS-SDK/Classes/KISSmetricsAPI.m"; sourceTree = "<group>"; };
+		E2A7641C24E4938400A5014E /* KMATrackingOperations_NonTrackingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMATrackingOperations_NonTrackingState.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMATrackingOperations_NonTrackingState.h"; sourceTree = "<group>"; };
+		E2A7641D24E4938400A5014E /* KMATrackingOperations_TrackingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMATrackingOperations_TrackingState.m; path = "../../KISSmetrics-iOS-SDK/Classes/KMATrackingOperations_TrackingState.m"; sourceTree = "<group>"; };
+		E2A7641E24E4938400A5014E /* KMASenderReadyState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMASenderReadyState.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMASenderReadyState.h"; sourceTree = "<group>"; };
+		E2A7641F24E4938400A5014E /* KMAMacros.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = KMAMacros.c; path = "../../KISSmetrics-iOS-SDK/Classes/KMAMacros.c"; sourceTree = "<group>"; };
+		E2A7642024E4938400A5014E /* KMAConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMAConnection.m; path = "../../KISSmetrics-iOS-SDK/Classes/KMAConnection.m"; sourceTree = "<group>"; };
+		E2A7642124E4938400A5014E /* KMAConnectionDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMAConnectionDelegateProtocol.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMAConnectionDelegateProtocol.h"; sourceTree = "<group>"; };
+		E2A7642224E4938400A5014E /* KMASenderSendingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMASenderSendingState.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMASenderSendingState.h"; sourceTree = "<group>"; };
+		E2A7642324E4938400A5014E /* KMAVerification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMAVerification.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMAVerification.h"; sourceTree = "<group>"; };
+		E2A7642424E4938400A5014E /* KMASenderSendingState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMASenderSendingState.m; path = "../../KISSmetrics-iOS-SDK/Classes/KMASenderSendingState.m"; sourceTree = "<group>"; };
+		E2A7642524E4938400A5014E /* KMATrackingOperations_TrackingState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMATrackingOperations_TrackingState.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMATrackingOperations_TrackingState.h"; sourceTree = "<group>"; };
+		E2A7642624E4938400A5014E /* KMAArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMAArchiver.m; path = "../../KISSmetrics-iOS-SDK/Classes/KMAArchiver.m"; sourceTree = "<group>"; };
+		E2A7642724E4938400A5014E /* KMAVerification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMAVerification.m; path = "../../KISSmetrics-iOS-SDK/Classes/KMAVerification.m"; sourceTree = "<group>"; };
+		E2A7642824E4938400A5014E /* KMASender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMASender.m; path = "../../KISSmetrics-iOS-SDK/Classes/KMASender.m"; sourceTree = "<group>"; };
+		E2A7642924E4938400A5014E /* KMASenderDisabledState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KMASenderDisabledState.m; path = "../../KISSmetrics-iOS-SDK/Classes/KMASenderDisabledState.m"; sourceTree = "<group>"; };
+		E2A7642A24E4938500A5014E /* KMASender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KMASender.h; path = "../../KISSmetrics-iOS-SDK/Classes/KMASender.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E2A763F924E4935900A5014E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E2A763F224E4935900A5014E = {
+			isa = PBXGroup;
+			children = (
+				E2A763FE24E4935900A5014E /* KISSmetricsSDK */,
+				E2A763FD24E4935900A5014E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E2A763FD24E4935900A5014E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E2A763FC24E4935900A5014E /* KISSmetricsSDK.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E2A763FE24E4935900A5014E /* KISSmetricsSDK */ = {
+			isa = PBXGroup;
+			children = (
+				E2A7640F24E4938300A5014E /* KISSmetricsAPI_options.h */,
+				E2A7640924E4938300A5014E /* KISSmetricsAPI.h */,
+				E2A7641B24E4938400A5014E /* KISSmetricsAPI.m */,
+				E2A7641424E4938300A5014E /* KMAArchiver.h */,
+				E2A7642624E4938400A5014E /* KMAArchiver.m */,
+				E2A7641A24E4938400A5014E /* KMAConnection.h */,
+				E2A7642024E4938400A5014E /* KMAConnection.m */,
+				E2A7642124E4938400A5014E /* KMAConnectionDelegateProtocol.h */,
+				E2A7641524E4938300A5014E /* KMAKeychainItemWrapper.h */,
+				E2A7641924E4938400A5014E /* KMAKeychainItemWrapper.m */,
+				E2A7641F24E4938400A5014E /* KMAMacros.c */,
+				E2A7640A24E4938300A5014E /* KMAQueryEncoder.h */,
+				E2A7640824E4938300A5014E /* KMAQueryEncoder.m */,
+				E2A7642A24E4938500A5014E /* KMASender.h */,
+				E2A7642824E4938400A5014E /* KMASender.m */,
+				E2A7641624E4938300A5014E /* KMASenderDisabledState.h */,
+				E2A7642924E4938400A5014E /* KMASenderDisabledState.m */,
+				E2A7641E24E4938400A5014E /* KMASenderReadyState.h */,
+				E2A7641724E4938400A5014E /* KMASenderReadyState.m */,
+				E2A7642224E4938400A5014E /* KMASenderSendingState.h */,
+				E2A7642424E4938400A5014E /* KMASenderSendingState.m */,
+				E2A7641124E4938300A5014E /* KMASenderStateProtocol.h */,
+				E2A7640724E4938300A5014E /* KMASwizzler.h */,
+				E2A7640C24E4938300A5014E /* KMASwizzler.m */,
+				E2A7641C24E4938400A5014E /* KMATrackingOperations_NonTrackingState.h */,
+				E2A7641224E4938300A5014E /* KMATrackingOperations_NonTrackingState.m */,
+				E2A7642524E4938400A5014E /* KMATrackingOperations_TrackingState.h */,
+				E2A7641D24E4938400A5014E /* KMATrackingOperations_TrackingState.m */,
+				E2A7640B24E4938300A5014E /* KMATrackingOperations.h */,
+				E2A7642324E4938400A5014E /* KMAVerification.h */,
+				E2A7642724E4938400A5014E /* KMAVerification.m */,
+				E2A7641024E4938300A5014E /* KMAVerificationDelegateProtocol.h */,
+				E2A7640E24E4938300A5014E /* UIDevice+KMAHardware.h */,
+				E2A7641824E4938400A5014E /* UIDevice+KMAHardware.m */,
+				E2A7641324E4938300A5014E /* UIViewController+KMAVCLifecycle.h */,
+				E2A7640D24E4938300A5014E /* UIViewController+KMAVCLifecycle.m */,
+				E2A7640024E4935900A5014E /* Info.plist */,
+			);
+			path = KISSmetricsSDK;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		E2A763F724E4935900A5014E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A7644924E4938500A5014E /* KMATrackingOperations_TrackingState.h in Headers */,
+				E2A7644624E4938500A5014E /* KMASenderSendingState.h in Headers */,
+				E2A7644024E4938500A5014E /* KMATrackingOperations_NonTrackingState.h in Headers */,
+				E2A7644E24E4938500A5014E /* KMASender.h in Headers */,
+				E2A7642E24E4938500A5014E /* KMAQueryEncoder.h in Headers */,
+				E2A7642F24E4938500A5014E /* KMATrackingOperations.h in Headers */,
+				E2A7643824E4938500A5014E /* KMAArchiver.h in Headers */,
+				E2A7643724E4938500A5014E /* UIViewController+KMAVCLifecycle.h in Headers */,
+				E2A7643E24E4938500A5014E /* KMAConnection.h in Headers */,
+				E2A7643324E4938500A5014E /* KISSmetricsAPI_options.h in Headers */,
+				E2A7643A24E4938500A5014E /* KMASenderDisabledState.h in Headers */,
+				E2A7643924E4938500A5014E /* KMAKeychainItemWrapper.h in Headers */,
+				E2A7643524E4938500A5014E /* KMASenderStateProtocol.h in Headers */,
+				E2A7642B24E4938500A5014E /* KMASwizzler.h in Headers */,
+				E2A7644524E4938500A5014E /* KMAConnectionDelegateProtocol.h in Headers */,
+				E2A7642D24E4938500A5014E /* KISSmetricsAPI.h in Headers */,
+				E2A7643424E4938500A5014E /* KMAVerificationDelegateProtocol.h in Headers */,
+				E2A7644224E4938500A5014E /* KMASenderReadyState.h in Headers */,
+				E2A7643224E4938500A5014E /* UIDevice+KMAHardware.h in Headers */,
+				E2A7644724E4938500A5014E /* KMAVerification.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		E2A763FB24E4935900A5014E /* KISSmetricsSDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2A7640424E4935900A5014E /* Build configuration list for PBXNativeTarget "KISSmetricsSDK" */;
+			buildPhases = (
+				E2A763F724E4935900A5014E /* Headers */,
+				E2A763F824E4935900A5014E /* Sources */,
+				E2A763F924E4935900A5014E /* Frameworks */,
+				E2A763FA24E4935900A5014E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KISSmetricsSDK;
+			productName = KISSmetricsSDK;
+			productReference = E2A763FC24E4935900A5014E /* KISSmetricsSDK.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E2A763F324E4935900A5014E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1160;
+				ORGANIZATIONNAME = KISSmetrics;
+				TargetAttributes = {
+					E2A763FB24E4935900A5014E = {
+						CreatedOnToolsVersion = 11.6;
+					};
+				};
+			};
+			buildConfigurationList = E2A763F624E4935900A5014E /* Build configuration list for PBXProject "KISSmetricsSDK" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E2A763F224E4935900A5014E;
+			productRefGroup = E2A763FD24E4935900A5014E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E2A763FB24E4935900A5014E /* KISSmetricsSDK */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E2A763FA24E4935900A5014E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E2A763F824E4935900A5014E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2A7642C24E4938500A5014E /* KMAQueryEncoder.m in Sources */,
+				E2A7643C24E4938500A5014E /* UIDevice+KMAHardware.m in Sources */,
+				E2A7644A24E4938500A5014E /* KMAArchiver.m in Sources */,
+				E2A7644C24E4938500A5014E /* KMASender.m in Sources */,
+				E2A7644424E4938500A5014E /* KMAConnection.m in Sources */,
+				E2A7644B24E4938500A5014E /* KMAVerification.m in Sources */,
+				E2A7644D24E4938500A5014E /* KMASenderDisabledState.m in Sources */,
+				E2A7644124E4938500A5014E /* KMATrackingOperations_TrackingState.m in Sources */,
+				E2A7643624E4938500A5014E /* KMATrackingOperations_NonTrackingState.m in Sources */,
+				E2A7644324E4938500A5014E /* KMAMacros.c in Sources */,
+				E2A7643024E4938500A5014E /* KMASwizzler.m in Sources */,
+				E2A7643B24E4938500A5014E /* KMASenderReadyState.m in Sources */,
+				E2A7643D24E4938500A5014E /* KMAKeychainItemWrapper.m in Sources */,
+				E2A7644824E4938500A5014E /* KMASenderSendingState.m in Sources */,
+				E2A7643F24E4938500A5014E /* KISSmetricsAPI.m in Sources */,
+				E2A7643124E4938500A5014E /* UIViewController+KMAVCLifecycle.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E2A7640224E4935900A5014E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		E2A7640324E4935900A5014E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E2A7640524E4935900A5014E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = KISSmetricsSDK/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kissmetrics.KISSmetricsSDK;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E2A7640624E4935900A5014E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = KISSmetricsSDK/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kissmetrics.KISSmetricsSDK;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E2A763F624E4935900A5014E /* Build configuration list for PBXProject "KISSmetricsSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2A7640224E4935900A5014E /* Debug */,
+				E2A7640324E4935900A5014E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2A7640424E4935900A5014E /* Build configuration list for PBXNativeTarget "KISSmetricsSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2A7640524E4935900A5014E /* Debug */,
+				E2A7640624E4935900A5014E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E2A763F324E4935900A5014E /* Project object */;
+}

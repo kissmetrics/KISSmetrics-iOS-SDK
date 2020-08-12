@@ -1,0 +1,27 @@
+PODS:
+  - KISSmetrics-iOS-SDK (2.5.0a)
+  - OCHamcrest (7.1.2)
+  - OCMockito (5.1.3):
+    - OCHamcrest (~> 7.0)
+
+DEPENDENCIES:
+  - KISSmetrics-iOS-SDK (from `../`)
+  - OCMockito
+
+SPEC REPOS:
+  trunk:
+    - OCHamcrest
+    - OCMockito
+
+EXTERNAL SOURCES:
+  KISSmetrics-iOS-SDK:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  KISSmetrics-iOS-SDK: 4b4c0e8a9589d1bbedb6dabe7ae8d5f9a0a006fd
+  OCHamcrest: b284c9592c28c1e4025a8542e67ea41a635d0d73
+  OCMockito: 677cbb4a18fd492b5a4fb10144dada4de5ddb877
+
+PODFILE CHECKSUM: 627681bb6a7f5a9c6a6178f0f8dcb6fc1dd00304
+
+COCOAPODS: 1.8.4
