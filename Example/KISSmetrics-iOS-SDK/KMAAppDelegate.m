@@ -6,7 +6,8 @@
 //
 
 #import "KMAAppDelegate.h"
-#import <KISSmetricsSDK/KISSmetricsAPI.h>
+
+@import KISSmetrics_iOS_SDK;
 
 @implementation KMAAppDelegate
 

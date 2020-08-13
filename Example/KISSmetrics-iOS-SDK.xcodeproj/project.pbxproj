@@ -400,11 +400,11 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-KISSmetrics-iOS-SDK_Example/Pods-KISSmetrics-iOS-SDK_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/KISSmetrics-iOS-SDK/KissmetricsSDK.framework",
+				"${BUILT_PRODUCTS_DIR}/KISSmetrics-iOS-SDK/KISSmetrics_iOS_SDK.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KissmetricsSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KISSmetrics_iOS_SDK.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
