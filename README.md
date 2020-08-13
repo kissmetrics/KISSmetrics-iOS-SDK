@@ -40,8 +40,7 @@ At the top of the application delegate's ``didFinishLaunchingWithOptions`` metho
 [KISSmetricsAPI sharedAPIWithKey:@"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"];
 ```
 
-```
-swift
+```swift
 KISSmetricsAPI.sharedAPI(withKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 ```
 
@@ -70,8 +69,7 @@ To record an event with properties:
 ```objective-c
 [[KISSmetricsAPI sharedAPI] record:@"/content_view" withProperties: @{ @"Content Name": @"Rogue One"}];
 ```
-```
-swift
+```swift
 KISSmetricsAPI.shared().record("/content_view", withProperties: ["Content Name": "Rogue One"])
 ```
 
