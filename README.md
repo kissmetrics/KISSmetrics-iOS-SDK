@@ -27,7 +27,9 @@ Import the API class in your AppDelegate and in any classes where you'll be trac
 ```objective-c
 import <KISSmetricsSDK/KISSmetricsAPI.h>
 ```
-
+```swift
+import KISSmetricsSDK
+```
 
 Initialization:
 ---------------
@@ -36,6 +38,11 @@ At the top of the application delegate's ``didFinishLaunchingWithOptions`` metho
 
 ```objective-c
 [KISSmetricsAPI sharedAPIWithKey:@"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"];
+```
+
+```
+swift
+KISSmetricsAPI.sharedAPI(withKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
 ```
 
 Automatic: (Requires ``KISSmetricsAPI_options.m``)
@@ -54,43 +61,20 @@ After initializing the API and configuring events as described above, record an 
 [[KISSmetricsAPI sharedAPI] record:@"/app_launched"];
 ```
 
+```swift
+KISSmetricsAPI.shared().record("/app_launched")
+```
+
 To record an event with properties:
 
 ```objective-c
-[[KISSmetricsAPI sharedAPI] record:@"/content_view" withProperties: @{ @"Content Name": @"Rouge One"}];
+[[KISSmetricsAPI sharedAPI] record:@"/content_view" withProperties: @{ @"Content Name": @"Rogue One"}];
+```
+```
+swift
+KISSmetricsAPI.shared().record("/content_view", withProperties: ["Content Name": "Rogue One"])
 ```
 
-Swift:
-------
-
-The API has been successfully tested and called from Swift project.
-
-Create a Swift Bridging Header using "How to create a Swift Bridging Header Manually" instructions in http://www.learnswiftonline.com/getting-started/adding-swift-bridging-header/
-
-Your header will look something like this:
-
-```objective-c
-//
-//  FlappyBird-Bridging-Header.h
-//  FlappyBird
-//
-//  Created by Peter O'Leary on 11/19/16.
-//
-
-#ifndef FlappyBird_Bridging_Header_h
-#define FlappyBird_Bridging_Header_h
-
-#import "KISSmetrics-iOS-SDK/KISSmetricsAPI.h"
-
-#endif /* FlappyBird_Bridging_Header_h */
-```
-
-Call the API like this:
-
-```swift
-KISSmetricsAPI.sharedAPI(withKey: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-KISSmetricsAPI.shared().record("/app_launched")
-```
 
 Tests:
 ---------------------------------
@@ -137,13 +121,6 @@ Testing:
 -------
 We're using OCMockito to aid in unit and application testing.
 https://github.com/jonreid/OCMockito
-
-The `KISSmetricsSDK_framework_builder` includes a set of unit tests but because the
-framework builder is not an application, application tests of the framework
-are conducted under `KISSmetricsSDK_buildFiles_arc_imp`.
-
-You should write your application tests in `KISSmetricsSDK_buildFiles_arc_imp` first rather
-than rebuilding the framework between each change to the SDK.
 
 
 Category Extension:
