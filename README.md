@@ -25,10 +25,10 @@ Inclusion:
 Import the API class in your AppDelegate and in any classes where you'll be tracking from:
 
 ```objective-c
-import <KISSmetricsSDK/KISSmetricsAPI.h>
+import <KISSmetrics/KISSmetricsAPI.h>
 ```
 ```swift
-import KISSmetricsSDK
+import KISSmetrics
 ```
 
 Initialization:

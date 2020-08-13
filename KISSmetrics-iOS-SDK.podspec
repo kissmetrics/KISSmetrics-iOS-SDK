@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'KISSmetrics-iOS-SDK'
-  s.module_name      = 'KissmetricsSDK'
-  s.version          = '2.5.0a'
+  s.module_name      = 'Kissmetrics'
+  s.version          = '2.5.0b'
   s.summary          = 'iOS SDK for KISSmetrics'
   s.description      = <<-DESC
 TODO: Add long description of the pod here.
